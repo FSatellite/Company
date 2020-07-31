@@ -57,6 +57,7 @@ x86/
 [Aa][Rr][Mm]64/
 bld/
 [Bb]in/
+!/AppTools-new/AppTools/bin/
 [Oo]bj/
 [Ll]og/
 
