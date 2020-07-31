@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles" displayName="头文件" projectFiles="true">
+      <itemPath>Test.h</itemPath>
+      <itemPath>ZhuQiVolume.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles" displayName="源文件" projectFiles="true">
+      <itemPath>Test.cpp</itemPath>
+      <itemPath>ZhuQiVolume.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles" displayName="资源文件" projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="TestFiles" displayName="测试文件" projectFiles="false" kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles" displayName="重要文件" projectFiles="false" kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="2">
+      <toolsSet>
+        <compilerSet>MinGW32|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <output>../RunFile/x86/test.${CND_DLIB_EXT}</output>
+        </linkerTool>
+      </compileType>
+      <item path="Test.cpp" ex="False" tool="1" flavor2="0" />
+      <item path="Test.h" ex="False" tool="3" flavor2="0" />
+      <item path="ZhuQiVolume.cpp" ex="False" tool="1" flavor2="0" />
+      <item path="ZhuQiVolume.h" ex="False" tool="3" flavor2="0" />
+    </conf>
+    <conf name="Debug64" type="2">
+      <toolsSet>
+        <compilerSet>MinGW64|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <output>../RunFile/x64/test.${CND_DLIB_EXT}</output>
+        </linkerTool>
+      </compileType>
+      <item path="Test.cpp" ex="False" tool="1" flavor2="0" />
+      <item path="Test.h" ex="False" tool="3" flavor2="0" />
+      <item path="ZhuQiVolume.cpp" ex="False" tool="1" flavor2="0" />
+      <item path="ZhuQiVolume.h" ex="False" tool="3" flavor2="0" />
+    </conf>
+    <conf name="Release" type="2">
+      <toolsSet>
+        <compilerSet>MinGW32|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <output>../RunFile/x86/test.${CND_DLIB_EXT}</output>
+        </linkerTool>
+      </compileType>
+      <item path="Test.cpp" ex="False" tool="1" flavor2="0" />
+      <item path="Test.h" ex="False" tool="3" flavor2="0" />
+      <item path="ZhuQiVolume.cpp" ex="False" tool="1" flavor2="0" />
+      <item path="ZhuQiVolume.h" ex="False" tool="3" flavor2="0" />
+    </conf>
+    <conf name="Release64" type="2">
+      <toolsSet>
+        <compilerSet>MinGW64|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <linkerTool>
+          <output>../RunFile/x64/test.${CND_DLIB_EXT}</output>
+        </linkerTool>
+      </compileType>
+      <item path="Test.cpp" ex="False" tool="1" flavor2="0" />
+      <item path="Test.h" ex="False" tool="3" flavor2="0" />
+      <item path="ZhuQiVolume.cpp" ex="False" tool="1" flavor2="0" />
+      <item path="ZhuQiVolume.h" ex="False" tool="3" flavor2="0" />
+    </conf>
+  </confs>
+</configurationDescriptor>

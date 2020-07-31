@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ModelDescription modelName="增压流量计算" modelIdentifier="CBoostedFlow" fmiVersion="1.0" guid="62A873FC-0522-4EC6-A2BB-6A9B6A94CD36" description="" author="muye" generationTool="C++" programType="dll" category="总体专业" categoryCode="Z" principleType="行业规范" principleTypeCode="HYGF" applicationType="数据计算" applicationTypeCode="Caculate" moduleCategory="增压系统计算模块" moduleCategoryCode="SuperChargerSystem" publishTime="2020-03-11 21:13:23 +8" copyright="" remark="" keyword="">
+  <ModelVariables>
+    <ScalarVariable name="Pz" displayName="贮箱气枕压力" dataType="double" valueReference="0" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Tz" displayName="贮箱气枕温度" dataType="double" valueReference="0" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Qt" displayName="发动机消耗的推进剂流量" dataType="double" valueReference="0" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="R" displayName="气体常数" dataType="double" valueReference="8314" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="M" displayName="增压气体介质的分子量" dataType="double" valueReference="0" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="q" displayName="增压流量" dataType="double" valueReference="0" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+  </ModelVariables>
+</ModelDescription>

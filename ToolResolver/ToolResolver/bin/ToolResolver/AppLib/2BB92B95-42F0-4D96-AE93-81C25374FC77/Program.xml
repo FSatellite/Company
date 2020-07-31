@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ModelDescription modelName="" modelIdentifier="" fmiVersion="" guid="00000000-0000-0000-0000-000000000000" description="" author="" generationTool="" programType="" category="" categoryCode="" principleType="" principleTypeCode="" applicationType="" applicationTypeCode="" moduleCategory="" moduleCategoryCode="" publishTime="0001-01-01 08:00:00 +8" copyright="" remark="" keyword="">
+  <ModelVariables>
+    <ScalarVariable name="Pz" displayName="贮箱气枕压力" dataType="double" valueReference="0" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Tz" displayName="贮箱气枕温度" dataType="double" valueReference="0" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Qt" displayName="发动机消耗的推进剂流量" dataType="double" valueReference="0" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="R" displayName="气体常数" dataType="double" valueReference="8314" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="M" displayName="增压气体介质的分子量" dataType="double" valueReference="0" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="q" displayName="增压流量" dataType="double" valueReference="0" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+  </ModelVariables>
+</ModelDescription>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ModelDescription modelName="Exe测试程序" modelIdentifier="TestExeProgram" fmiVersion="1.0" guid="F41A47AF-71F4-480C-B76C-5ED5FB8AD642" description="" author="muye" generationTool="C++" programType="dll" category="总体专业" categoryCode="Z" principleType="行业规范" principleTypeCode="HYGF" applicationType="数据计算" applicationTypeCode="Caculate" moduleCategory="增压系统计算模块" moduleCategoryCode="SuperChargerSystem" publishTime="2020-03-21 16:23:53 +8" copyright="" remark="" keyword="">
+  <ModelVariables>
+    <ScalarVariable name="D1" displayName="参数1" dataType="double" valueReference="4" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="D2" displayName="参数2" dataType="double" valueReference="10.00" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="sum" displayName="和" dataType="double" valueReference="4.0" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+  </ModelVariables>
+</ModelDescription>

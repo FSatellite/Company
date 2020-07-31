@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ModelDescription modelName="ZhuQiVolume" modelIdentifier="ZhuQiVolume" fmiVersion="1.0" guid="8C58FA89-33A7-44AD-BA5E-953A8E76B970" description="" author="muye" generationTool="C++" programType="dll" category="总体专业" categoryCode="Z" principleType="行业规范" principleTypeCode="HYGF" applicationType="数据计算" applicationTypeCode="Caculate" moduleCategory="增压系统计算模块" moduleCategoryCode="SuperChargerSystem" publishTime="2020-03-12 17:13:09 +8" copyright="" remark="" keyword="">
+  <ModelVariables>
+    <ScalarVariable name="k" displayName="余量系数" dataType="double" valueReference="4" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="m" displayName="贮箱外排气体总质量" dataType="double" valueReference="0" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Densityq" displayName="贮气密度" dataType="double" valueReference="33.367" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="M" displayName="增压气体介质分子量" dataType="double" valueReference="4" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Pj" displayName="贮气装置余压" dataType="double" valueReference="5000000" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Pt" displayName="贮箱最高气枕压力" dataType="double" valueReference="400000" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="R" displayName="气体常数" dataType="double" valueReference="8314" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Tj" displayName="贮气装置温度" dataType="double" valueReference="300" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Tt" displayName="贮箱气枕平均温度" dataType="double" valueReference="120" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Vt" displayName="推进剂加注量" dataType="double" valueReference="3.8" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Vq" displayName="贮气装置容积" dataType="double" valueReference="0.29" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+  </ModelVariables>
+</ModelDescription>

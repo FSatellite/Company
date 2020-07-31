@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ModelDescription modelName="Testhua" modelIdentifier="Testhua" fmiVersion="1.0" guid="40280FB6-8D9D-4B1A-A61F-3395B8B718DB" description="" author="muye" generationTool="C++" programType="dll" category="总体专业" categoryCode="Z" principleType="行业规范" principleTypeCode="HYGF" applicationType="数据计算" applicationTypeCode="Caculate" moduleCategory="增压系统计算模块" moduleCategoryCode="SuperChargerSystem" publishTime="2020-03-13 08:53:34 +8" copyright="" remark="" keyword="">
+  <ModelVariables>
+    <ScalarVariable name="Test" displayName="测试参数" dataType="double" valueReference="0" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="Test2" displayName="测试参数" dataType="double" valueReference="0" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+  </ModelVariables>
+</ModelDescription>
