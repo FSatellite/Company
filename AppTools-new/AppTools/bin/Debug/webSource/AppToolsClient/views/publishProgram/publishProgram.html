@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="style/publishProgram.css">
+<div compName="publishProgramComponent"
+     style="width: 100%;height: 100%;border:0;background-color: #fbfcfd;">
+    <div style="height:100%;padding: 15px 2px;">
+        <div style="width: 100%;text-align: right">
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'kno_icon_develop'"
+               style="padding:0 5px;height: 24px;">
+                <span style="font-size: 12px;" onclick="publishProgramComponent.programDevelop()">程序开发</span>
+            </a>
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'kno_icon_publish'"
+               style="padding:0 5px;height: 24px;" onclick="publishProgramComponent.publishProgram()">
+                <span style="font-size: 12px;">发布程序</span>
+            </a>
+            <i class="icon20 common_icon_refresh" style="vertical-align: middle;cursor: pointer;"
+               onclick="publishProgramComponent.refreshLocalPro();"></i>
+        </div>
+        <div style="padding: 5px 0;overflow: hidden">
+            <div style="width: 100%;height: 90%;overflow: hidden">
+                <ul class="program_type_ul" style="height: 10%">
+                    <li knocomp="local" style="border-bottom: solid #44A4D7 2px;color:#333"
+                        onclick="publishProgramComponent.changeProgramType(this)">本地
+                    </li>
+                    <li knocomp="remote" onclick="publishProgramComponent.changeProgramType(this)">远程</li>
+                </ul>
+                <div knocomp="ownLocalPublishProgram" style="height: 90%;">
+                    <input class="easyui-searchbox" id="localSearchInput"
+                           data-options="prompt:'搜索',searcher:publishProgramComponent.doLocalSearch"
+                           style="width:100%;height: 26px;-webkit-app-region:no-drag;">
+                    <div style="margin: 10px 0;text-align: right;">
+                        <a href="javascript:publishProgramComponent.shareToRemote()" id="showPublish" class="easyui-linkbutton"
+                           data-options="iconCls:'program_icon_ifshare'"
+                           style="padding:0 5px;height: 24px;-webkit-app-region:no-drag;">
+                            <span style="font-size: 12px;" onclick="publishProgramComponent.shareToRemote()">共享到服务器</span></a>
+                    </div>
+                    <h6 class="pub_pro_title" style="width:100%;">已发布的程序</h6>
+                    <div knocomp="ownLocalCon" style="height:100%;width:100%;overflow:auto;">
+                    </div>
+                </div>
+
+                <div knocomp="ownRemotePublishProgram" style="height: 90%;">
+                    <div knocomp="placeLoginCon"><a onclick="publishProgramComponent.goToLogin()">请先登录！</a></div>
+                    <div knocomp="loginLastCon">
+                        <input class="easyui-searchbox" id="remoteSearchInput"
+                               data-options="prompt:'搜索',searcher:publishProgramComponent.doRemoteSearch"
+                               style="width:100%;height: 26px;-webkit-app-region:no-drag;">
+                        <h6 class="pub_pro_title" style="width:100%;margin-top: 10px">已共享的程序</h6>
+                        <div knocomp="ownRemoteCon" style="height:530px;width:100%;overflow:auto;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var publishProgramComponent = CFactory.createComponent({
+        compName: "publishProgramComponent",
+        init: function () {
+            if (!x_auth_token) {
+                $("#showPublish").attr("disabled",true);
+                $("#showPublish").css("pointer-events","none");
+            }
+        },
+        //登录
+        goToLogin: function () {
+            $(smallProIndexComponent.navPage).panel({
+                href: 'views/user/user.html',
+                onLoad: function () {
+                    userLoginComponent.user();
+                }
+            });
+            smallProIndexComponent.styleChange($(this.user));
+        },
+        //获取已发布的本地程序
+        getPublishLoalProgram: function (modelName) {
+            $(this.ownLocalCon).html("");
+            $(this.ownLocalPublishProgram).css({"display": "block"});
+            $(this.ownRemotePublishProgram).css({"display": "none"});
+            var localResultData = JSON.parse(Kworld.AppInfo.selectNativeApp(pageNum, pageSize, modelName));
+            var list = localResultData.list;
+            if (list.length > 0) {
+                for (var i = 0; i < list.length; i++) {
+                    var IfShareIcon = "";
+                    var publishFlag = false;
+                    if (list[i].IfShare == 1) {
+                        IfShareIcon = "program_icon_ifshare";
+                        publishFlag = true;
+                    }
+                    var node = CFactory.createNode({
+                        type: "div",
+                        attr: {
+                            class: "pub_pro_con",
+                            knocomp: list[i].id,
+                            style: "margin-top:0px;"
+                        },
+                        child: [{
+                            type: 'div',
+                            attr: {
+                                style: "position:relative;width:20px;height20px;border:1px solid #cccccc;margin-top:-15px;margin-left:-10px;display:" + (publishFlag ? "none" : "block")
+                            },
+                            child: [{
+                                type: 'input',
+                                attr: {
+                                    type: 'checkbox',
+                                    value: list[i].guid,
+                                    style: "margin-top:2px;margin-left:2px;width:16px;height:16px;"
+                                }
+                            }]
+
+                        }, {
+                            type: "img",
+                            attr: {
+                                src: "imgs/common/defaultProgram.png",
+                                width: "32px",
+                                height: "32px",
+                                style: "float: left;margin-top: -5px;"
+                            }
+                        }, {
+                            type: "div",
+                            attr: {
+                                style: "margin-left: 32px;position: relative;margin-top:-5px;"
+                            },
+                            child: [{
+                                type: "ul",
+                                child: [{
+                                    type: "li",
+                                    attr: {
+                                        class: "pub_pro_con_title",
+                                        style: "margin-top:-4px;"
+                                    },
+                                    child: [{
+                                        type: "span",
+                                        attr: {
+                                            style: "margin-left:10px",
+                                            title:list[i].modelName
+                                        },
+                                        text: (list[i].modelName.length <= 13 ? list[i].modelName : (list[i].modelName.slice(0, 12) + "..."))
+                                    },
+                                        {
+                                            type: "span",
+                                            attr: {
+                                                class: "icon20 " + IfShareIcon,
+                                                style: "margin-left:8px;vertical-align: bottom;"
+                                            }
+                                        }]
+                                },
+                                    {
+                                        type: "li",
+                                        attr: {
+                                            class: "pub_pro_line20"
+                                        },
+                                        child: [{
+                                            type: "span",
+                                            attr: {
+//                                                class: "program_tip mr8"
+                                                style: "color: #7789A8;margin-left:10px"
+                                            },
+                                            child: [{
+                                                type: 'sub',
+                                                text: list[i].principleType
+                                            }]
+
+                                        },
+                                            {
+                                                type: "span",
+                                                attr: {
+//                                                    class: "program_tip mr8"
+                                                    style: "margin-left:10px;color: #7789A8"
+                                                },
+                                                child: [{
+                                                    type: 'sub',
+                                                    text: list[i].category
+                                                }]
+
+                                            }]
+                                    }, {
+                                        type: "li",
+                                        attr: {
+                                            class: "pub_pro_line28"
+                                        },
+                                        child: [{
+                                            type: "span",
+                                            attr: {
+                                                class: "pub_pro_con_des_title",
+                                                style: "margin-left:10px"
+                                            },
+                                            text: "版本"
+                                        },
+                                            {
+                                                type: "span",
+                                                attr: {
+                                                    class: ""
+                                                },
+                                                text: list[i].fmiVersion
+                                            },
+                                            {
+                                                type: "span",
+                                                attr: {
+                                                    class: "pub_pro_con_des_title",
+                                                    style: "margin-left: 20px;"
+                                                },
+                                                text: "发布时间"
+                                            },
+                                            {
+                                                type: "span",
+                                                attr: {},
+                                                text: list[i].publishTime.slice(0, 10)
+                                            }]
+                                    }]
+                            },
+                                {
+                                    type: "ul",
+                                    attr: {
+                                        class: "pub_pro_con_icon"
+                                    },
+                                    child: [
+                                        !publishFlag ? {
+                                            type: "li",
+                                            attr: {
+                                                title: "编辑",
+                                                guid:list[i].guid,
+                                            },
+                                            child: [{
+                                                type: "i",
+                                                attr: {
+                                                    class: "icon20 common_icon_edit"
+                                                }
+                                            }],
+                                            events: {
+                                                onclick: function () {
+                                                    Kworld.AppWork.editApp(this.getAttribute("guid"));
+                                                    //alert("编辑功能正在开发中");
+                                                }
+                                            }
+                                        } : {},
+                                        {
+                                            type: "li",
+                                            attr: {
+                                                title: "删除",
+                                                signId: list[i].id,
+                                            },
+                                            child: [{
+                                                type: "i",
+                                                attr: {
+                                                    class: "icon20 common_icon_del"
+                                                }
+                                            }],
+                                            events: {
+                                                onclick: function () {
+                                                    var id = $(this).attr("signId");
+                                                    var result = Kworld.AppInfo.delete(id,id);
+                                                    if (result) {
+                                                        $('[knocomp=' + id + ']').remove();
+                                                        alert("删除成功！")
+                                                    } else {
+                                                        alert("删除失败！")
+                                                    }
+                                                }
+                                            }
+                                        }]
+
+                                }]
+                        }]
+                    });
+                    $(this.ownLocalCon).append(node);
+                }
+            } else {
+                var node = CFactory.createNode({
+                    type: "div",
+                    attr: {
+                        class: "pub_pro_con"
+                    },
+                    text: "暂无数据！"
+                });
+                $(this.ownLocalCon).append(node);
+            }
+        },
+        //获取已共享的本地程序
+        getShareLocalProgram: function (modelName) {
+            $(this.ownRemotePublishProgram).css({"display": "block"});
+            $(this.ownLocalPublishProgram).css({"display": "none"});
+            if (loginUser && JSON.stringify(loginUser) != '{}') {
+                $(this.placeLoginCon).css({"display": "none"});
+                $(this.loginLastCon).css({"display": "block"});
+                $(this.ownRemoteCon).html("");
+                /*var remoteResultData = JSON.parse(Kworld.AppInfo.selectNativeApp(pageNum, pageSize, modelName));
+                 var list1 = remoteResultData.list;
+                 console.log(list1);*/
+                 var remoteModel = $(this.ownRemoteCon);
+                services.get(config.KnowledgeApp_Addr + "/model/getByAuthor/" + loginUser.id + "?x-auth-token=" + x_auth_token+"&modelName="+modelName, null, function (result) {
+                    console.log(result);
+                    if (result.code == "success") {
+                        var list = result.data;
+                        if (list.length > 0) {
+                            for (var i = 0; i < list.length; i++) {
+                                var node = CFactory.createNode({
+                                    type: "div",
+                                    attr: {
+                                        class: "pub_pro_con",
+                                        knocomp: list[i].id,
+                                        style: "margin-top:0px;"
+                                    },
+                                    child: [{
+                                        type: "img",
+                                        attr: {
+                                            src: "imgs/common/defaultProgram.png",
+                                            width: "32px",
+                                            height: "32px",
+                                            style: "float: left;margin-top: -5px;"
+                                        }
+                                    }, {
+                                        type: "div",
+                                        attr: {
+                                            style: "margin-left: 32px;position: relative;margin-top:-5px;"
+                                        },
+                                        child: [{
+                                            type: "ul",
+                                            child: [{
+                                                type: "li",
+                                                attr: {
+                                                    class: "pub_pro_con_title",
+                                                    style: "margin-top:-4px;"
+                                                },
+                                                child: [{
+                                                    type: "span",
+                                                    attr: {
+                                                        style: "margin-left:10px",
+                                                        title:list[i].modelname
+                                                    },
+                                                    text: (list[i].modelname.length <= 13 ? list[i].modelname : (list[i].modelname.slice(0, 12) + "..."))
+                                                }]
+                                            },
+                                                {
+                                                    type: "li",
+                                                    attr: {
+                                                        class: "pub_pro_line20"
+                                                    },
+                                                    child: [{
+                                                        type: "span",
+                                                        attr: {
+                                                            //                                                class: "program_tip mr8"
+                                                            style: "color: #7789A8;margin-left:10px"
+                                                        },
+                                                        child: [{
+                                                            type: 'sub',
+                                                            text: list[i].principleType
+                                                        }]
+
+                                                    },
+                                                        {
+                                                            type: "span",
+                                                            attr: {
+                                                                //                                                    class: "program_tip mr8"
+                                                                style: "margin-left:10px;color: #7789A8"
+                                                            },
+                                                            child: [{
+                                                                type: 'sub',
+                                                                text: list[i].category
+                                                            }]
+
+                                                        }]
+                                                }, {
+                                                    type: "li",
+                                                    attr: {
+                                                        class: "pub_pro_line28"
+                                                    },
+                                                    child: [{
+                                                        type: "span",
+                                                        attr: {
+                                                            class: "pub_pro_con_des_title",
+                                                            style: "margin-left:10px"
+                                                        },
+                                                        text: "版本"
+                                                    },
+                                                        {
+                                                            type: "span",
+                                                            attr: {
+                                                                class: ""
+                                                            },
+                                                            text: list[i].fmiVersion
+                                                        },
+                                                        {
+                                                            type: "span",
+                                                            attr: {
+                                                                class: "pub_pro_con_des_title",
+                                                                style: "margin-left: 20px;"
+                                                            },
+                                                            text: "发布时间"
+                                                        },
+                                                        {
+                                                            type: "span",
+                                                            attr: {},
+                                                            text: list[i].publishTime.slice(0, 10)
+                                                        }]
+                                                }]
+                                        },
+                                            {
+                                                type: "ul",
+                                                attr: {
+                                                    class: "pub_pro_con_icon"
+                                                },
+                                                child: [{
+                                                        type: "li",
+                                                        attr: {
+                                                            title: "共享范围编辑",
+                                                            signId: list[i].id,
+                                                            guid:list[i].guid
+                                                        },
+                                                        child: [{
+                                                            type: "i",
+                                                            attr: {
+                                                                class: "icon20 common_icon_lock"
+                                                            }
+                                                        }],
+                                                        events: {
+                                                            onclick: function () {
+                                                                var guid = $(this).attr("guid");
+                                                                console.log("共享范围遍及:" + guid);
+                                                                var url = config.AppToolsClient_Addr+"/views/publishProgram/dialog/editAuthority.html?x-auth-token="+x_auth_token+"&guid="+guid;
+                                                                Kworld.Window.Open(url,'true','400','350');
+                                                            }
+                                                        }
+                                                    },
+                                                    {
+                                                        type: "li",
+                                                        attr: {
+                                                            title: "删除",
+                                                            signId: list[i].id,
+                                                            guid: list[i].guid
+                                                        },
+                                                        child: [{
+                                                            type: "i",
+                                                            attr: {
+                                                                class: "icon20 common_icon_del"
+                                                            }
+                                                        }],
+                                                        events: {
+                                                            onclick: function () {
+                                                                var id = $(this).attr("signId");
+                                                                var guid = $(this).attr("guid");
+                                                                console.log(guid);
+//                                                                var result = Kworld.AppInfo.delete(id);
+                                                                services.get(config.KnowledgeApp_Addr+"/model/deleteById/"+id+"?x-auth-token="+x_auth_token,null,function (delSucc) {
+                                                                    console.log(delSucc);
+                                                                    $('[knocomp=' + id + ']').remove();
+                                                                    Kworld.AppInfo.updateIfShare(guid,0);
+                                                                    alert("删除成功！")
+                                                                },function (delErr) {
+                                                                    console.log(delErr);
+                                                                    alert("删除失败！")
+                                                                })
+                                                                /*if (result) {
+                                                                    $('[knocomp=' + id + ']').remove();
+                                                                    alert("删除成功！")
+                                                                } else {
+                                                                    alert("删除失败！")
+                                                                }*/
+                                                            }
+                                                        }
+                                                    }]
+
+                                            }]
+                                    }]
+                                });
+                                remoteModel.append(node);
+                            }
+                        } else {
+                            var node = CFactory.createNode({
+                                type: "div",
+                                attr: {
+                                    class: "pub_pro_con"
+                                },
+                                text: "暂无数据！"
+                            });
+                            remoteModel.append(node);
+                        }
+                    }
+                }, function (error) {
+                    console.log(error);
+                })
+
+            } else {
+                $(this.loginLastCon).css({"display": "none"});
+                $(this.placeLoginCon).css({"display": "block"});
+            }
+
+        },
+        //打开发布程序页面
+        publishProgram: function () {
+            try {
+                Kworld.Window.Open(config.AppToolsClient_Addr + "/views/publishProgram/dialog/packBagePro.html", "true", "800", "500");
+            } catch (ex) {
+                window.open("views/publishProgram/dialog/packBagePro.html");
+            }
+        },
+        //切换程序类型
+        changeProgramType: function (ele) {
+            $(ele).siblings().css({"border-bottom": "solid #44A4D7 0", "color": "#333"});
+            $(ele).css({"border-bottom": "solid #44A4D7 2px", "color": "#666"});
+            $("#localSearchInput").searchbox('setValue', '');
+            $("#remoteSearchInput").searchbox('setValue', '');
+
+            if ("local" == $(ele).attr("knocomp")) {
+                this.getPublishLoalProgram("");
+            } else {
+                this.getShareLocalProgram("");
+            }
+        },
+        //程序开发
+        programDevelop: function () {
+            try {
+                var appInfoStr = Kworld.AppWork.newApp(this.id);
+                Kworld.IoOption.saveXMLAndPublish("", appInfoStr)
+            } catch (ex) {
+                
+            }
+            //alert("此功能还未开通！")
+        },
+        //共享到服务器
+        shareToRemote: function () {
+            var inputs = $("input:checkbox:checked");
+            if (inputs.length == 0) {
+                alert("请选择您要共享的程序");
+                return;
+            }
+            var value = "";
+            for(var i=0;i<inputs.length;i++){
+                value += inputs[i].value+",";
+            }
+            value = value.slice(0,value.length-1);
+            console.log(value);
+            var url = config.AppToolsClient_Addr+"/views/publishProgram/dialog/modelAuthority.html?x-auth-token="+x_auth_token+"&value="+value;
+            Kworld.Window.Open(url,'true','400','350');
+            /*for (var i = 0; i < inputs.length; i++) {
+                var result = Kworld.IoOption.uploadModel(inputs[i].value, x_auth_token);
+                console.log(result);
+                //修改本地程序的是否共享字段
+                if (result.indexOf("success") > 0) {
+                    Kworld.AppInfo.updateIfShare(inputs[i].value, "1");
+                    alert("共享成功");
+                }
+            }*/
+        },
+        //刷新本地程序
+        refreshLocalPro: function () {
+            this.getPublishLoalProgram("");
+            $("#localSearchInput").searchbox('setValue', '');
+            $("li[knocomp='local']").css({
+                "border-bottom": "2px solid rgb(68, 164, 215)",
+                "color": "rgb(102, 102, 102)"
+            });
+            $("li[knocomp='remote']").css({"border-bottom": "0px solid rgb(68, 164, 215)", "color": "rgb(51, 51, 51)"});
+        },
+        doLocalSearch: function (value, name) {
+            $("div[knocomp='ownLocalCon']").html("");
+            publishProgramComponent.getPublishLoalProgram(value);
+        },
+        doRemoteSearch: function (value, name) {
+            $("div[knocomp='ownLocalCon']").html("");
+            publishProgramComponent.getShareLocalProgram(value);
+        }
+    })
+</script>
+</body>
+</html>

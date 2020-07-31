@@ -1,0 +1,7 @@
+
+组件在平台中的工作表ID:03BDFAEF-6853-4F0E-98D8-F4D914E0E034
+文件名:V-H.exe
+工作包相对路径:\
+文件所在路径:D:\项目工作\2018年度\集成优化\OptXpert\OptXpert\bin\DMLib\a6fd5931-0449-42f3-ac97-dcea7ee18b0a
+接口调用URL:http://192.168.0.119:8005/dmExcute/GetFile?workid=03BDFAEF-6853-4F0E-98D8-F4D914E0E034&filename=V-H.exe&path=\
+接口调用返回信息:异常：无法连接到远程服务器

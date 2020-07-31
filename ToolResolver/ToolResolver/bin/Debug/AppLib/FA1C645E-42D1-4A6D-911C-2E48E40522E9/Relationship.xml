@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Relationships>
+  <Param TaskParam="k" ToolParam="工具参数.k" />
+  <Param TaskParam="m" ToolParam="工具参数.m" />
+  <Param TaskParam="Densityq" ToolParam="工具参数.Densityq" />
+  <Param TaskParam="M" ToolParam="工具参数.M" />
+  <Param TaskParam="Pj" ToolParam="工具参数.Pj" />
+  <Param TaskParam="Pt" ToolParam="工具参数.Pt" />
+  <Param TaskParam="R" ToolParam="工具参数.R" />
+  <Param TaskParam="Tj" ToolParam="工具参数.Tj" />
+  <Param TaskParam="Tt" ToolParam="工具参数.Tt" />
+  <Param TaskParam="Vt" ToolParam="工具参数.Vt" />
+  <Param TaskParam="Vq" ToolParam="工具参数.Vq" />
+</Relationships>

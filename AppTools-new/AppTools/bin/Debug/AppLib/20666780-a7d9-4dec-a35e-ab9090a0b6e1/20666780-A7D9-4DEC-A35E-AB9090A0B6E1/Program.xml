@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ModelDescription modelName="标准模型" modelIdentifier="StandardModel" fmiVersion="1.0" guid="20666780-A7D9-4DEC-A35E-AB9090A0B6E1" description="" author="knowind" generationTool="C#" programType="" category="总体专业" categoryCode="Z" principleType="行业规范" principleTypeCode="HYGF" applicationType="Proe模型" applicationTypeCode="StandardModel" moduleCategory="自研程序模块" moduleCategoryCode="SelfDevelopedProcedure" publishTime="2020-07-07 15:20:47 +8" copyright="" remark="" keyword="">
+  <ModelVariables />
+</ModelDescription>

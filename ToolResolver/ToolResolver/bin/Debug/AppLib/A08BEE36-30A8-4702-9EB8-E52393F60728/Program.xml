@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ModelDescription modelName="增压系统计算模块" modelIdentifier="ZhuQiVolume" fmiVersion="1.0" guid="A08BEE36-30A8-4702-9EB8-E52393F60728" description="" author="muye" generationTool="C++" programType="dll" category="总体专业" categoryCode="Z" principleType="行业规范" principleTypeCode="HYGF" applicationType="数据计算" applicationTypeCode="Caculate" moduleCategory="增压系统计算模块" moduleCategoryCode="SuperChargerSystem" publishTime="2020-03-13 09:48:46 +8" copyright="" remark="" keyword="">
+  <ModelVariables>
+    <ScalarVariable name="k" displayName="余量系数" dataType="double" valueReference="4" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="c" displayName="输出" dataType="double" valueReference="0" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+  </ModelVariables>
+</ModelDescription>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div compName="remoteProgramComponent" style="height: 100%;">
+    <div knocomp="placeLoginCon"><a onclick="remoteProgramComponent.goToLogin()">请先登录！</a></div>
+    <div knocomp="loginLastCon">
+        <ul class="program_type_ul" id="remote_program_type_ul" style="display:block">
+            <li style="border-bottom: solid #44A4D7 2px;color:#333"
+                onclick="remoteProgramComponent.changeProgramApplicationType(this)" knocomp="all">全部
+            </li>
+            <li knocomp="Caculate" onclick="remoteProgramComponent.changeProgramApplicationType(this)">公式计算</li>
+            <li knocomp="Search" onclick="remoteProgramComponent.changeProgramApplicationType(this)">数据查询</li>
+            <li knocomp="Report" onclick="remoteProgramComponent.changeProgramApplicationType(this)">报表</li>
+        </ul>
+        <!--<input class="easyui-searchbox" id="remote_search"
+               data-options="prompt:'搜索',searcher:remoteProgramComponent.doSearch"
+               style="width:330px;height: 26px;-webkit-app-region:no-drag;">-->
+        <input class="easyui-searchbox" data-options="prompt:'搜索',searcher:remoteProgramComponent.doSearch"
+               knocomp="remoteProgramSearch"
+               style="width:100%;height: 26px;-webkit-app-region:no-drag;">
+        <div style="width:100%;margin-top:2px;text-align: right;">
+            <!--<div id="showFlagRemoteButton"
+                 style="width: 83px;height: 18px;margin-bottom:5px;float:right;text-align: center;-webkit-app-region:no-drag;color:#005F92;"
+                 onclick="remoteProgramComponent.showAppType()">显示分类信息
+            </div>-->
+            <select panelHeight="auto" id="selectBox" onchange="remoteProgramComponent.change(this.value)"
+                    style="width:80px;height: 20px;float:right;-webkit-app-region:no-drag;
+        margin: 0;
+        padding: 0 4px;
+        white-space: normal;
+        vertical-align: top;
+        outline-style: none;
+        resize: none;
+        -moz-border-radius: 5px 5px 5px 5px;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;">
+                <option value="bigImg">大图标</option>
+                <option value="list">列表</option>
+            </select>
+        </div>
+        <div style="margin-top:10px;height: 100%;width:100%;overflow: auto">
+            <div class="easyui-accordion" data-options="multiple:true" id="remoteProgramTree" style="width:95%;border: none">
+            </div>
+        </div>
+        <!--<ul id="remoteProgramTree" style="margin-top:10px;height:530px;width:350px;overflow:auto;"></ul>-->
+        <ul id="searchRemoteProgramTree"
+            style="margin-top:10px;height:100%;width:100%;overflow:auto;display: none"></ul>
+        <div id="remoteProgramTreeContextMenu" class="easyui-menu" style="width:120px;">
+            <!--<div onclick="removeit()" data-options="iconCls:'icon-remove'">更新</div>-->
+            <div onclick="remoteProgramComponent.downloadModel()" data-options="iconCls:'kno_icon_down'">下载</div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var remoteProgramComponent = CFactory.createComponent({
+        compName: "remoteProgramComponent",
+        //功能分类code
+        applicationTypeCode: "all",
+        //默认选中第一个模块分类
+        checkModuleCategoryOne: "",
+        //选中树节点的id
+        checkedTreeNodeId: "",
+        moduleCategory: [],
+        allCount: 0,
+        caculateCount: 0,
+        searchCount: 0,
+        reportCount: 0,
+        showFlag: false,
+        selectValue:"bigImg",
+        currentModelId:"",
+        currentGuid:"",
+        downCount:0,
+        init: function () {
+//            this.getRemoteData("all");
+        },
+        //登录
+        goToLogin: function () {
+            $(smallProIndexComponent.navPage).panel({
+                href: 'views/user/user.html',
+                onLoad: function () {
+                    userLoginComponent.user();
+                }
+            });
+            smallProIndexComponent.styleChange($(this.user));
+        },
+        //获取远程程序数据
+        getRemoteData: function (applicationTypeCode) {
+            $("#remote_search").textbox('setValue', '');
+            if (loginUser && JSON.stringify(loginUser) != '{}') {
+                $(this.placeLoginCon).css({"display": "none"});
+                $(this.loginLastCon).css({"display": "block"});
+                //获取远程程序分类
+                var this_ = this;
+                var url = config.KnowledgeApp_Addr + "/model/getByApplicationType?x-auth-token="+x_auth_token;
+                if (applicationTypeCode != 'all') {
+                    url += ("&applicationTypeCode=" + applicationTypeCode);
+                }
+                services.get(config.KnowledgeApp_Addr + "/moduleCategory/getAll?x-auth-token="+x_auth_token, null, function (mcs) {
+                        var moduleCategorys = mcs.data;
+                        console.log("moduleCategorys:" + moduleCategorys.length);
+                        services.get(url, {}, function (modelResult) {
+                                //所有的程序
+                                var models = modelResult.data;
+                                console.log(models);
+                                for (var i = 0; i < moduleCategorys.length; i++) {
+                                    console.log("############################");
+                                    moduleCategorys[i].id = moduleCategorys[i].moduleCategoryCode;
+                                    moduleCategorys[i].type = "moduleCategory";
+                                    moduleCategorys[i].children = [];
+                                    if (i != 0) {
+                                        moduleCategorys[i].state = "closed";
+                                    }
+                                    if (i == 0 && applicationTypeCode == 'all') {
+                                        remoteProgramComponent.allCount = 0;
+                                        remoteProgramComponent.caculateCount = 0;
+                                        remoteProgramComponent.searchCount = 0;
+                                        remoteProgramComponent.reportCount = 0;
+                                    }
+                                    for (var j = 0; j < models.length; j++) {
+                                        if (i == 0 && applicationTypeCode == 'all') {
+                                            remoteProgramComponent.allCount++;
+                                            if (models[i].applicationTypeCode == 'Caculate') {
+                                                remoteProgramComponent.caculateCount++;
+                                            }
+                                            if (models[i].applicationTypeCode == 'Search') {
+                                                remoteProgramComponent.searchCount++;
+                                            }
+                                            if (models[i].applicationTypeCode == 'Report') {
+                                                remoteProgramComponent.reportCount++;
+                                            }
+                                        }
+                                        if (models[j].moduleCategoryCode == moduleCategorys[i].moduleCategoryCode) {
+                                            models[j].modelName = models[j].modelname;
+                                            moduleCategorys[i].children.push(models[j]);
+                                        }
+                                    }
+                                    var child = [];
+                                    var length = moduleCategorys[i].children.length;
+                                    if (length == 0) {
+                                        var node = CFactory.createNode({
+                                            type: "div",
+                                            text: "暂无数据"
+                                        })
+                                        child.push(node);
+                                    } else {
+                                        for (var j = 0; j < moduleCategorys[i].children.length; j++) {
+
+                                            var programClass = "";
+                                            if ( moduleCategorys[i].children[j].applicationTypeCode == "Caculate") {
+                                                programClass = "program_icon_caculate";
+                                            } else if (moduleCategorys[i].children[j].applicationTypeCode == "Search") {
+                                                programClass = "program_icon_search";
+                                            } else if (moduleCategorys[i].children[j].applicationTypeCode == "Report") {
+                                                programClass = "program_icon_report";
+                                            } else {
+                                                programClass = "";
+                                            }
+                                            var node = {};
+                                            if(remoteProgramComponent.selectValue == 'bigImg'){
+                                                node = {
+                                                    type: "div",
+                                                    attr: {
+                                                        style: "width:90px;height:70px;margin:10px 5px 10px 0;float:left;border:1px solid #cccccc,text-align:center",
+                                                        modelId:moduleCategorys[i].children[j].id,
+                                                        guid:moduleCategorys[i].children[j].guid
+                                                    },
+                                                    child: [{
+                                                        type: "div",
+                                                        attr: {
+                                                            style: "display:none",
+                                                            modelName:moduleCategorys[i].children[j].modelName,
+                                                            id: "remote_imgDesc_" + moduleCategorys[i].children[j].id
+                                                        },
+                                                        text: moduleCategorys[i].children[j].description
+                                                    }, {
+                                                        type: "img",
+                                                        attr: {
+                                                            src: "imgs/common/defaultProgram.png",
+                                                            width: "48px",
+                                                            height: "48px",
+                                                            style: "margin-left:15px;",
+                                                            modelId: moduleCategorys[i].children[j].id
+                                                        },
+                                                        events:{
+                                                            //鼠标悬浮事件
+                                                            onmouseover: function (event) {
+                                                                //获取鼠标点击的xy坐标
+                                                                // console.log($(this).offset().top);
+                                                                var x = $(this).offset().left;
+                                                                var y = $(this).offset().top + 50;
+                                                                var id = $(this).attr("modelId");
+                                                                var modelName = $("#remote_imgDesc_"+id).attr("modelName");
+                                                                var desc = $("#remote_imgDesc_"+id).html();
+                                                                $("#modelDesc").html("<h4 style='margin-bottom: 10px'>"+modelName+"</h4><p style='text-indent:2em;'>"+desc+"</p>")
+                                                                $("#modelDesc").menu('show', {
+                                                                    left: x,
+                                                                    top: y
+                                                                });
+                                                            },
+                                                            onmouseout:function () {
+                                                                $("#modelDesc").menu('hide');
+                                                            }
+                                                        }
+                                                    }, {
+                                                        type: "br"
+                                                    },{
+                                                        type:"div",
+                                                        attr:{"style":"text-align:center;"},
+                                                        child:[ {
+                                                            type: "sub",
+                                                            attr: {
+                                                                style: "color: #7789A8"
+                                                            },
+                                                            text: moduleCategorys[i].children[j].modelName.length > 6 ? moduleCategorys[i].children[j].modelName.slice(0, 6) + "..." : moduleCategorys[i].children[j].modelName
+                                                        }]
+                                                    }],
+                                                    events: {
+                                                        //鼠标悬浮事件
+                                                        /*onmouseover:function () {
+
+                                                         }*/
+                                                        oncontextmenu: function (event) {
+                                                            //获取鼠标点击的xy坐标
+                                                            var x = event.clientX;
+                                                            var y = event.clientY;
+                                                            remoteProgramComponent.currentModelId = $(this).attr("modelId");
+                                                            remoteProgramComponent.currentGuid = $(this).attr("guid");
+                                                            $("#remoteProgramTreeContextMenu").menu('show', {
+                                                                left: x,
+                                                                top: y
+                                                            })
+                                                        }
+                                                    }
+                                                }
+                                            }else{
+                                                node = {
+                                                    type: "div",
+                                                    attr: {
+                                                        style: "overflow: hidden;width: 300px;",
+                                                        modelId:moduleCategorys[i].children[j].id,
+                                                        guid:moduleCategorys[i].children[j].guid
+                                                    },
+                                                    child: [{
+                                                        type: "div",
+                                                        attr: {
+                                                            style: "float: left;display: inline-block;margin-top: 5px;"
+                                                        },
+                                                        child: [{
+                                                            type: "div",
+                                                            attr: {
+                                                                style: "display:none",
+                                                                modelName:moduleCategorys[i].children[j].modelName,
+                                                                id: "remote_listDesc_" + moduleCategorys[i].children[j].id
+                                                            },
+                                                            text: moduleCategorys[i].children[j].description
+                                                        },{
+                                                            type: "img",
+                                                            attr: {
+                                                                src: "imgs/common/defaultProgram.png",
+                                                                width: "48px",
+                                                                height: "48px",
+                                                                modelId: moduleCategorys[i].children[j].id
+                                                            },
+                                                            events:{
+                                                                //鼠标悬浮事件
+                                                                onmouseover: function (event) {
+                                                                    //获取鼠标点击的xy坐标
+                                                                    // console.log($(this).offset().top);
+                                                                    var x = $(this).offset().left;
+                                                                    var y = $(this).offset().top;
+                                                                    var id = $(this).attr("modelId");
+                                                                    var modelName = $("#remote_listDesc_"+id).attr("modelName");
+                                                                    var desc = $("#remote_listDesc_"+id).html();
+                                                                    $("#modelDesc").html("<h4 style='margin-bottom: 10px'>"+modelName+"</h4><p style='text-indent:2em;'>"+desc+"</p>")
+                                                                    $("#modelDesc").menu('show', {
+                                                                        left: x+50,
+                                                                        top: y
+                                                                    });
+                                                                },
+                                                                onmouseout:function () {
+                                                                    $("#modelDesc").menu('hide');
+                                                                }
+                                                            }
+                                                        }]
+                                                    }, {
+                                                        type: "div",
+                                                        attr: {
+                                                            class: "color2 font12",
+                                                            style: "margin-left: 32px;margin-top:10px;position: relative"
+                                                        },
+                                                        child: [{
+                                                            type: "span",
+                                                            attr: {
+                                                                style: "margin-left: 10px;font-size:14px;font-weight:bold "
+                                                            },
+                                                            text: (moduleCategorys[i].children[j].modelName.length <= 13 ? moduleCategorys[i].children[j].modelName : (moduleCategorys[i].children[j].modelName.slice(0, 12) + "..."))
+                                                        }, {
+                                                            type: "span",
+                                                            attr: {
+                                                                class: "icon20 " + programClass,
+                                                                style: "vertical-align: bottom;position: absolute;right: 0px;top:5px;",
+                                                                title: moduleCategorys[i].children[j].applicationType
+                                                            }
+                                                        }]
+                                                    }, {
+                                                        type: "div",
+                                                        attr: {
+                                                            class: "color2 font12",
+                                                            style: "margin-left: 32px;"
+                                                        },
+                                                        child: [{
+                                                            type: "span",
+                                                            attr: {
+                                                                style: "margin-left:10px;color: #7789A8"
+                                                            },
+                                                            child: [{
+                                                                type: "sub",
+                                                                text: moduleCategorys[i].children[j].principleType
+                                                            }]
+                                                        }, {
+                                                            type: "span",
+                                                            attr: {
+                                                                style: "margin-left:10px;color: #7789A8"
+                                                            },
+                                                            child: [{
+                                                                type: "sub",
+                                                                text: moduleCategorys[i].children[j].category
+                                                            }]
+                                                        }]
+                                                    }],
+                                                    events: {
+                                                        oncontextmenu: function (event) {
+                                                            //获取鼠标点击的xy坐标
+                                                            var x = event.clientX;
+                                                            var y = event.clientY;
+                                                            remoteProgramComponent.currentModelId = $(this).attr("modelId");
+                                                            remoteProgramComponent.currentGuid = $(this).attr("guid");
+                                                            $("#remoteProgramTreeContextMenu").menu('show', {
+                                                                left: x,
+                                                                top: y
+                                                            })
+                                                        }
+                                                    }
+                                                };
+                                            }
+
+
+                                            /*var node = {
+                                             type: "div",
+                                             attr: {
+                                             style: "width:90px;height:70px;margin:10px 5px 10px 0;float:left;border:1px solid #cccccc,text-align:center",
+                                             },
+                                             child: [{
+                                             type: "img",
+                                             attr: {
+                                             src: "imgs/common/defaultProgram.png",
+                                             width: "48px",
+                                             height: "48px",
+                                             style: "margin-left:15px;"
+                                             }
+                                             }, {
+                                             type: "br"
+                                             }, {
+                                             type: "sub",
+                                             attr: {
+                                             style: "color: #7789A8"
+                                             },
+                                             text: appToolsData[i].children[j].modelName.length > 6 ? appToolsData[i].children[j].modelName.slice(0, 6) + "..." : appToolsData[i].children[j].modelName
+                                             }]
+                                             };*/
+                                            child.push(node);
+                                        }
+                                    }
+                                    var content = CFactory.createNode({
+                                        type: "div",
+                                        attr: {
+                                            style: "overflow:auto;padding:10px;"
+                                        },
+                                        child: child
+                                    });
+                                    var selected = false;
+                                    if (i == 0) {
+                                        selected = true;
+                                    }
+                                    var panels = $("#remoteProgramTree").accordion("panels");
+                                    if(i==0){
+                                        var plength=panels.length;
+                                        for(var n=plength;n>0;n--){
+                                            $("#remoteProgramTree").accordion("remove",n-1);
+                                        }
+                                    }
+                                    $("#remoteProgramTree").accordion("add", {
+                                        title: moduleCategorys[i].moduleCategory + " (" + moduleCategorys[i].children.length + ")",
+                                        style: "overflow:auto;padding:10px;margin:10px 0",
+                                        content: content,
+                                        selected: selected
+                                    });
+
+                                    /*if (moduleCategorys[i].children.length == 0) {
+                                        moduleCategorys[i].children.push({
+                                            "modelName": "暂无数据!",
+                                            "type": "noData",
+                                            "iconCls": "kno_icon_empty"
+                                        });
+                                        moduleCategorys[i].modelCount = "&nbsp;(<span>0</span>)";
+                                    } else {
+                                        moduleCategorys[i].modelCount = "&nbsp;(<span>" + moduleCategorys[i].children.length + "</span>)";
+                                    }*/
+                                }
+                                //设置总数
+                                $("li[knocomp = 'all']").html("全部&nbsp;<span style='color:#7789A8'>" + remoteProgramComponent.allCount + "</span>");
+                                $("li[knocomp = 'Caculate']").html("公式计算&nbsp;<span style='color:#7789A8'>" + remoteProgramComponent.caculateCount + "</span>");
+                                $("li[knocomp = 'Search']").html("数据查询&nbsp;<span style='color:#7789A8'>" + remoteProgramComponent.searchCount + "</span>");
+                                $("li[knocomp = 'Report']").html("报表&nbsp;<span style='color:#7789A8'>" + remoteProgramComponent.reportCount + "</span>");
+                                /*$("#remoteProgramTree").tree({
+                                    data: moduleCategorys,
+                                    onBeforeExpand: function (node) {
+                                        $('#remoteProgramTree').tree('select', node.target);
+                                    },
+                                    onBeforeCollapse: function (node) {
+                                        $('#remoteProgramTree').tree('select', node.target);
+                                    },
+                                    formatter: function (node) {
+                                        var programClass = "";
+                                        if (node.applicationTypeCode == "Caculate") {
+                                            programClass = "program_icon_caculate";
+                                        } else if (node.applicationTypeCode == "Search") {
+                                            programClass = "program_icon_search";
+                                        } else if (node.applicationTypeCode == "Report") {
+                                            programClass = "program_icon_report";
+                                        } else {
+                                            programClass = "";
+                                        }
+                                        var IfShareClass = "";
+                                        if (node.IfShare == 0) {
+                                            IfShareClass = "program_icon_publish";
+                                        }
+                                        if ("moduleCategory" == node.type) {
+                                            return "<span class='color1 font14 sign_set_height'>" + node.moduleCategory + node.modelCount + "</span>";
+                                        } else if ("noData" == node.type) {
+                                            return "<span class='color1 font14 sign_set_height'>" + node.modelName + "</span>";
+                                        } else {
+                                            var str = '<div style="overflow: hidden;width: 300px;" >' +
+                                                '<div style="float: left;display: inline-block;margin-top: 5px;" >' +
+                                                '<img src="imgs/common/defaultProgram.png" width="32px" height="32px;" id="' + node.guid + '" onclick="localProgramComponent.showProgramDes(event,this,\'' + node.guid + '\')">' +
+                                                '</div> <div class="color2 font12" style="margin-left: 32px;position: relative">' +
+                                                '<span style="margin-left: 10px;font-size:14px;font-weight:bold ">' + (node.modelName.length <= 13 ? node.modelName : (node.modelName.slice(0, 12) + "...")) + '</span>';
+                                            if (remoteProgramComponent.showFlag) {
+                                                str = str + '<span class="icon20 ' + programClass + '" style="vertical-align: bottom;position: absolute;right: 0px;" title="' + node.applicationType + '"></span>';
+                                            }
+                                            str = str + '</div><div class="color2 font12" style="margin-left: 32px;"><span  style="margin-left:10px;color: #7789A8" ><sub >' + node.principleType + '</sub></span><span style="margin-left:10px;color: #7789A8" ><sub >' + node.category + '</sub></span></div> </div>';
+                                            return str;
+//                                            return '<div style="overflow: hidden;width: 300px;" >' +
+//                                                '<div style="float: left;display: inline-block;margin-top: 5px;" >' +
+//                                                '<img src="imgs/common/defaultProgram.png" width="32px" height="32px;" id="' + node.guid + '" onclick="localProgramComponent.showProgramDes(event,this,\'' + node.guid + '\')">' +
+//                                                '</div> <div class="color2 font12" style="margin-left: 32px;position: relative">' +
+//                                                '<span style="margin-left: 10px;font-size:14px;font-weight:bold ">' + (node.modelName.length<=13?node.modelName:(node.modelName.slice(0,12)+"...")) + '</span>' +
+////                                                '<span class="icon20 ' + programClass + '" style="vertical-align: bottom;position: absolute;right: 0px;" title="' + node.applicationType + '"></span>' +
+////                                                '<span class="icon20 ' + IfShareClass + '" style="vertical-align: bottom;position: absolute;right: 30px;" ></span>' +
+//                                                '</div><div class="color2 font12" style="margin-left: 32px;"><span  style="margin-left:10px;color: #7789A8" ><sub >' + node.principleType + '</sub></span><span style="margin-left:10px;color: #7789A8" ><sub >' + node.category + '</sub></span></div> </div>';
+                                        }
+                                    },
+                                    onContextMenu: function (e, node) {
+                                        e.preventDefault();
+                                        remoteProgramComponent.checkedTreeNodeId = node.id;
+                                        console.log("111")
+                                        if (node.modelName) {
+                                            $(this).tree('select', node.target);
+                                            $('#remoteProgramTreeContextMenu').menu('show', {
+                                                left: e.pageX,
+                                                top: e.pageY
+                                            });
+                                        }
+                                    }
+                                });
+                                $(".sign_set_height").parent().parent().css({"height": "28px"});
+                                var firstNode = $("#remoteProgramTree").tree("find", moduleCategorys[0].id);
+                                $("#remoteProgramTree").tree("select", firstNode.target);*/
+                            },
+                            function (mcError) {
+                                console.log(mcError);
+                            })
+                    }
+                    ,
+                    function (error) {
+                        console.log(error);
+                    }
+                )
+            }
+            else {
+                $(this.loginLastCon).css({"display": "none"});
+                $(this.placeLoginCon).css({"display": "block"});
+            }
+        },
+        //切换小程序功能分类
+        changeProgramApplicationType: function (ele) {
+            this.applicationTypeCode = $(ele).attr("knocomp");
+            $(ele).siblings().css({"border-bottom": "solid #44A4D7 0", "color": "#333"});
+            $(ele).css({"border-bottom": "solid #44A4D7 2px", "color": "#666"});
+            this.getRemoteData(this.applicationTypeCode);
+            $("#remoteProgramTree").css({"display": "block"});
+            $("#searchRemoteProgramTree").css({"display": "none"});
+        },
+        //搜索
+        doSearch: function (value, name) {
+            if (value == "") {
+                $("#remoteProgramTree").css({"display": "block"});
+                $("#remoteProgramTree").parent().css({"display": "block"});
+                $("#searchRemoteProgramTree").css({"display": "none"});
+                return;
+            }
+            $("#remoteProgramTree").parent().css({"display": "none"});
+            $("#remoteProgramTree").css({"display": "none"});
+            $("#searchRemoteProgramTree").css({"display": "block"});
+            services.get(config.KnowledgeApp_Addr + "/model/getAll?name=" + value + "&pageSize=" + pageSize + "&pageNum=" + pageNum+"&x-auth-token="+x_auth_token, {}, function (result) {
+                var searchData = result.data.list;
+                var length = searchData.length;
+                if (length == 0) {
+                    var node = CFactory.createNode({
+                        type: "div",
+                        text: "暂无数据"
+                    })
+                    $("#searchRemoteProgramTree").html("");
+                    $("#searchRemoteProgramTree").append(node);
+                }else{
+                    for (var i = 0; i < length; i++) {
+                        if (i == 0) {
+                            $("#searchRemoteProgramTree").html("");
+                        }
+                        var programClass = "";
+                        if (searchData[i].applicationTypeCode == "Caculate") {
+                            programClass = "program_icon_caculate";
+                        } else if (searchData[i].applicationTypeCode == "Search") {
+                            programClass = "program_icon_search";
+                        } else if (searchData[i].applicationTypeCode == "Report") {
+                            programClass = "program_icon_report";
+                        } else {
+                            programClass = "";
+                        }
+                        var node;
+                        if (remoteProgramComponent.selectValue == 'bigImg') {
+                            node = CFactory.createNode({
+                                type: "div",
+                                attr: {
+                                    style: "width:90px;height:70px;margin:10px 5px 10px 0;float:left;border:1px solid #cccccc,text-align:center",
+                                    modelId:searchData[i].id,
+                                    guid:searchData[i].guid
+                                },
+                                child: [{
+                                    type: "div",
+                                    attr: {
+                                        style: "display:none",
+                                        modelName:searchData[i].modelname,
+                                        id: "search_imgDesc_" + searchData[i].id
+                                    },
+                                    text: searchData[i].description
+                                }, {
+                                    type: "img",
+                                    attr: {
+                                        src: "imgs/common/defaultProgram.png",
+                                        width: "48px",
+                                        height: "48px",
+                                        style: "margin-left:15px;",
+                                        modelId:searchData[i].id
+                                    },
+                                    events:{
+                                        //鼠标悬浮事件
+                                        onmouseover: function (event) {
+                                            //获取鼠标点击的xy坐标
+                                            var x = $(this).offset().left;
+                                            var y = $(this).offset().top + 50;
+                                            var id = $(this).attr("modelId");
+                                            var modelName = $("#search_imgDesc_"+id).attr("modelName");
+                                            var desc = $("#search_imgDesc_"+id).html();
+                                            $("#modelDesc").html("<h4 style='margin-bottom: 10px'>"+modelName+"</h4><p style='text-indent:2em;'>"+desc+"</p>")
+                                            $("#modelDesc").menu('show', {
+                                                left: x,
+                                                top: y
+                                            });
+                                        },
+                                        onmouseout:function () {
+                                            $("#modelDesc").menu('hide');
+                                        }
+                                    }
+                                }, {
+                                    type: "br"
+                                },{
+                                    type:"div",
+                                    attr:{"style":"text-align:center;"},
+                                    child:[ {
+                                        type: "sub",
+                                        attr: {
+                                            style: "color: #7789A8"
+                                        },
+                                        text: searchData[i].modelname.length > 6 ? searchData[i].modelname.slice(0, 6) + "..." : searchData[i].modelname
+                                    }]
+                                }],
+                                events: {
+                                    oncontextmenu: function (event) {
+                                        //获取鼠标点击的xy坐标
+                                        var x = event.clientX;
+                                        var y = event.clientY;
+                                        remoteProgramComponent.currentModelId = $(this).attr("modelId");
+                                        remoteProgramComponent.currentGuid = $(this).attr("guid");
+                                        $("#remoteProgramTreeContextMenu").menu('show', {
+                                            left: x,
+                                            top: y
+                                        })
+                                    }
+                                }
+                            });
+                        } else {
+                            node = CFactory.createNode({
+                                type: "div",
+                                attr: {
+                                    style: "overflow: hidden;width: 300px;",
+                                    modelId:searchData[i].id,
+                                    guid:searchData[i].guid
+                                },
+                                child: [{
+                                    type: "div",
+                                    attr: {
+                                        style: "float: left;display: inline-block;margin-top: 5px;"
+                                    },
+                                    child: [{
+                                        type: "div",
+                                        attr: {
+                                            style: "display:none",
+                                            modelName:searchData[i].modelname,
+                                            id: "search_listDesc_" + searchData[i].id
+                                        },
+                                        text: searchData[i].description
+                                    },{
+                                        type: "img",
+                                        attr: {
+                                            src: "imgs/common/defaultProgram.png",
+                                            width: "48px",
+                                            height: "48px",
+                                            modelId: searchData[i].id
+                                        },
+                                        events:{
+                                            //鼠标悬浮事件
+                                            onmouseover: function () {
+                                                //获取鼠标点击的xy坐标
+                                                // console.log($(this).offset().top);
+                                                var x = $(this).offset().left;
+                                                var y = $(this).offset().top;
+                                                var id = $(this).attr("modelId");
+                                                var modelName = $("#search_listDesc_"+id).attr("modelName");
+                                                var desc = $("#search_listDesc_"+id).html();
+                                                $("#modelDesc").html("<h4 style='margin-bottom: 10px'>"+modelName+"</h4><p style='text-indent:2em;'>"+desc+"</p>")
+                                                $("#modelDesc").menu('show', {
+                                                    left: x+50,
+                                                    top: y
+                                                });
+                                            },
+                                            onmouseout:function () {
+                                                $("#modelDesc").menu('hide');
+                                            }
+                                        }
+                                    }]
+                                }, {
+                                    type: "div",
+                                    attr: {
+                                        class: "color2 font12",
+                                        style: "margin-left: 32px;margin-top:10px;position: relative"
+                                    },
+                                    child: [{
+                                        type: "span",
+                                        attr: {
+                                            style: "margin-left: 10px;font-size:14px;font-weight:bold "
+                                        },
+                                        text: (searchData[i].modelname.length <= 13 ? searchData[i].modelname : (searchData[i].modelname.slice(0, 12) + "..."))
+                                    }, {
+                                        type: "span",
+                                        attr: {
+                                            class: "icon20 " + programClass,
+                                            style: "vertical-align: bottom;position: absolute;right: 0px;top:5px;",
+                                            title: searchData[i].applicationType
+                                        }
+                                    }]
+                                }, {
+                                    type: "div",
+                                    attr: {
+                                        class: "color2 font12",
+                                        style: "margin-left: 32px;"
+                                    },
+                                    child: [{
+                                        type: "span",
+                                        attr: {
+                                            style: "margin-left:10px;color: #7789A8"
+                                        },
+                                        child: [{
+                                            type: "sub",
+                                            text: searchData[i].principleType
+                                        }]
+                                    }, {
+                                        type: "span",
+                                        attr: {
+                                            style: "margin-left:10px;color: #7789A8"
+                                        },
+                                        child: [{
+                                            type: "sub",
+                                            text: searchData[i].category
+                                        }]
+                                    }]
+                                }],
+                                events: {
+                                    oncontextmenu: function (event) {
+                                        //获取鼠标点击的xy坐标
+                                        var x = event.clientX;
+                                        var y = event.clientY;
+                                        remoteProgramComponent.currentModelId = $(this).attr("modelId");
+                                        remoteProgramComponent.currentGuid = $(this).attr("guid");
+                                        $("#remoteProgramTreeContextMenu").menu('show', {
+                                            left: x,
+                                            top: y
+                                        })
+                                    }
+                                }
+                            });
+                        }
+                        $("#searchRemoteProgramTree").append(node);
+                    }
+                }
+            }, function (error) {
+                console.log(error);
+            });
+        },
+        showAppType: function () {
+            if (remoteProgramComponent.showFlag) {
+                remoteProgramComponent.showFlag = false;
+                remoteProgramComponent.getRemoteData(this.applicationTypeCode);
+                $("#showFlagRemoteButton").css("background-color", "")
+            } else {
+                remoteProgramComponent.showFlag = true;
+                remoteProgramComponent.getRemoteData(this.applicationTypeCode);
+                $("#showFlagRemoteButton").css("background-color", "#D8EFFC");
+            }
+        },
+        change: function (value) {
+            this.selectValue = value;
+            if ($("#remoteProgramTree").css("display") == "block") {
+                this.getRemoteData(this.applicationTypeCode);
+            } else {
+                var inputValue = $("input[knocomp='remoteProgramSearch']").val();
+                this.doSearch(inputValue, "");
+            }
+        },
+        //下载程序
+        downloadModel:function () {
+            //先根据guid查询本地是否存在
+            var localInfo =  Kworld.AppInfo.getByGuid(this.currentGuid);
+            if(localInfo != ""){
+                var flag = confirm("该程序已存在，请确认是否下载？");
+                if(!flag){
+                    return;
+                }
+                //根据guid删除本地数据库中的程序
+            }
+            //确认覆盖或本地不存在，直接下载
+            var result = Kworld.IoOption.downloadModel(this.currentModelId,x_auth_token);
+            if(JSON.parse(result).state == "success"){
+                alert("下载成功");
+            }else{
+                console.log(result);
+                /*if(this.downCount ==3){
+                    this.downCount = 0;*/
+                    alert("下载失败");
+                /*}else{
+                    this.downCount++;
+                    this.downloadModel()
+                }*/
+
+            }
+        }
+    })
+</script>
+
+</body>
+</html>

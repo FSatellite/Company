@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>程序维护管理</title>
+    <link rel="stylesheet" type="text/css" href="../../../style/common/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/color.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/kno-icon-expends.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/kno-gray/kno-easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../style/common/commonIcon.css">
+    <link rel="stylesheet" type="text/css" href="../../../style/manager/twoLevelPage/twoLevelPage.css">
+    <script type="text/javascript" src="../../../libs/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../libs/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../../libs/knowind/CFactory.js"></script>
+    <script type="text/javascript" src="../../../js/common/config.js"></script>
+    <script type="text/javascript" src="../../../js/common/services.js"></script>
+</head>
+<body>
+<div compName="programMaintainComponent" style="width:100%;height:100%;">
+    <div class="easyui-layout" style="width:100%;height:100%;">
+        <!--<div data-options="region:'north'" style="height:32px;background-color: #005F92;border: 0;">-->
+            <!--<h6 class="manager_two_title">程序维护管理</h6>-->
+        <!--</div>-->
+        <div data-options="region:'north'"
+             style="height:35px;border: 0;border-bottom: solid #c6cfdb 1px;background-color: #005f92;">
+            <h6 class="manager_two_title" style="width:30%;float: left">程序维护管理</h6>
+            <div style="width:66%;float: left ">
+                <ul style="text-align: right;width:100%;margin-top:10px;-webkit-app-region:drag;">
+                    <li style="float: right;width: 22px;height: 22px;cursor: pointer; -webkit-app-region:no-drag;"
+                        onmouseover="programMaintainComponent.showMouseOverState(this,'../../../imgs/common/commonIcon_close')"
+                        onmouseout="programMaintainComponent.hideMouseOverState(this,'../../../imgs/common/commonIcon_close')">
+                        <img class="fa-close" n-ui-command="close" src="../../../imgs/common/commonIcon_close.png"></li>
+                    <li style="float: right;width: 22px;height: 22px;cursor: pointer;-webkit-app-region:no-drag;"
+                        onmouseover="programMaintainComponent.showMouseOverState(this,'../../../imgs/common/commonIcon_minimize')"
+                        onmouseout="programMaintainComponent.hideMouseOverState(this,'../../../imgs/common/commonIcon_minimize')">
+                        <img class="fa-window-minimize" n-ui-command="minimize"
+                             src="../../../imgs/common/commonIcon_minimize.png"></li>
+                </ul>
+            </div>
+
+        </div>
+        <div data-options="region:'center'">
+            <div class="easyui-layout" style="width:100%;height:100%;">
+                <div data-options="region:'north'"
+                     style="height:40px;line-height:38px;border: solid #c6cfdb 1px;background-color: #fbfcfd;">
+                    <div style="float:right;padding: 0 20px;">
+                        <input class="easyui-searchbox" id="searchModel"
+                               data-options="prompt:'搜索',searcher:programMaintainComponent.doSearch"
+                               style="width:400px;height: 24px;">
+                    </div>
+                </div>
+                <div data-options="region:'west'" style="width:260px;border: solid #c6cfdb 1px;">
+                    <div style="height: 32px;border-bottom: solid 1px #cccccc">
+                        <a href="javascript:programMaintainComponent.openAddMcDialog()" class="easyui-linkbutton"
+                           data-options="iconCls:'program_icon_ifshare'"
+                           style="padding:0 5px;margin-left:5px;margin-top:4px;height: 24px;-webkit-app-region:no-drag;">
+                            <span style="font-size: 12px;">添加分类</span></a>
+                    </div>
+
+                    <ul id="programMaintainTree"></ul>
+                </div>
+                <div data-options="region:'center'" style="border: solid #c6cfdb 1px;">
+                    <table id="programMaintainTable" data-options="fit: true,fitColumns: true"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="addCategory" class="easyui-dialog" title="添加分类" closed="true" style="width:400px;"
+         data-options="iconCls:'icon-save',resizable:true,modal:true,border:false">
+        <div style="margin-top:20px;margin-bottom:40px;text-align: center">
+            <label style="margin-right: 20px">分类标识:</label>
+            <input id="mcCode" class="easyui-textbox" style="width:70%;height:32px">
+        </div>
+        <div style="margin-bottom:20px;text-align: center">
+            <label style="margin-right: 20px">&nbsp;&nbsp;分类名:</label>
+            <input id="mcName" class="easyui-textbox" style="width:70%;height:32px">
+        </div>
+
+        <div style="margin-top:40px;margin-bottom:20px;text-align: center">
+            <div id="addMcMsg" style="text-align: center;color: red;"></div>
+            <a href="javascript:programMaintainComponent.addModuleCategory()" class="easyui-linkbutton"
+               iconCls="icon-ok" style="width:50%;height:32px">添加分类</a>
+        </div>
+
+    </div>
+    <div id="editCategory" class="easyui-dialog" title="编辑分类" closed="true" style="width:400px;"
+         data-options="iconCls:'icon-save',resizable:true,modal:true,border:false">
+        <div style="margin-top:40px;margin-bottom:40px;text-align: center;">
+            <label style="margin-right: 20px">&nbsp;&nbsp;分类名:</label>
+            <input id="editMcName" class="easyui-textbox" style="width:70%;height:32px">
+        </div>
+
+        <div style="margin-top:40px;margin-bottom:20px;text-align: center">
+            <div id="editMcMsg" style="text-align: center;color: red;"></div>
+            <a href="javascript:programMaintainComponent.editModuleCategory()" class="easyui-linkbutton"
+               iconCls="icon-ok" style="width:50%;height:32px">编辑分类</a>
+        </div>
+
+    </div>
+    <div id="mcMenu" class="easyui-menu" style="width:120px;">
+        <div onclick="programMaintainComponent.openEditMcDialog()" data-options="iconCls:'icon-add'">编辑分类</div>
+        <div onclick="programMaintainComponent.delModuleCategory()" data-options="iconCls:'icon-remove'">删除分类</div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    var programMaintainComponent = CFactory.createComponent({
+        compName: "programMaintainComponent",
+        x_auth_token: "",
+        //编辑或删除的分类标识
+        editMcCode: "",
+        init: function () {
+            x_auth_token = services.getQueryString("x_auth_token");
+            this.loadProgramMaintainTree();
+//            this.loadProgramMaintainTable();
+        },
+        doSearch: function () {
+            var model = $("#searchModel").textbox("getText");
+            if (!model){
+                return;
+            }
+            services.get(config.KnowledgeApp_Addr + "/model/getAll?name="+model+"&x_auth_token="+x_auth_token,null,function (succ) {
+                var models = succ.data;
+                var data = {"total": models.length, "rows": models};
+                $('#programMaintainTable').datagrid('loadData',{total:0,rows:[]})
+                $('#programMaintainTable').datagrid({
+                    data: data,
+                    emptyMsg: "<span>暂无数据</span>",
+                    singleSelect: true,
+                    columns: [[
+                        {field: 'modelname', title: '名称', width: 200},
+                        {field: 'fmiVersion', title: '版本', width: 100},
+                        {field: 'author', title: '作者', width: 100},
+                        {field: 'category', title: '专业', width: 100},
+                        {field: 'principleType', title: '原理依据类型', width: 100},
+                        {field: 'generatationTool', title: '开发语言', width: 100},
+                        {field: 'programType', title: '程序类型', width: 100},
+                        {
+                            field: 'id',
+                            title: '操作',
+                            width: 100,
+                            align: "center",
+                            formatter: function (value, row, index) {
+                                return "<i class='icon20 common_icon_del mr8' style='vertical-align: bottom;' onclick='programMaintainComponent.delModel(\"" + value + "\",\"" + index + "\")'></i>"
+                            }
+                        }
+                    ]]
+                });
+
+            },function (error) {
+
+            })
+        },
+        //设置程序关闭、最小化等等按钮样式
+        showMouseOverState: function (ele, src) {
+            $(ele).children("img").attr("src", src + "_hover.png");
+        },
+        hideMouseOverState: function (ele, src) {
+            $(ele).children("img").attr("src", src + ".png");
+        },
+        //打开添加分类dialog
+        openAddMcDialog: function () {
+            $("#addCategory").dialog("open");
+            $("#mcCode").textbox("setText", "");
+            $("#mcName").textbox("setText", "");
+            $("#addMcMsg").text("")
+        },
+        //添加分类
+        addModuleCategory: function () {
+            var moduleCategoryCode = $("#mcCode").textbox("getValue");
+            var moduleCategory = $("#mcName").textbox("getValue");
+            if (!moduleCategoryCode || !moduleCategory) {
+                $("#addMcMsg").text("分类标识和分类名不能为空");
+                return;
+            }
+            if (moduleCategoryCode == "root") {
+                $("#addMcMsg").text("分类标识已存在");
+                return;
+            }
+            var data = {
+                "moduleCategoryCode": moduleCategoryCode,
+                "moduleCategory": moduleCategory
+            };
+            //判断分类是否存在
+            services.get(config.KnowledgeApp_Addr + "/moduleCategory/checkExist?x_auth_token=" + x_auth_token, data,
+                function (mcResult) {
+                    var mc = mcResult.data;
+                    if (mc.length == 0) {
+                        //不存在
+                        services.post(config.KnowledgeApp_Addr + "/moduleCategory/insert?x_auth_token=" + x_auth_token, data,
+                            function (succ) {
+                                alert("分类保存成功");
+                                $("#addCategory").dialog("close");
+                                var node = $('#programMaintainTree').tree('find', "root");
+                                $('#programMaintainTree').tree('select', node.target);
+                                var selected = $('#programMaintainTree').tree('getSelected');
+                                $("#programMaintainTree").tree('append', {
+                                    parent: selected.target,
+                                    data: [{
+                                        id: moduleCategoryCode,
+                                        moduleCategoryCode: moduleCategoryCode,
+                                        moduleCategory: moduleCategory,
+                                        text: moduleCategory,
+                                        iconCls: "icon-save"
+                                    }]
+                                })
+
+                            }, function (error) {
+                                console.log(error)
+                            })
+
+                    } else {
+                        //已存在
+                        $("#addMcMsg").text("分类标识或分类名已存在");
+                        return;
+                    }
+                }, function (mcError) {
+                    console.log(mcError);
+                })
+
+        },
+        //打开编辑分类dialog
+        openEditMcDialog: function () {
+            $("#editCategory").dialog("open");
+            $("#editMcMsg").text("");
+            //根据id查询分类
+            services.get(config.KnowledgeApp_Addr + "/moduleCategory/getByCode/" + this.editMcCode + "?x_auth_token=" + x_auth_token, null, function (succ) {
+                var mc = succ.data;
+                $("#editMcName").textbox("setText", mc.moduleCategory);
+
+            }, function (error) {
+                console.log(error)
+            });
+
+        },
+        //编辑分类
+        editModuleCategory: function () {
+            var moduleCategoryCode = this.editMcCode;
+            var moduleCategory = $("#editMcName").textbox("getValue");
+            if (!moduleCategoryCode || !moduleCategory) {
+                $("#editMcMsg").text("分类名不能为空");
+                return;
+            }
+            if (moduleCategoryCode == "root") {
+                $("#editMcMsg").text("分类标识已存在");
+                return;
+            }
+            var data = {
+                "moduleCategoryCode": moduleCategoryCode,
+                "moduleCategory": moduleCategory
+            };
+            //判断分类是否存在
+            services.get(config.KnowledgeApp_Addr + "/moduleCategory/getByName/" + moduleCategory + "?x_auth_token=" + x_auth_token, null,
+                function (mcResult) {
+                    var mc = mcResult.data;
+                    if (mc == null) {
+                        //不存在
+                        services.post(config.KnowledgeApp_Addr + "/moduleCategory/update?x_auth_token=" + x_auth_token, data,
+                            function (succ) {
+                                alert("分类编辑成功");
+                                $("#editCategory").dialog("close");
+                                var selected = $('#programMaintainTree').tree('getSelected');
+                                $("#programMaintainTree").tree('update', {
+                                    target: selected.target,
+                                    text: moduleCategory,
+                                    moduleCategory: moduleCategory
+                                })
+                            }, function (error) {
+                                console.log(error)
+                            })
+
+                    } else {
+                        //已存在
+                        $("#editMcMsg").text("分类名已存在");
+                        return;
+                    }
+                }, function (mcError) {
+                    console.log(mcError);
+                })
+
+        },
+        //删除分类
+        delModuleCategory: function () {
+            var flag = confirm("确认要删除该分类吗？");
+            if (flag) {
+                var moduleCategoryCode = this.editMcCode;
+                services.get(config.KnowledgeApp_Addr + "/moduleCategory/deleteByCode/" + moduleCategoryCode + "?x_auth_token=" + x_auth_token, null, function (delSucc) {
+                    console.log(delSucc);
+                    alert("分类删除成功");
+                    var selected = $('#programMaintainTree').tree('getSelected');
+                    $("#programMaintainTree").tree('remove',selected.target)
+                }, function (delError) {
+                    console.log(delError);
+                })
+            }
+        },
+        loadProgramMaintainTree: function () {
+            //查询所有分类
+//            var x_auth_token = services.getQueryString("x_auth_token");
+            services.get(config.KnowledgeApp_Addr + "/moduleCategory/getAll?x_auth_token=" + x_auth_token, null, function (succ) {
+                for (var i = 0; i < succ.data.length; i++) {
+                    succ.data[i]["iconCls"] = "icon-more";
+                    succ.data[i]["id"] = succ.data[i].moduleCategoryCode;
+                }
+                var data = [{
+                    "id": "root",
+                    "text": "全部分类",
+                    moduleCategory: "全部分类",
+                    moduleCategoryCode: "root",
+                    "children": succ.data
+                }];
+                $("#programMaintainTree").tree({
+                    data: data,
+                    formatter: function (node) {
+                        return node.moduleCategory;
+                    },
+                    onSelect: function (node) {
+                        var moduleCategoryCode = node.moduleCategoryCode;
+                        $("#searchModel").textbox("setText","");
+                        programMaintainComponent.loadProgramMaintainTable(moduleCategoryCode);
+                    },
+                    //右键菜单
+                    onContextMenu: function (e, node) {
+                        e.preventDefault();  //阻止右键默认事件
+                        if (node.id == "root") {
+                            return;
+                        }
+                        $('#programMaintainTree').tree('select', node.target);
+                        programMaintainComponent.editMcCode = node.id;
+                        // display context menu
+                        $('#mcMenu').menu('show', {
+                            left: e.pageX,
+                            top: e.pageY
+                        });
+                    }
+                })
+                var n = $('#programMaintainTree').tree('find', succ.data[0].id);
+
+                $('#programMaintainTree').tree('select', n.target);
+
+            }, function (error) {
+                console.log(error)
+            });
+
+        },
+        loadProgramMaintainTable: function (moduleCategoryCode) {
+            //根据分类查询程序
+            services.get(config.KnowledgeApp_Addr + "/model/getByModuleCategory/" + moduleCategoryCode + "?x_auth_token=" + x_auth_token, null, function (succ) {
+                var arr = succ.data;
+                var data = {"total": arr.length, "rows": arr};
+                $('#programMaintainTable').datagrid({
+                    data: data,
+                    emptyMsg: "<span>暂无数据</span>",
+                    singleSelect: true,
+                    columns: [[
+                        {field: 'modelname', title: '名称', width: 200},
+                        {field: 'fmiVersion', title: '版本', width: 100},
+                        {field: 'author', title: '作者', width: 100},
+                        {field: 'category', title: '专业', width: 100},
+                        {field: 'principleType', title: '原理依据类型', width: 100},
+                        {field: 'generatationTool', title: '开发语言', width: 100},
+                        {field: 'programType', title: '程序类型', width: 100},
+                        {
+                            field: 'id',
+                            title: '操作',
+                            width: 100,
+                            align: "center",
+                            formatter: function (value, row, index) {
+                                return "<i class='icon20 common_icon_del mr8' style='vertical-align: bottom;' onclick='programMaintainComponent.delModel(\"" + value + "\",\"" + index + "\")'></i>"
+                            }
+                        }
+                    ]]
+                });
+
+            }, function (error) {
+                console.log(error);
+            })
+        },
+        delModel: function (id, index) {
+            services.get(config.KnowledgeApp_Addr + "/model/deleteById/" + id + "?x_auth_token=" + x_auth_token, null, function (delSucc) {
+                console.log(delSucc);
+                $('#programMaintainTable').datagrid('deleteRow', index);
+                var rows = $('#programMaintainTable').datagrid("getRows");    //重新获取数据生成行号
+                $('#programMaintainTable').datagrid("loadData", rows);
+                alert("删除成功！")
+            }, function (delErr) {
+                console.log(delErr);
+                alert("删除失败！")
+            })
+        }
+
+    })
+</script>
+</body>
+</html>

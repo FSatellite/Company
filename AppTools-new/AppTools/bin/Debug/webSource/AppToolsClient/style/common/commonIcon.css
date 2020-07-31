@@ -1,0 +1,81 @@
+.icon20{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+.icon22{
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+}
+.common_icon_edit{
+    background: url("../../imgs/common/commonIcon.png") -59px -6px no-repeat;
+}
+.common_icon_del{
+    background: url("../../imgs/common/commonIcon.png") -275px -6px no-repeat;
+}
+.common_icon_del1{
+    background: url("../../imgs/common/commonIcon.png") -322px -6px no-repeat;
+}
+.common_icon_lock{
+    background: url("../../imgs/common/commonIcon.png") -10px -6px no-repeat;
+}
+.common_icon_man{
+    background: url("../../imgs/common/commonIcon.png") -34px -6px no-repeat;
+}
+.common_icon_quit{
+    background: url("../../imgs/common/commonIcon.png") -83px -6px no-repeat;
+}
+.common_icon_search{
+    background: url("../../imgs/common/commonIcon.png") -161px -6px no-repeat;
+}
+.common_icon_down{
+    background: url("../../imgs/common/commonIcon.png") -218px -6px no-repeat;
+}
+.common_icon_stop{
+    background: url("../../imgs/common/commonIcon.png") -372px -6px no-repeat;
+}
+
+.common_icon_refresh{
+    background: url("../../imgs/common/commonIcon.png") -299px -6px no-repeat;
+}
+.common_icon_return{
+    background: url("../../imgs/common/commonIcon.png") -344px -6px no-repeat;
+}
+.common_icon_close{
+    background: url("../../imgs/common/commonIcon.png") -283px -95px no-repeat;
+}
+.common_icon_close_hover{
+    background: url("../../imgs/common/commonIcon.png") -339px -6px no-repeat;
+}
+.common_icon_maximization{
+    background: url("../../imgs/common/commonIcon.png") -283px -6px no-repeat;
+}
+.common_icon_maximization_hover{
+    background: url("../../imgs/common/commonIcon.png") -339px -6px no-repeat;
+}
+.common_icon_minimize{
+    background: url("../../imgs/common/commonIcon.png") -261px -95px no-repeat;
+}
+.common_icon_minimize_hover{
+    background: url("../../imgs/common/commonIcon.png") -317px -95px no-repeat;
+}
+
+.program_icon_caculate{
+    background: url("../../imgs/common/commonIcon.png") -197px -93px no-repeat;
+}
+.program_icon_search{
+    background: url("../../imgs/common/commonIcon.png") -215px -93px no-repeat;
+}
+.program_icon_report{
+    background: url("../../imgs/common/commonIcon.png") -233px -93px no-repeat;
+}
+.program_icon_my{
+    background: url("../../imgs/common/commonIcon.png") -180px -93px no-repeat;
+}
+.program_icon_ifshare{
+    background: url("../../imgs/common/commonIcon.png") -137px -7px no-repeat;
+}
+.program_icon_publish{
+    background: url("../../imgs/common/commonIcon.png") -163px -93px no-repeat;
+}

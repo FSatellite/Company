@@ -1,0 +1,5 @@
+出现应用程序未处理的异常：2019/7/18 12:04:41
+Application UnhandledException:未能加载文件或程序集“IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1”或它的某一个依赖项。系统找不到指定的文件。;
+堆栈信息:   在 ScriptEngine.ScriptEngine..ctor()
+   在 MLearning.Form1..ctor(String[] args) 位置 E:\WworkSpace\AppProgram\TechnoSoft\OptXpert\Form1.cs:行号 45
+   在 MLearning.Program.Main(String[] args) 位置 E:\WworkSpace\AppProgram\TechnoSoft\OptXpert\Program.cs:行号 18

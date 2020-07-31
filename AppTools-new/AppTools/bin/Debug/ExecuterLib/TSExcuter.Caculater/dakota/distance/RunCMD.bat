@@ -1,0 +1,1 @@
+java -jar simexecuter.jar distance

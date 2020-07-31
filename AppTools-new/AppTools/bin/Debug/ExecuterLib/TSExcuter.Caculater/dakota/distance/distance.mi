@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ModelDescription modelName="BeamStress" fmiVersion="" guid="" description="" author="" generatationTool="" generateionDate="" copyRight="">
+
+  <ModelVariables>
+    <ScalarVariable name="x" valueReference="0" description="x"
+                  dataFlow="input" Format="6E3" attachFile="xy.dat" rowIndex="1" columnStartIndex="2" columnEndIndex="8"
+                   causality="local" variability="continuous" initial="exact" unit="m">
+    </ScalarVariable>
+   <ScalarVariable name="y" valueReference="0" description="y"
+                  dataFlow="input" Format="6E3" attachFile="xy.dat" rowIndex="2" columnStartIndex="2" columnEndIndex="8"
+                   causality="local" variability="continuous" initial="exact" unit="m">
+    </ScalarVariable>
+
+	<ScalarVariable name="distance" valueReference="0" description="distance of location"
+                    dataFlow="output" Format="6E3" attachFile="distance.dat" rowIndex="1" columnStartIndex="9" columnEndIndex="15"
+                     causality="local" variability="continuous" initial="exact" unit="pa">
+    </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <batchFile name="distance.bat"></batchFile>
+    <inputFiles>
+      <inputFile name="xy.dat"></inputFile>
+    </inputFiles>
+    <outputFiles>
+      <outputFile name="distance.dat"></outputFile>
+    </outputFiles>
+  </ModelStructure>
+</ModelDescription>

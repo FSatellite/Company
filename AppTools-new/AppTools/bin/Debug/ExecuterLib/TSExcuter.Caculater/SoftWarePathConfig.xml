@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoftWarePathConfig> 
+<!--Name:软件名称  LocalPath：软件exe在本地所在路径 CommandPara: 界面打开必须设置的参数--> 
+  <SoftWare Name="Abaqus" LocalPath="D:\SIMULIA\CAE\2018\win_b64\code\bin\ABQLauncher.exe"  CommandPara="cae" />
+  <SoftWare Name="Adams" LocalPath="" CommandPara="" />
+  <SoftWare Name="Ansys" LocalPath="D:\Program Files\ANSYS Inc\v140\ansys\bin\winx64\ANSYS140.exe" CommandPara="" />
+  <SoftWare Name="Autoform" LocalPath="" CommandPara="" />
+  <SoftWare Name="Caefem" LocalPath="" CommandPara="" />
+  <SoftWare Name="Cfx5" LocalPath="D:\Program Files\ANSYS Inc\v140\CFX\bin\cfx.exe" CommandPara="" />
+  <SoftWare Name="Dads" LocalPath="" CommandPara="" />
+  <SoftWare Name="Femap" LocalPath="" CommandPara="" />
+  <SoftWare Name="Fluent" LocalPath="D:\Program Files\ANSYS Inc\v140\fluent\ntbin\win64\fluent.exe" CommandPara="" />
+  <SoftWare Name="Gambit" LocalPath="" CommandPara="" />
+  <SoftWare Name="GTPower" LocalPath="" CommandPara="" />
+  <SoftWare Name="Hydsim" LocalPath="" CommandPara="" />
+  <SoftWare Name="CEM-CFD" LocalPath="" CommandPara="" />
+  <SoftWare Name="IDEAS" LocalPath="" CommandPara="" />
+  <SoftWare Name="LSDYNA" LocalPath="D:\Program Files\ANSYS Inc\v140\ansys\bin\winx64\LSDYNA140.exe" CommandPara="" />
+  <SoftWare Name="Matlab" LocalPath="D:\Program Files\MATLAB\R2014b\bin\matlab.exe" CommandPara="" />
+  <SoftWare Name="MatrixX" LocalPath="" CommandPara="" />
+  <SoftWare Name="Maze and dyna 2d" LocalPath="	" CommandPara=""/>
+  <SoftWare Name="MoldFlow" LocalPath="" CommandPara="" />
+  <SoftWare Name="Nastran" LocalPath="" CommandPara="" />
+  <SoftWare Name="PAMCRASH" LocalPath="" CommandPara="" />
+  <SoftWare Name="Patran" LocalPath="" CommandPara="" />
+  <SoftWare Name="ProE" LocalPath="" CommandPara="" />
+  <SoftWare Name="RADIOSS" LocalPath="" CommandPara="" />
+  <SoftWare Name="SYSNOISE" LocalPath="" CommandPara="" />
+  <SoftWare Name="UniGraphics" LocalPath="" CommandPara="" />    
+</SoftWarePathConfig>

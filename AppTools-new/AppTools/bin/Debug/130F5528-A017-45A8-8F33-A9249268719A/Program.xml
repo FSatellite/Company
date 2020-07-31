@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ModelDescription modelName="弹翼外形几何参数计算" modelIdentifier="WingsGeomParamCal" fmiVersion="1.0" guid="130F5528-A017-45A8-8F33-A9249268719A" description="" author="knowind" generationTool="C++" programType="dll" category="总体专业" categoryCode="Z" principleType="行业规范" principleTypeCode="HYGF" applicationType="数据计算" applicationTypeCode="Caculate" moduleCategory="自研程序模块" moduleCategoryCode="SelfDevelopedProcedure" publishTime="2020-05-14 09:36:18 +8" copyright="" remark="" keyword="">
+  <ModelVariables>
+    <ScalarVariable name="m" displayName="导弹质量" dataType="double" valueReference="5" dataFlow="input" description="" format="" unit="t" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="g" displayName="重力加速度" dataType="double" valueReference="9.8" dataFlow="input" description="" format="" unit="m/s2" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="density" displayName="空气密度" dataType="double" valueReference="1.225" dataFlow="input" description="" format="" unit="kg/m3" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="V" displayName="远场速度" dataType="double" valueReference="238" dataFlow="input" description="" format="" unit="m/s" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="l" displayName="翼展" dataType="double" valueReference="2.5" dataFlow="input" description="" format="" unit="m" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="CL" displayName="升力系数" dataType="double" valueReference="0.8" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="rtRatio" displayName="梢根比" dataType="double" valueReference="5" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="S" displayName="翼面积" dataType="double" valueReference="1.41" dataFlow="output" description="" format="" unit="m2" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="aspectRatio" displayName="展弦比" dataType="double" valueReference="4.43" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="b0" displayName="翼根弦长" dataType="double" valueReference="0.85" dataFlow="output" description="" format="" unit="m" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="b1" displayName="翼尖弦长" dataType="double" valueReference="0.28" dataFlow="output" description="" format="" unit="m" variability="" causality="" keyMap="" tagImage="" />
+  </ModelVariables>
+</ModelDescription>

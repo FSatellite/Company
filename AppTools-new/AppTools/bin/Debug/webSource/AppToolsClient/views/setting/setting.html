@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="style/setting.css">
+<div compName="settingComponent" style="width: 100%;height: 100%;border:0;background-color: #fbfcfd;">
+    <div class="page_title">设置</div>
+    <ul class="setting_nav_con">
+        <li><input type="checkbox" checked="checked" id="autoRunInput" onchange="settingComponent.autoRunSet()">&nbsp;&nbsp;&nbsp;&nbsp;<span>开机自动运行系统</span>
+        </li>
+        <li><input type="checkbox" onchange="settingComponent.init()">&nbsp;&nbsp;&nbsp;&nbsp;<span>关闭面板时，退出系统</span></li>
+    </ul>
+    <!--<div>
+        <h6 class="page_two_title">本地库路径</h6>
+        <div style="margin-bottom:20px;padding: 0 20px;">
+            <input class="easyui-filebox" name="file2" data-options="prompt:'文件路径'" style="width:30%;height: 26px;">
+        </div>
+    </div>-->
+</div>
+<script type="text/javascript">
+
+    var settingComponent = CFactory.createComponent({
+        compName: "settingComponent",
+        init: function () {
+        },
+        autoRunSet: function () {
+            var isAuto = $("#autoRunInput")[0].checked;
+            console.log(isAuto);
+            Kworld.IoOption.autoStart(isAuto);
+        }
+    })
+</script>
+</body>
+</html>

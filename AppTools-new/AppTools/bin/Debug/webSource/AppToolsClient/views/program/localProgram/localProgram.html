@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div compName="localProgramComponent" style="height: 100%;">
+    <ul class="program_type_ul">
+        <li style="border-bottom: solid #44A4D7 2px;color:#333"
+            onclick="localProgramComponent.changeProgramApplicationType(this)" knocomp="all">全部
+        </li>
+        <li knocomp="Caculate" onclick="localProgramComponent.changeProgramApplicationType(this)">公式计算</li>
+        <li knocomp="Search" onclick="localProgramComponent.changeProgramApplicationType(this)">数据查询</li>
+        <li knocomp="Report" onclick="localProgramComponent.changeProgramApplicationType(this)">报表</li>
+    </ul>
+    <input class="easyui-searchbox" data-options="prompt:'搜索',searcher:localProgramComponent.doSearch"
+           knocomp="localProgramSearch"
+           style="width:100%;height: 26px;-webkit-app-region:no-drag;">
+    <div style="width:100%;margin-top:2px;text-align: right;">
+        <select panelHeight="auto" id="selectBox" onchange="localProgramComponent.change(this.value)"
+                style="width:80px;height: 20px;float:right;-webkit-app-region:no-drag;
+        margin: 0;
+        padding: 0 4px;
+        white-space: normal;
+        vertical-align: top;
+        outline-style: none;
+        resize: none;
+        -moz-border-radius: 5px 5px 5px 5px;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;">
+            <option value="bigImg">大图标</option>
+            <option value="list">列表</option>
+        </select>
+    </div>
+    <div style="margin-top:10px;height: 100%;width:100%;overflow: auto" id="localParent">
+        <div class="easyui-accordion" style="width:100%;border: none" id="recentlyUsedToolsTree">
+        </div>
+        <div class="easyui-accordion" data-options="multiple:true" id="localProgramTree" style="width:100%;border: none">
+        </div>
+    </div>
+
+    <ul id="searchProgramTree" style="margin-top:10px;height:100%;width:350px;overflow:auto;display: none"></ul>
+    <div id="recentlyUsedToolsTreeContextMenu" class="easyui-menu" style="width:120px;">
+        <div onclick="localProgramComponent.userAppTools()" data-options="iconCls:'kno_icon_use'">程序使用</div>
+        <div onclick="localProgramComponent.userAppValidate()" data-options="iconCls:'kno_icon_use'">程序验证</div>
+    </div>
+    <div id="localProgramTreeContextMenu" class="easyui-menu" style="width:120px;">
+        <div onclick="localProgramComponent.userAppTools()" data-options="iconCls:'kno_icon_use'">程序使用</div>
+        <div onclick="localProgramComponent.userAppValidate()" data-options="iconCls:'kno_icon_use'">程序验证</div>
+        <!--div onclick="localProgramComponent.updateAppTools()" data-options="iconCls:'kno_icon_refresh'">更新</div-->
+        <div onclick="localProgramComponent.delAppTools()" data-options="iconCls:'kno_icon_del1'">卸载</div>
+    </div>
+    <div id="modelDesc" class="easyui-menu" style="width:200px;background-color:#ffffcc">
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    var localProgramComponent = CFactory.createComponent({
+        compName: "localProgramComponent",
+        //功能分类code
+        applicationTypeCode: "all",
+        //默认选中第一个模块分类
+        checkModuleCategoryOne: "",
+        //选中树节点的id
+        checkedTreeNodeId: "",
+        allCount: 0,
+        caculateCount: 0,
+        searchCount: 0,
+        reportCount: 0,
+        userModelId: "",
+        guid:"",
+        selectValue: "bigImg",
+        init: function () {
+        },
+
+        //获取本地程序数据
+        getLocalData: function (applicationTypeCode) {
+            this.getRecentlyUsedTools();
+            this.getAppToolsData(applicationTypeCode);
+        },
+        //加载最近使用的程序
+        getRecentlyUsedTools: function () {
+            //获取最近使用的程序
+            var recentlyUsedTools = [{
+                "moduleCategoryCode": "最近使用",
+                "moduleCategory": "",
+                "type": "moduleCategory",
+                "children": []
+            }];
+            var recentlyUsedData = JSON.parse(Kworld.AppInfo.selectRecentUseModule(defaultSize, this.applicationTypeCode));
+            if (recentlyUsedData.length > 0) {
+                recentlyUsedTools[0].children = JSON.parse(Kworld.AppInfo.selectRecentUseModule(defaultSize, this.applicationTypeCode));
+                recentlyUsedTools[0].moduleCategoryCode = "最近使用 (" + recentlyUsedData.length + ")";
+            } else {
+                recentlyUsedTools[0].children = []
+                recentlyUsedTools[0].moduleCategoryCode = "最近使用 (0)";
+            }
+
+            var recentlyUsedToolsData = recentlyUsedTools;
+            var child = [];
+            var length = recentlyUsedToolsData[0].children.length;
+            if (length == 0) {
+                var node = CFactory.createNode({
+                    type: "div",
+                    text: "暂无数据"
+                })
+                child.push(node);
+            } else {
+                for (var i = 0; i < recentlyUsedToolsData[0].children.length; i++) {
+                    var programClass = "";
+                    if (recentlyUsedToolsData[0].children[i].applicationTypeCode == "Caculate") {
+                        programClass = "program_icon_caculate";
+                    } else if (recentlyUsedToolsData[0].children[i].applicationTypeCode == "Search") {
+                        programClass = "program_icon_search";
+                    } else if (recentlyUsedToolsData[0].children[i].applicationTypeCode == "Report") {
+                        programClass = "program_icon_report";
+                    } else {
+                        programClass = "";
+                    }
+                    var IfShareClass = "";
+                    if (recentlyUsedToolsData[0].children[i].IfShare == 0) {
+                        IfShareClass = "program_icon_publish";
+                    }
+                    var node = {};
+                    if (localProgramComponent.selectValue == 'bigImg') {
+                        node = {
+                            type: "div",
+                            attr: {
+                                style: "width:90px;height:70px;margin:10px 5px 10px 0;float:left;border:1px solid #cccccc,text-align:center",
+                                modelId: recentlyUsedToolsData[0].children[i].id,
+                                guid:recentlyUsedToolsData[0].children[i].guid
+                            },
+                            child: [{
+                                type: "div",
+                                attr: {
+                                    style: "display:none",
+                                    modelName: recentlyUsedToolsData[0].children[i].modelName,
+                                    id: "use_imgDesc_" + recentlyUsedToolsData[0].children[i].id
+                                },
+                                text: recentlyUsedToolsData[0].children[i].description
+                            }, {
+                                type: "img",
+                                attr: {
+                                    src: "imgs/common/defaultProgram.png",
+                                    width: "48px",
+                                    height: "48px",
+                                    style: "margin-left:15px;",
+                                    modelId: recentlyUsedToolsData[0].children[i].id
+                                },
+                                events: {
+                                    //鼠标悬浮事件
+                                    onmouseover: function (event) {
+                                        //获取鼠标点击的xy坐标
+                                        // console.log($(this).offset().top);
+                                        var x = $(this).offset().left;
+                                        var y = $(this).offset().top + 50;
+                                        var id = $(this).attr("modelId");
+                                        var modelName = $("#use_imgDesc_" + id).attr("modelName");
+                                        var desc = $("#use_imgDesc_" + id).html();
+                                        $("#modelDesc").html("<h4 style='margin-bottom: 10px'>" + modelName + "</h4><p style='text-indent:2em;'>" + desc + "</p>")
+                                        $("#modelDesc").menu('show', {
+                                            left: x,
+                                            top: y
+                                        });
+                                    },
+                                    onmouseout: function () {
+                                        $("#modelDesc").menu('hide');
+                                    }
+                                }
+                            }, {
+                                type: "br"
+                            },{
+                                type:"div",
+                                attr:{"style":"text-align:center;"},
+                                child:[{
+                                    type: "sub",
+                                    attr: {
+                                        style: "color: #7789A8"
+                                    },
+                                    text: recentlyUsedToolsData[0].children[i].modelName.length > 6 ? recentlyUsedToolsData[0].children[i].modelName.slice(0, 6) + "..." : recentlyUsedToolsData[0].children[i].modelName
+                                }]
+                            }],
+                            events: {
+                                oncontextmenu: function (event) {
+                                    //获取鼠标点击的xy坐标
+                                    var x = event.clientX;
+                                    var y = event.clientY;
+                                    localProgramComponent.userModelId = $(this).attr("modelId");
+                                    localProgramComponent.guid = $(this).attr("guid");
+                                    $("#recentlyUsedToolsTreeContextMenu").menu('show', {
+                                        left: x,
+                                        top: y
+                                    })
+//                                    console.log(recentlyUsedToolsData[0].children[i]);
+                                }
+                            }
+                        }
+                    } else {
+                        node = {
+                            type: "div",
+                            attr: {
+                                style: "overflow: hidden;width: 300px;",
+                                modelId: recentlyUsedToolsData[0].children[i].id,
+                                guid: recentlyUsedToolsData[0].children[i].guid
+                            },
+                            child: [{
+                                type: "div",
+                                attr: {
+                                    style: "display:none",
+                                    modelName: recentlyUsedToolsData[0].children[i].modelName,
+                                    id: "use_listDesc_" + recentlyUsedToolsData[0].children[i].id
+                                },
+                                text: recentlyUsedToolsData[0].children[i].description
+                            }, {
+                                type: "div",
+                                attr: {
+                                    style: "float: left;display: inline-block;margin-top: 5px;"
+                                },
+                                child: [{
+                                    type: "img",
+                                    attr: {
+                                        src: "imgs/common/defaultProgram.png",
+                                        width: "48px",
+                                        height: "48px",
+                                        modelId: recentlyUsedToolsData[0].children[i].id
+                                    },
+                                    events: {
+                                        //鼠标悬浮事件
+                                        onmouseover: function () {
+                                            //获取鼠标点击的xy坐标
+                                            // console.log($(this).offset().top);
+                                            var x = $(this).offset().left;
+                                            var y = $(this).offset().top;
+                                            var id = $(this).attr("modelId");
+                                            var modelName = $("#use_listDesc_" + id).attr("modelName");
+                                            var desc = $("#use_listDesc_" + id).html();
+                                            $("#modelDesc").html("<h4 style='margin-bottom: 10px'>" + modelName + "</h4><p style='text-indent:2em;'>" + desc + "</p>")
+                                            $("#modelDesc").menu('show', {
+                                                left: x + 50,
+                                                top: y
+                                            });
+                                        },
+                                        onmouseout: function () {
+                                            $("#modelDesc").menu('hide');
+                                        }
+                                    }
+                                }]
+                            }, {
+                                type: "div",
+                                attr: {
+                                    class: "color2 font12",
+                                    style: "margin-left: 32px;margin-top:10px;position: relative"
+                                },
+                                child: [{
+                                    type: "span",
+                                    attr: {
+                                        style: "margin-left: 10px;font-size:14px;font-weight:bold "
+                                    },
+                                    text: (recentlyUsedToolsData[0].children[i].modelName.length <= 13 ? recentlyUsedToolsData[0].children[i].modelName : (recentlyUsedToolsData[0].children[i].modelName.slice(0, 12) + "..."))
+                                }, {
+                                    type: "span",
+                                    attr: {
+                                        class: "icon20 " + programClass,
+                                        style: "vertical-align: bottom;position: absolute;right: 0px;top:5px",
+                                        title: recentlyUsedToolsData[0].children[i].applicationType
+                                    }
+                                }, {
+                                    type: "span",
+                                    attr: {
+                                        class: "icon20 " + IfShareClass,
+                                        style: "vertical-align: bottom;position: absolute;right: 20px;top:5px",
+                                    }
+                                }]
+                            }, {
+                                type: "div",
+                                attr: {
+                                    class: "color2 font12",
+                                    style: "margin-left: 32px;"
+                                },
+                                child: [{
+                                    type: "span",
+                                    attr: {
+                                        style: "margin-left:10px;color: #7789A8"
+                                    },
+                                    child: [{
+                                        type: "sub",
+                                        text: recentlyUsedToolsData[0].children[i].principleType
+                                    }]
+                                }, {
+                                    type: "span",
+                                    attr: {
+                                        style: "margin-left:10px;color: #7789A8"
+                                    },
+                                    child: [{
+                                        type: "sub",
+                                        text: recentlyUsedToolsData[0].children[i].category
+                                    }]
+                                }]
+                            }],
+                            events: {
+                                oncontextmenu: function (event) {
+                                    //获取鼠标点击的xy坐标
+                                    var x = event.clientX;
+                                    var y = event.clientY;
+                                    localProgramComponent.userModelId = $(this).attr("modelId");
+                                    localProgramComponent.guid = $(this).attr("guid");
+                                    $("#recentlyUsedToolsTreeContextMenu").menu('show', {
+                                        left: x,
+                                        top: y
+                                    })
+                                }
+                            }
+                        };
+                    }
+                    child.push(node);
+                }
+            }
+            var content = CFactory.createNode({
+                type: "div",
+                attr: {
+//                    title: recentlyUsedTools[0].moduleCategoryCode,
+                    style: "overflow:auto;padding:10px;"
+                },
+                child: child
+            });
+            var panels = $("#recentlyUsedToolsTree").accordion("panels");
+            if (panels.length > 0) {
+                for (var i = 0; i < panels.length; i++) {
+                    $("#recentlyUsedToolsTree").accordion("remove", i);
+                }
+            }
+            $("#recentlyUsedToolsTree").accordion("add", {
+                title: recentlyUsedToolsData[0].moduleCategoryCode,
+                style: "overflow:auto;padding:10px;",
+                content: content,
+                selected: true
+            });
+        },
+        //加载除最近使用的程序外的所有树结构
+        getAppToolsData: function (applicationTypeCode) {
+            var this_ = this;
+            var appToolsData = this.getModuleCategory();
+            var models = this.getAllModels(applicationTypeCode);
+            if (appToolsData.length <= 0) {
+                return false;
+            }
+            appToolsData = this.getCount(appToolsData, models);
+            //设置总数
+            $("li[knocomp = 'all']").html("全部&nbsp;<span style='color:#7789A8'>" + this_.allCount + "</span>");
+            $("li[knocomp = 'Caculate']").html("公式计算&nbsp;<span style='color:#7789A8'>" + this_.caculateCount + "</span>");
+            $("li[knocomp = 'Search']").html("数据查询&nbsp;<span style='color:#7789A8'>" + this_.searchCount + "</span>");
+            $("li[knocomp = 'Report']").html("报表&nbsp;<span style='color:#7789A8'>" + this_.reportCount + "</span>");
+            for (var i = 0; i < appToolsData.length; i++) {
+                var childrenNodeData = this.getToolsByModuleCategory(appToolsData[i].moduleCategoryCode);
+                if (childrenNodeData.length > 0) {
+                    appToolsData[i].children = childrenNodeData;
+                } else {
+                    appToolsData[i].children = []
+                }
+                var child = [];
+                var length = appToolsData[i].children.length;
+                if (length == 0) {
+                    var node = CFactory.createNode({
+                        type: "div",
+                        text: "暂无数据"
+                    })
+                    child.push(node);
+                } else {
+                    for (var j = 0; j < appToolsData[i].children.length; j++) {
+
+                        var programClass = "";
+                        if (appToolsData[i].children[j].applicationTypeCode == "Caculate") {
+                            programClass = "program_icon_caculate";
+                        } else if (appToolsData[i].children[j].applicationTypeCode == "Search") {
+                            programClass = "program_icon_search";
+                        } else if (appToolsData[i].children[j].applicationTypeCode == "Report") {
+                            programClass = "program_icon_report";
+                        } else {
+                            programClass = "";
+                        }
+                        var IfShareClass = "";
+                        if (appToolsData[i].children[j].IfShare == 0) {
+                            IfShareClass = "program_icon_publish";
+                        }
+                        var node = {};
+                        if (localProgramComponent.selectValue == 'bigImg') {
+                            node = {
+                                type: "div",
+                                attr: {
+                                    style: "width:90px;height:70px;margin:10px 5px 10px 0;float:left;border:1px solid #cccccc,text-align:center",
+                                    modelId: appToolsData[i].children[j].id,
+                                    guid: appToolsData[i].children[j].guid
+                                },
+                                child: [{
+                                    type: "div",
+                                    attr: {
+                                        style: "display:none",
+                                        modelName: appToolsData[i].children[j].modelName,
+                                        id: "local_imgDesc_" + appToolsData[i].children[j].id
+                                    },
+                                    text: appToolsData[i].children[j].description
+                                }, {
+                                    type: "img",
+                                    attr: {
+                                        src: "imgs/common/defaultProgram.png",
+                                        width: "48px",
+                                        height: "48px",
+                                        style: "margin-left:15px;",
+                                        modelId: appToolsData[i].children[j].id
+                                    },
+                                    events: {
+                                        //鼠标悬浮事件
+                                        onmouseover: function (event) {
+                                            //获取鼠标点击的xy坐标
+                                            // console.log($(this).offset().top);
+                                            var x = $(this).offset().left;
+                                            var y = $(this).offset().top + 50;
+                                            var id = $(this).attr("modelId");
+                                            var modelName = $("#local_imgDesc_" + id).attr("modelName");
+                                            var desc = $("#local_imgDesc_" + id).html();
+                                            $("#modelDesc").html("<h4 style='margin-bottom: 10px'>" + modelName + "</h4><p style='text-indent:2em;'>" + desc + "</p>")
+                                            $("#modelDesc").menu('show', {
+                                                left: x,
+                                                top: y
+                                            });
+                                        },
+                                        onmouseout: function () {
+                                            $("#modelDesc").menu('hide');
+                                        }
+                                    }
+                                }, {
+                                    type: "br"
+                                },{
+                                    type:"div",
+                                    attr:{"style":"text-align:center;"},
+                                    child:[{
+                                        type: "sub",
+                                        attr: {
+                                            style: "color: #7789A8"
+                                        },
+                                        text: appToolsData[i].children[j].modelName.length > 6 ? appToolsData[i].children[j].modelName.slice(0, 6) + "..." : appToolsData[i].children[j].modelName
+                                    }]
+                                }/*, {
+                                    type: "sub",
+                                    attr: {
+                                        style: "color: #7789A8"
+                                    },
+                                    text: appToolsData[i].children[j].modelName.length > 6 ? appToolsData[i].children[j].modelName.slice(0, 6) + "..." : appToolsData[i].children[j].modelName
+                                }*/],
+                                events: {
+                                    //鼠标悬浮事件
+                                    /*onmouseover:function () {
+
+                                     }*/
+                                    oncontextmenu: function (event) {
+                                        //获取鼠标点击的xy坐标
+                                        var x = event.clientX;
+                                        var y = event.clientY;
+                                        localProgramComponent.userModelId = $(this).attr("modelId");
+                                        localProgramComponent.guid = $(this).attr("guid");
+                                        $("#localProgramTreeContextMenu").menu('show', {
+                                            left: x,
+                                            top: y
+                                        })
+                                    }
+                                }
+                            }
+                        } else {
+                            node = {
+                                type: "div",
+                                attr: {
+                                    style: "overflow: hidden;width: 300px;",
+                                    modelId: appToolsData[i].children[j].id,
+                                    guid: appToolsData[i].children[j].guid
+                                },
+                                child: [{
+                                    type: "div",
+                                    attr: {
+                                        style: "float: left;display: inline-block;margin-top: 5px;"
+                                    },
+                                    child: [{
+                                        type: "div",
+                                        attr: {
+                                            style: "display:none",
+                                            modelName: appToolsData[i].children[j].modelName,
+                                            id: "local_listDesc_" + appToolsData[i].children[j].id
+                                        },
+                                        text: appToolsData[i].children[j].description
+                                    }, {
+                                        type: "img",
+                                        attr: {
+                                            src: "imgs/common/defaultProgram.png",
+                                            width: "48px",
+                                            height: "48px",
+                                            modelId: appToolsData[i].children[j].id
+                                        },
+                                        events: {
+                                            //鼠标悬浮事件
+                                            onmouseover: function (event) {
+                                                //获取鼠标点击的xy坐标
+                                                // console.log($(this).offset().top);
+                                                var x = $(this).offset().left;
+                                                var y = $(this).offset().top;
+                                                var id = $(this).attr("modelId");
+                                                var modelName = $("#local_listDesc_" + id).attr("modelName");
+                                                var desc = $("#local_listDesc_" + id).html();
+                                                $("#modelDesc").html("<h4 style='margin-bottom: 10px'>" + modelName + "</h4><p style='text-indent:2em;'>" + desc + "</p>")
+                                                $("#modelDesc").menu('show', {
+                                                    left: x + 50,
+                                                    top: y
+                                                });
+                                            },
+                                            onmouseout: function () {
+                                                $("#modelDesc").menu('hide');
+                                            }
+                                        }
+                                    }]
+                                }, {
+                                    type: "div",
+                                    attr: {
+                                        class: "color2 font12",
+                                        style: "margin-left: 32px;margin-top:10px;position: relative"
+                                    },
+                                    child: [{
+                                        type: "span",
+                                        attr: {
+                                            style: "margin-left: 10px;font-size:14px;font-weight:bold "
+                                        },
+                                        text: (appToolsData[i].children[j].modelName.length <= 13 ? appToolsData[i].children[j].modelName : (appToolsData[i].children[j].modelName.slice(0, 12) + "..."))
+                                    }, {
+                                        type: "span",
+                                        attr: {
+                                            class: "icon20 " + programClass,
+                                            style: "vertical-align: bottom;position: absolute;right: 0px;top:5px;",
+                                            title: appToolsData[i].children[j].applicationType
+                                        }
+                                    },appToolsData[i].children[j].id!=appToolsData[i].children[j].guid?{
+                                        type: "span",
+                                        attr: {
+                                            class: "icon20 " + IfShareClass,
+                                            style: "vertical-align: bottom;position: absolute;right: 20px;top:5px;",
+                                        }
+                                    }:{}]
+                                }, {
+                                    type: "div",
+                                    attr: {
+                                        class: "color2 font12",
+                                        style: "margin-left: 32px;"
+                                    },
+                                    child: [{
+                                        type: "span",
+                                        attr: {
+                                            style: "margin-left:10px;color: #7789A8"
+                                        },
+                                        child: [{
+                                            type: "sub",
+                                            text: appToolsData[i].children[j].principleType
+                                        }]
+                                    }, {
+                                        type: "span",
+                                        attr: {
+                                            style: "margin-left:10px;color: #7789A8"
+                                        },
+                                        child: [{
+                                            type: "sub",
+                                            text: appToolsData[i].children[j].category
+                                        }]
+                                    }]
+                                }],
+                                events: {
+                                    oncontextmenu: function (event) {
+                                        //获取鼠标点击的xy坐标
+                                        var x = event.clientX;
+                                        var y = event.clientY;
+                                        localProgramComponent.userModelId = $(this).attr("modelId");
+                                        localProgramComponent.guid = $(this).attr("guid");
+                                        $("#localProgramTreeContextMenu").menu('show', {
+                                            left: x,
+                                            top: y
+                                        })
+                                    }
+                                }
+                            };
+                        }
+                        child.push(node);
+                    }
+                }
+                var content = CFactory.createNode({
+                    type: "div",
+                    attr: {
+//                        title: appToolsData[i].moduleCategoryCode,
+                        style: "overflow:auto;padding:10px;"
+                    },
+                    child: child
+                });
+                var selected = false;
+                if (i == 0) {
+                    selected = true;
+                }
+                var panels = $("#localProgramTree").accordion("panels");
+                if (i == 0) {
+                    var plength = panels.length;
+                    for (var n = plength; n > 0; n--) {
+                        $("#localProgramTree").accordion("remove", n - 1);
+                    }
+                }
+                $("#localProgramTree").accordion("add", {
+                    title: appToolsData[i].moduleCategory + " (" + appToolsData[i].modelCount + ")",
+                    style: "overflow:auto;padding:10px;margin:10px 0",
+                    content: content,
+                    selected: selected
+                });
+            }
+        },
+        //获取程序分类（增压系统计算模块、等等）
+        getModuleCategory: function () {
+            var moduleCategoryData = JSON.parse(Kworld.ModuleCategory.selectMouduleCategory());
+            if (moduleCategoryData.length > 0) {
+                this.checkModuleCategoryOne = moduleCategoryData[0];
+                for (var i = 0; i < moduleCategoryData.length; i++) {
+                    moduleCategoryData[i].children = [];
+                    moduleCategoryData[i].type = "moduleCategory";
+                    if (i != 0) {
+                        moduleCategoryData[i].state = "closed";
+                    }
+                }
+            }
+            return moduleCategoryData;
+        },
+        //获取所有程序
+        getAllModels: function (applicationTypeCode) {
+            var models = JSON.parse(Kworld.AppInfo.getAllModels(applicationTypeCode));
+            return models;
+        },
+
+        //计算数量
+        getCount: function (moduleCategorys, models) {
+            if (this.applicationTypeCode == 'all') {
+                this.allCount = models.length;
+                this.caculateCount = 0;
+                this.searchCount = 0;
+                this.reportCount = 0;
+            }
+            for (var i = 0; i < moduleCategorys.length; i++) {
+                moduleCategorys[i].modelCount = 0;
+                for (var j = 0; j < models.length; j++) {
+                    if (i == 0 && this.applicationTypeCode == 'all' && models[j].applicationTypeCode == 'Caculate') {
+                        this.caculateCount++
+                    } else if (i == 0 && this.applicationTypeCode == 'all' && models[j].applicationTypeCode == 'Search') {
+                        this.searchCount++;
+                    } else if (i == 0 && this.applicationTypeCode == 'all' && models[j].applicationTypeCode == 'Report') {
+                        this.reportCount++;
+                    }
+                    if (models[j].moduleCategoryCode == moduleCategorys[i].moduleCategoryCode) {
+                        moduleCategorys[i].modelCount++;
+                    }
+                }
+            }
+            return moduleCategorys;
+        },
+
+        //获取分类下的小程序
+        getToolsByModuleCategory: function (moduleCategoryCode) {
+            var toolsByModuleCategoryData = JSON.parse(Kworld.AppInfo.selectPageByModuleCategoryCode(pageNum, pageSize, this.applicationTypeCode, moduleCategoryCode));
+            return toolsByModuleCategoryData.list;
+        },
+        //切换小程序功能分类
+        changeProgramApplicationType: function (ele) {
+            this.applicationTypeCode = $(ele).attr("knocomp");
+            $(ele).siblings().css({"border-bottom": "solid #44A4D7 0", "color": "#333"});
+            $(ele).css({"border-bottom": "solid #44A4D7 2px", "color": "#666"});
+            this.getLocalData(this.applicationTypeCode);
+            $(this.localProgramSearch).searchbox('setValue', '');
+            $("#recentlyUsedToolsTree").parent().css({"display": "block"});
+            $("#recentlyUsedToolsTree").css({"display": "block"});
+            $("#localProgramTree").css({"display": "block"});
+            $("#searchProgramTree").css({"display": "none"});
+        },
+        //搜索
+        doSearch: function (value, name) {
+            if (value == "") {
+                $("#recentlyUsedToolsTree").parent().css({"display": "block"});
+                $("#recentlyUsedToolsTree").css({"display": "block"});
+                $("#localProgramTree").css({"display": "block"});
+                $("#searchProgramTree").css({"display": "none"});
+                return;
+            }
+            $("#recentlyUsedToolsTree").parent().css({"display": "none"});
+            $("#recentlyUsedToolsTree").css({"display": "none"});
+            $("#localProgramTree").css({"display": "none"});
+            $("#searchProgramTree").css({"display": "block"});
+            var result = JSON.parse(Kworld.AppInfo.search(pageNum, pageSize, localProgramComponent.applicationTypeCode, value));
+            var searchData = result.list;
+            if (searchData.length <= 0) {
+                searchData = []
+            }
+            var length = searchData.length;
+            if (length == 0) {
+                var node = CFactory.createNode({
+                    type: "div",
+                    text: "暂无数据"
+                })
+                $("#searchProgramTree").html("");
+                $("#searchProgramTree").append(node);
+            } else {
+                for (var i = 0; i < length; i++) {
+                    if (i == 0) {
+                        $("#searchProgramTree").html("");
+                    }
+                    var programClass = "";
+                    if (searchData[i].applicationTypeCode == "Caculate") {
+                        programClass = "program_icon_caculate";
+                    } else if (searchData[i].applicationTypeCode == "Search") {
+                        programClass = "program_icon_search";
+                    } else if (searchData[i].applicationTypeCode == "Report") {
+                        programClass = "program_icon_report";
+                    } else {
+                        programClass = "";
+                    }
+                    var IfShareClass = "";
+                    if (searchData[i].IfShare == 0) {
+                        IfShareClass = "program_icon_publish";
+                    }
+                    if (localProgramComponent.selectValue == 'bigImg') {
+                        node = CFactory.createNode({
+                            type: "div",
+                            attr: {
+                                style: "width:90px;height:70px;margin:10px 5px 10px 0;float:left;border:1px solid #cccccc,text-align:center",
+                                modelId: searchData[i].id,
+                                guid: searchData[i].guid
+                            },
+                            child: [{
+                                type: "div",
+                                attr: {
+                                    style: "display:none",
+                                    modelName: searchData[i].modelName,
+                                    id: "search_imgDesc_" + searchData[i].id
+                                },
+                                text: searchData[i].description
+                            }, {
+                                type: "img",
+                                attr: {
+                                    src: "imgs/common/defaultProgram.png",
+                                    width: "48px",
+                                    height: "48px",
+                                    style: "margin-left:15px;",
+                                    modelId: searchData[i].id
+                                },
+                                events: {
+                                    //鼠标悬浮事件
+                                    onmouseover: function (event) {
+                                        //获取鼠标点击的xy坐标
+                                        var x = $(this).offset().left;
+                                        var y = $(this).offset().top + 50;
+                                        var id = $(this).attr("modelId");
+                                        var modelName = $("#search_imgDesc_" + id).attr("modelName");
+                                        var desc = $("#search_imgDesc_" + id).html();
+                                        $("#modelDesc").html("<h4 style='margin-bottom: 10px'>" + modelName + "</h4><p style='text-indent:2em;'>" + desc + "</p>")
+                                        $("#modelDesc").menu('show', {
+                                            left: x,
+                                            top: y
+                                        });
+                                    },
+                                    onmouseout: function () {
+                                        $("#modelDesc").menu('hide');
+                                    }
+                                }
+                            }, {
+                                type: "br"
+                            },{
+                                type:"div",
+                                attr:{"style":"text-align:center;"},
+                                child:[{
+                                    type: "sub",
+                                    attr: {
+                                        style: "color: #7789A8"
+                                    },
+                                    text: searchData[i].modelName.length > 6 ? searchData[i].modelName.slice(0, 6) + "..." : searchData[i].modelName
+                                }]
+                            } ],
+                            events: {
+                                oncontextmenu: function (event) {
+                                    //获取鼠标点击的xy坐标
+                                    var x = event.clientX;
+                                    var y = event.clientY;
+                                    localProgramComponent.userModelId = $(this).attr("modelId");
+                                    localProgramComponent.guid = $(this).attr("guid");
+                                    $("#localProgramTreeContextMenu").menu('show', {
+                                        left: x,
+                                        top: y
+                                    })
+                                }
+                            }
+                        });
+                    } else {
+                        node = CFactory.createNode({
+                            type: "div",
+                            attr: {
+                                style: "overflow: hidden;width: 300px;",
+                                modelId: searchData[i].id,
+                                guid: searchData[i].guid
+                            },
+                            child: [{
+                                type: "div",
+                                attr: {
+                                    style: "float: left;display: inline-block;margin-top: 5px;"
+                                },
+                                child: [{
+                                    type: "div",
+                                    attr: {
+                                        style: "display:none",
+                                        modelName: searchData[i].modelName,
+                                        id: "search_listDesc_" + searchData[i].id
+                                    },
+                                    text: searchData[i].description
+                                }, {
+                                    type: "img",
+                                    attr: {
+                                        src: "imgs/common/defaultProgram.png",
+                                        width: "48px",
+                                        height: "48px",
+                                        modelId: searchData[i].id
+                                    },
+                                    events: {
+                                        //鼠标悬浮事件
+                                        onmouseover: function () {
+                                            //获取鼠标点击的xy坐标
+                                            // console.log($(this).offset().top);
+                                            var x = $(this).offset().left;
+                                            var y = $(this).offset().top;
+                                            var id = $(this).attr("modelId");
+                                            var modelName = $("#search_listDesc_" + id).attr("modelName");
+                                            var desc = $("#search_listDesc_" + id).html();
+                                            $("#modelDesc").html("<h4 style='margin-bottom: 10px'>" + modelName + "</h4><p style='text-indent:2em;'>" + desc + "</p>")
+                                            $("#modelDesc").menu('show', {
+                                                left: x + 50,
+                                                top: y
+                                            });
+                                        },
+                                        onmouseout: function () {
+                                            $("#modelDesc").menu('hide');
+                                        }
+                                    }
+                                }]
+                            }, {
+                                type: "div",
+                                attr: {
+                                    class: "color2 font12",
+                                    style: "margin-left: 32px;margin-top:10px;position: relative"
+                                },
+                                child: [{
+                                    type: "span",
+                                    attr: {
+                                        style: "margin-left: 10px;font-size:14px;font-weight:bold "
+                                    },
+                                    text: (searchData[i].modelName.length <= 13 ? searchData[i].modelName : (searchData[i].modelName.slice(0, 12) + "..."))
+                                }, {
+                                    type: "span",
+                                    attr: {
+                                        class: "icon20 " + programClass,
+                                        style: "vertical-align: bottom;position: absolute;right: 0px;top:5px;",
+                                        title: searchData[i].applicationType
+                                    }
+                                }, {
+                                    type: "span",
+                                    attr: {
+                                        class: "icon20 " + IfShareClass,
+                                        style: "vertical-align: bottom;position: absolute;right: 20px;top:5px;",
+                                    }
+                                }]
+                            }, {
+                                type: "div",
+                                attr: {
+                                    class: "color2 font12",
+                                    style: "margin-left: 32px;"
+                                },
+                                child: [{
+                                    type: "span",
+                                    attr: {
+                                        style: "margin-left:10px;color: #7789A8"
+                                    },
+                                    child: [{
+                                        type: "sub",
+                                        text: searchData[i].principleType
+                                    }]
+                                }, {
+                                    type: "span",
+                                    attr: {
+                                        style: "margin-left:10px;color: #7789A8"
+                                    },
+                                    child: [{
+                                        type: "sub",
+                                        text: searchData[i].category
+                                    }]
+                                }]
+                            }],
+                            events: {
+                                oncontextmenu: function (event) {
+                                    //获取鼠标点击的xy坐标
+                                    var x = event.clientX;
+                                    var y = event.clientY;
+                                    localProgramComponent.userModelId = $(this).attr("modelId");
+                                    localProgramComponent.guid = $(this).attr("guid");
+                                    $("#localProgramTreeContextMenu").menu('show', {
+                                        left: x,
+                                        top: y
+                                    })
+                                }
+                            }
+                        });
+                    }
+                    $("#searchProgramTree").append(node);
+                }
+            }
+        },
+        //程序使用
+        userAppTools: function () {
+            var id = this.userModelId;
+            var guid = this.guid;
+            var currTime = new Date();
+            var time = currTime.getTime();
+            try {
+                // if (config.callTool === "ShareWorks"){
+                //     Kworld.AppInfo.updateLastUseTime(id,time+"");
+                //     Kworld.AppWork.testApp(guid);
+                // }
+                // else{
+                    //修改程序最后使用时间
+                    Kworld.AppInfo.updateLastUseTime(guid,time+"");
+                    //将组件拷贝到工具解析器指定目录中
+                    Kworld.IoOption.copyFile(guid);
+                // }
+                //alert(config.callTool);
+            } catch (error) {
+                console.log(error.message);
+            }
+        },
+        //验证程序
+        userAppValidate:function(){
+            var id = this.userModelId;
+            var guid = this.guid;
+            var currTime = new Date();
+            var time = currTime.getTime();
+            try {
+                Kworld.AppInfo.updateLastUseTime(id,time + "");
+                Kworld.AppWork.testApp(guid);
+            } catch (error) {
+                console.log(error.message);
+            }
+        },
+        //程序更新
+        updateAppTools: function () {
+            console.log(this.userModelId);
+            alert("此功能还未开通！");
+        },
+        //删除程序
+        delAppTools: function () {
+//            alert("此功能还未开通！");
+//            console.log(this.userModelId);
+            var id = this.userModelId;
+            var guid = this.guid;
+            var result = Kworld.AppInfo.delete(id,guid);
+            if (result) {
+                alert("删除成功！")
+            } else {
+                alert("删除失败！")
+            }
+        },
+        //展示小程序详细信息
+        showProgramDes: function (e, ele, guid) {
+            e.preventDefault();
+            /*    var node = $('#localProgramTree').tree('find', guid);*/
+            $('#dd').tooltip({
+                content: $('<div></div>'),
+                showEvent: 'mouseover',
+                onUpdate: function (content) {
+                    content.panel({
+                        width: 200,
+                        border: false,
+                        title: 'Login',
+                        href: 'views/program/programDescribe.html'
+                    });
+                },
+                onShow: function () {
+                    var t = $(this);
+                    t.tooltip('tip').unbind().bind('mouseenter', function () {
+                        t.tooltip('show');
+                    }).bind('mouseleave', function () {
+                        t.tooltip('hide');
+                    });
+                }
+            });
+
+
+        },
+        //设置树结构中的图标
+        setTreeIconByData: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                data[i].iconCls = "kno_icon_empty";
+                for (var j = 0; j < data[i].children.length; j++) {
+                    data[i].children[j].iconCls = "kno_icon_empty";
+                    data[i].children[j].id = data[i].children[j].guid;
+                }
+            }
+            return data;
+        },
+        change: function (value) {
+            this.selectValue = value;
+            /*$("#recentlyUsedToolsTree").css({"display": "block"});
+             $("#localProgramTree").css({"display": "block"});
+             $("#searchProgramTree").css({"display": "none"});*/
+            if ($("#recentlyUsedToolsTree").css("display") == "block") {
+                this.getRecentlyUsedTools();
+                this.getLocalData(this.applicationTypeCode);
+            } else {
+                var inputValue = $("input[knocomp='localProgramSearch']").val();
+                this.doSearch(inputValue, "");
+            }
+            /*this.getRecentlyUsedTools();
+             this.getLocalData(this.applicationTypeCode);*/
+        }
+    })
+
+</script>
+
+</body>
+</html>

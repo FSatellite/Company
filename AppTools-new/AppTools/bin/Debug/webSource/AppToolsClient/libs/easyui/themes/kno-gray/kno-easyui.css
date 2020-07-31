@@ -1,0 +1,38 @@
+.panel-header, .panel-body {
+    border-width: 0;
+    border-style: solid;
+}
+
+/*tab页样式*/
+.tabs-header, .tabs-tool {
+    background-color: #eaeef4;
+}
+
+.tabs {
+    border-color: #c6cfdb;
+}
+.tabs-header,
+.tabs-scroller-left,
+.tabs-scroller-right,
+.tabs-tool,
+.tabs,
+.tabs-panels,
+.tabs li a.tabs-inner {
+    border-color: #c6cfdb;
+}
+.tabs li a{
+    background-color: red;
+}
+
+
+/*树结构样式*/
+.tree-node {
+    height: 48px;
+}
+.tree-node-selected {
+    /*color: #fff;*/
+    background-color: #D8EFFC;
+    /*border: solid #005f92 1px;*/
+}
+
+

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>系统运行日志</title>
+    <link rel="stylesheet" type="text/css" href="../../../style/common/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/color.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/kno-icon-expends.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/kno-gray/kno-easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../style/common/commonIcon.css">
+    <link rel="stylesheet" type="text/css" href="../../../style/manager/twoLevelPage/twoLevelPage.css">
+    <script type="text/javascript" src="../../../libs/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../libs/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../../libs/knowind/CFactory.js"></script>
+    <script type="text/javascript" src="../../../js/common/config.js"></script>
+    <script type="text/javascript" src="../../../js/common/services.js"></script>
+</head>
+<body>
+<div compName="logManagerComponent" style="width:100%;height:100%;">
+    <div class="easyui-layout" style="width:100%;height:100%;">
+        <div data-options="region:'north'" style="height:32px;background-color: #005F92;border: 0;">
+            <h6 class="manager_two_title" style="width:30%;float: left">系统运行日志</h6>
+            <div style="width:66%;float: left ">
+                <ul style="text-align: right;width:100%;margin-top:10px;-webkit-app-region:drag;">
+                    <li style="float: right;width: 22px;height: 22px;cursor: pointer; -webkit-app-region:no-drag;"
+                        onmouseover="logManagerComponent.showMouseOverState(this,'../../../imgs/common/commonIcon_close')"
+                        onmouseout="logManagerComponent.hideMouseOverState(this,'../../../imgs/common/commonIcon_close')">
+                        <img class="fa-close" n-ui-command="close" src="../../../imgs/common/commonIcon_close.png"></li>
+                    <li style="float: right;width: 22px;height: 22px;cursor: pointer;-webkit-app-region:no-drag;"
+                        onmouseover="logManagerComponent.showMouseOverState(this,'../../../imgs/common/commonIcon_minimize')"
+                        onmouseout="logManagerComponent.hideMouseOverState(this,'../../../imgs/common/commonIcon_minimize')">
+                        <img class="fa-window-minimize" n-ui-command="minimize"
+                             src="../../../imgs/common/commonIcon_minimize.png"></li>
+                </ul>
+            </div>
+        </div>
+        <div data-options="region:'center'">
+            <div class="easyui-layout" style="width:100%;height:100%;">
+                <div data-options="region:'north'" style="border: solid #c6cfdb 1px;background-color: #fbfcfd;">
+                    <div>
+                        <table>
+                            <tr>
+                                <td style="text-align: right">用户名&nbsp;</td>
+                                <td><input class="easyui-textbox" style="width:200px;height:28px"></td>
+                                <td style="width: 80px;text-align: right">操作内容&nbsp;</td>
+                                <td><input class="easyui-textbox" style="width:300px;height:28px"></td>
+                                <td style="width: 80px;text-align: right">IP地址&nbsp;</td>
+                                <td><input class="easyui-textbox" style="width:200px;height:28px"></td>
+                                <td style="width: 80px;text-align: right">是否成功&nbsp;</td>
+                                <td>
+                                    <select class="easyui-combobox" name="state" style="width:100px;">
+                                        <option value="AK">是</option>
+                                        <option value="AZ">否</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: right">开始时间&nbsp;</td>
+                                <td><input class="easyui-datetimebox" style="width:200px"></td>
+                                <td style="width: 80px;text-align: right">结束时间&nbsp;</td>
+                                <td colspan="4"><input class="easyui-datetimebox" style="width:200px"></td>
+
+                                <td style="text-align: right"><a href="#" class="easyui-linkbutton" style="width:80px;">搜索</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div data-options="region:'center'" style="border: solid #c6cfdb 1px;">
+                    <table id="logManagerTable" data-options="fit: true,fitColumns: true"></table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var logManagerComponent = CFactory.createComponent({
+        compName: "logManagerComponent",
+        init: function () {
+            this.loadOrganizeTable();
+        },
+        doSearch: function () {
+
+        },
+        //设置程序关闭、最小化等等按钮样式
+        showMouseOverState: function (ele, src) {
+            $(ele).children("img").attr("src", src + "_hover.png");
+        },
+        hideMouseOverState: function (ele, src) {
+            $(ele).children("img").attr("src", src + ".png");
+        },
+        loadOrganizeTable: function () {
+            var data={"total":28,"rows":[
+                {"name":"李明","dept":"技术部","ipAddr":"192.168.0.251","power":"本地程序","action":"添加计算","success":"是","date":"2018-09-23"},
+                {"name":"王德顺","dept":"技术部","ipAddr":"192.168.0.251","power":"本地程序","action":"添加计算","success":"是","date":"2018-10-08"},
+                {"name":"李丹","dept":"技术部","ipAddr":"192.168.0.251","power":"本地程序","action":"添加计算","success":"是","date":"2018-11-12"},
+                {"name":"张思","dept":"技术部","ipAddr":"192.168.0.251","power":"本地程序","action":"添加计算","success":"是","date":"2018-12-27"}
+            ]}
+            $('#logManagerTable').datagrid({
+                data:data,
+                columns:[[
+                    {field:'name',title:'用户名',width:100},
+                    {field:'dept',title:'部门',width:120},
+                    {field:'ipAddr',title:'IP地址',width:200},
+                    {field:'power',title:'功能模块',width:180},
+                    {field:'action',title:'操作',width:180},
+                    {field:'success',title:'是否成功',width:180},
+                    {field:'date',title:'操作时间',width:100}
+                ]]
+            });
+        }
+
+    })
+</script>
+</body>
+</html>

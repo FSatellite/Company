@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="style/user.css">
+<style>
+    .textbox .textbox-text {
+        font-size: 12px;
+        color: #666;
+    }
+</style>
+<div compName="userLoginComponent"
+     style="width: 100%;height: 100%;border:0;background-color: #fbfcfd;">
+    <!--用户信息展示-->
+    <div knocomp="showUserInfoCon" style="padding: 15px 20px;">
+        <div class="easyui-panel" style="padding: 20px;width: 300px;border:solid #c6cfdb 1px;">
+            <div style="float: left;width:40px;"><img src="imgs/index/user_on.png"
+                                                      style="width: 30px;height: 30px;border: solid #c6cfdb 1px;"></div>
+            <div style="margin-left: 40px;">
+                <div style="margin-bottom:20px;;height: 28px;line-height: 28px;"><i
+                        class="icon20 common_icon_man mr8" style="vertical-align: middle;"></i><span
+                        style="margin-right: 8px;" knocomp="userTrueNameCon">薛晓雅</span><i
+                        class="icon20 common_icon_edit" style="vertical-align: middle;display: none;"></i></div>
+                <div style="margin-bottom:18px">
+                    <span style="width: 20%">手机&nbsp;&nbsp;&nbsp;</span>
+                    <input class="easyui-textbox" style="width:170px;height:28px;color: #666;" knocomp="userPhoneCon"
+                           data-options="readonly:true">
+                </div>
+                <div style="margin-bottom:18px">
+                    <span>邮箱&nbsp;&nbsp;&nbsp;</span>
+                    <input class="easyui-textbox" style="width:170px;height:28px;color: #666;" knocomp="userEmailCon"
+                           data-options="readonly:true">
+                </div>
+                <div style="margin-bottom:18px">
+                    <span>专业&nbsp;&nbsp;&nbsp;</span>
+                    <input class="easyui-textbox" style="width:170px;height:28px;color: #666;"
+                           data-options="readonly:true"
+                           knocomp="userMajorNameCon">
+                </div>
+                <div style="float: right;display: none;">
+                    <a href="#" class="easyui-linkbutton"
+                       style="padding:0 5px;height: 24px;">
+                        <span style="font-size: 12px;">取消</span>
+                    </a>
+                    <a href="#" class="easyui-linkbutton"
+                       style="padding:0 5px;height: 24px;">
+                        <span style="font-size: 12px;">保存</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center;width: 260px;margin-top: 20px;">
+            <a href="#" class="easyui-linkbutton" data-options="iconCls:'kno_icon_quit'"
+               onclick="userLoginComponent.logout()"
+               style="padding:1px 0;width:50%;">
+                <span style="font-size: 12px;">退出登录</span>
+            </a>
+        </div>
+    </div>
+    <!--用户登录-->
+    <div knocomp="userLoginCon" style="padding: 15px 20px;">
+        <div class="easyui-panel" style="padding: 20px;width: 300px;border:solid #c6cfdb 1px;">
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" style="width:100%;height:28px;padding:12px" knocomp="login_user"
+                       data-options="prompt:'用户名',iconCls:'kno_icon_man',iconWidth:38,iconAlign:'left'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-passwordbox" style="width:100%;height:28px;padding:12px" knocomp="login_pwd"
+                       data-options="prompt:'密码',iconCls:'kno_icon_lock',iconWidth:38,iconAlign:'left',showEye:false,revealed:false"
+                       onkeydown="userLoginComponent.keydownLogin()">
+            </div>
+            <div style="margin-bottom:8px">
+            <span>
+                <input type="checkbox" style="vertical-align: text-bottom;" id="rememberPwd">
+                <span>记住密码</span>
+            </span>
+                <span style="float: right;">
+                <input type="checkbox" style="vertical-align: text-bottom;" id="autoLogin"
+                       onchange="userLoginComponent.changeAutoLogin()">
+                <span>自动登录</span>
+            </span>
+            </div>
+            <div knocomp="login_msg" style="line-height: 24px;color: red;height: 24px;"></div>
+            <div>
+                <a href="#" class="easyui-linkbutton"
+                   style="padding:1px 0;width:100%;" onclick="userLoginComponent.userLogin()">
+                    <span style="font-size: 12px;" knocomp="login_btn">登录</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    window.userToken = "";
+    var userLoginComponent = CFactory.createComponent({
+        compName: "userLoginComponent",
+        loginOptions: {},
+        key: CryptoJS.enc.Utf8.parse("1234123412ABCDEF"),  //十六位十六进制数作为密钥
+        iv: CryptoJS.enc.Utf8.parse('ABCDEF1234123412'),   //十六位十六进制数作为密钥偏移量
+        init: function () {
+        },
+        //解密方法
+        Decrypt: function (word) {
+            var encryptedHexStr = CryptoJS.enc.Hex.parse(word);
+            var srcs = CryptoJS.enc.Base64.stringify(encryptedHexStr);
+            var decrypt = CryptoJS.AES.decrypt(srcs, userLoginComponent.key, {
+                iv: userLoginComponent.iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
+            var decryptedStr = decrypt.toString(CryptoJS.enc.Utf8);
+            return decryptedStr.toString();
+        },
+        //加密方法
+        Encrypt: function (word) {
+            var srcs = CryptoJS.enc.Utf8.parse(word);
+            var encrypted = CryptoJS.AES.encrypt(srcs, userLoginComponent.key, {
+                iv: userLoginComponent.iv,
+                mode: CryptoJS.mode.CBC,
+                padding: CryptoJS.pad.Pkcs7
+            });
+            return encrypted.ciphertext.toString().toUpperCase();
+        },
+        user: function () {
+            if (!loginUser || JSON.stringify(loginUser) == "{}") {
+                //未登录
+                $(this.showUserInfoCon).css({"display": "none"});
+                $(this.userLoginCon).css({"display": "block"});
+                $(this.login_msg).text("");
+                //查询登录信息
+                var result = Kworld.LoginOptions.selectOptions();
+                if (result != '') {
+                    //说明有登录信息
+                    this.loginOptions = JSON.parse(result);
+                    var username = this.loginOptions.userName;
+                    var password = this.loginOptions.password;
+                    var pwd = userLoginComponent.Decrypt(password);
+                    var rememberPwd = this.loginOptions.rememberPwd;
+                    var autoLogin = this.loginOptions.autoLogin;
+                    $(this.login_user).textbox("setText", username);
+                    if (password != null && password != '') {
+                        $(this.login_pwd).passwordbox("setValue", pwd);
+                    }
+                    if (rememberPwd == '1') {
+                        $("#rememberPwd").attr("checked", true);
+                    } else {
+                        pwd = "";
+                        $(this.login_pwd).passwordbox("setValue", "");
+                    }
+                    if (autoLogin == '1') {
+                        $("#autoLogin").attr("checked", true);
+                        if (username && pwd) {
+                            this.userLogin();
+                        }
+                    }
+                }
+            } else {
+                //已登录
+                this.setUserInfo();
+            }
+        },
+        setUserInfo: function () {
+            $(this.userLoginCon).css({"display": "none"});
+            $(this.showUserInfoCon).css({"display": "block"});
+            $(this.userTrueNameCon).text(loginUser.truename);
+            if (loginUser.phone) {
+                $(this.userPhoneCon).textbox('setText', loginUser.phone);
+            } else {
+                $(this.userPhoneCon).textbox('setText', "无");
+            }
+            if (loginUser.email) {
+                $(this.userEmailCon).textbox('setText', loginUser.email);
+            } else {
+                $(this.userEmailCon).textbox('setText', "无");
+            }
+            if (loginUser.majorName) {
+                $(this.userMajorNameCon).textbox('setText', loginUser.majorName);
+            } else {
+                $(this.userMajorNameCon).textbox('setText', "无");
+            }
+        },
+        changeRememberPwd: function (userName,password,rememberPwd) {
+            Kworld.LoginOptions.updateRememberPwd(userName,password,rememberPwd);
+        },
+        changeAutoLogin: function () {
+            var flag = $("#autoLogin")[0].checked;
+            var autoLogin = "";
+            if (flag) {
+                autoLogin = "1"
+            } else {
+                autoLogin = "0";
+            }
+            Kworld.LoginOptions.updateAutoLogin(autoLogin);
+        },
+        //用户登录
+        userLogin: function () {
+            var loginUserVal = $(this.login_user).textbox("getText");
+            var loginPwdVal = $(this.login_pwd).passwordbox("getValue");
+            if ("" == loginUserVal || "" == loginPwdVal) {
+                $(this.login_msg).text("请输入用户名和密码！");
+                return false;
+            }
+            $(this.login_btn).text("登录中...");
+            var dada = {
+                username: loginUserVal,
+                password: loginPwdVal
+            };
+            var this_ = this;
+            var pwdFlag = $("#rememberPwd")[0].checked;
+            var rememberPwd = pwdFlag ? "1" : "0";
+            var pwd = userLoginComponent.Encrypt(loginPwdVal);
+            $.ajax({
+                url: config.portal_Addr + "/login",
+                type: "POST", //GET
+                async: false,    //true:异步请求；false:同步请求
+                data: dada,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                dataType: 'JSON',    //返回的数据格式：json/xml/html/script/jsonp/text
+                success: function (result) {
+                    if ("success" == result.code) {
+                        userToken = result.data.x_auth_token;
+                        x_auth_token = result.data.x_auth_token;
+                        loginUser = result.data.user;
+                        var Days = 1;
+                        var exp = new Date();
+                        exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+                        $.cookie('SESSION', userToken, {expires: 1, path: '/'});
+                        this_.setUserInfo();
+                        $(smallProIndexComponent.manager).children("img").attr({src: "imgs/index/manager_off.png"});
+                        $(smallProIndexComponent.setting).children("img").attr({src: "imgs/index/setting_off.png"});
+                        //判断是否记住密码
+                        if(rememberPwd == "1"){
+                            Kworld.LoginOptions.updateRememberPwd(loginUserVal,pwd,rememberPwd);
+                        }else{
+                            Kworld.LoginOptions.updateRememberPwd(loginUserVal,"",rememberPwd);
+                        }
+                    } else {
+                        $(this_.login_msg).text(result.msg);
+                        $(this_.login_btn).text("登录");
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    $(this_.login_msg).text("登录失败");
+                    console.log(xhr.status);
+                    console.log(xhr.readyState);
+                    console.log(textStatus);
+                }
+            });
+        },
+        //用户退出
+        logout: function () {
+            var this_ = this;
+            $.messager.confirm('提示', '您确认要退出系统？', function (r) {
+                if (r) {
+                    services.call("GET", config.portal_Addr + "/logoutSuccess?x-auth-token=" + x_auth_token, {},
+                        function (result) {
+                            $(this_.showUserInfoCon).css({"display": "none"});
+                            $(this_.userLoginCon).css({"display": "block"});
+                            $(this_.login_msg).text("");
+                            loginUser = {};
+                            $(smallProIndexComponent.manager).children("img").attr({src: "imgs/index/manager_invalid.png"});
+                            $(smallProIndexComponent.setting).children("img").attr({src: "imgs/index/setting_invalid.png"});
+                            x_auth_token="";
+                        }, function (error) {
+                            $(this_.showUserInfoCon).css({"display": "none"});
+                            $(this_.userLoginCon).css({"display": "block"});
+                            $(this_.login_msg).text("");
+                            loginUser = {};
+                        });
+                }
+            })
+        },
+        //回车登录
+        keydownLogin: function () {
+            console.log("-------------");
+            console.log(event);
+        }
+    })
+</script>
+<!--<script src="md5.js"></script>-->
+<!--<script src="enc-base64-min.js"></script>-->
+</body>
+</html>

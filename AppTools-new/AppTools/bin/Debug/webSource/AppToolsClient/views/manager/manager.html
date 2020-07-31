@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="style/manager.css">
+<div compName="managerComponent" style="width: 100%;height: 100%;border:0;background-color: #fbfcfd;">
+    <div class="page_title">管理</div>
+    <div class="manager_nav_con" id="userManage">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'common_icon_man'" style="padding: 0 8px;"
+           onclick="managerComponent.openPerManager()">人员组织管理</a>
+    </div>
+    <div class="manager_nav_con">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'common_icon_man'" style="padding: 0 8px;"
+           onclick="managerComponent.openProgramMaintain()">程序维护管理</a>
+    </div>
+    <div class="manager_nav_con">
+        <a href="#" class="easyui-linkbutton" data-options="iconCls:'common_icon_man'" style="padding: 0 8px;"
+           onclick="managerComponent.openLogManager()">系统运行日志</a>
+    </div>
+</div>
+<script type="text/javascript">
+    window.aa=[];
+    var managerComponent = CFactory.createComponent({
+        compName: "managerComponent",
+        init: function () {
+            var username = loginUser.username.toUpperCase();
+            if(username == 'SYSADMIN' || username == 'SAFEADMIN' || username == 'AUDITADMIN'){
+                $("#userManage").css("display","block");
+            }else{
+                $("#userManage").css("display","none");
+            }
+        },
+        openPerManager: function () {
+//            window.open( config.smallProgramClient_Addr+"views/manager/twoLevelPage/personOrganize.html");
+            window.open(config.portal_Addr+"/index.html?x-auth-token="+x_auth_token);
+//            try {
+//                Kworld.Window.Open(config.portal_Addr+"/index.html?x_auth_token="+x_auth_token, "true", "1200", "500");
+//            } catch (ex) {
+//                window.open(config.portal_Addr+"/index.html?x-auth-token="+x_auth_token);
+//            }
+        },
+        openProgramMaintain: function () {
+            try {
+                Kworld.Window.Open(config.AppToolsClient_Addr+"/views/manager/twoLevelPage/programMaintain.html?x_auth_token="+x_auth_token, "false", "1200", "500");
+            } catch (ex) {
+                window.open("/views/publishProgram/dialog/packBagePro.html");
+            }
+//            window.open( config.AppToolsClient_Addr+"views/manager/twoLevelPage/programMaintain.html");
+        },
+        openLogManager: function () {
+            try {
+                Kworld.Window.Open(config.AppToolsClient_Addr+"/views/manager/twoLevelPage/logManager.html?x_auth_token="+x_auth_token, "false", "1200", "500");
+            } catch (ex) {
+                window.open("/views/manager/twoLevelPage/logManager.html");
+            }
+//            window.open( config.smallProgramClient_Addr+"views/manager/twoLevelPage/logManager.html");
+        }
+    })
+</script>
+</body>
+</html>

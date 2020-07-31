@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ModelDescription modelName="BeamStress" fmiVersion="" guid="" description="" author="" generatationTool="" generateionDate="" copyRight="">
+
+  <ModelVariables>
+    <ScalarVariable name="t" valueReference="0" description="t"
+                  dataFlow="input" Format="6E3" attachFile="t.dat" rowIndex="1" columnStartIndex="2" columnEndIndex="8"
+                   causality="local" variability="continuous" initial="exact" unit="m">
+    </ScalarVariable>
+	<ScalarVariable name="y" valueReference="0" description="stress of beam"
+                    dataFlow="output" Format="6E3" attachFile="y.dat" rowIndex="1" columnStartIndex="2" columnEndIndex="8"
+                     causality="local" variability="continuous" initial="exact" unit="pa">
+    </ScalarVariable>
+  </ModelVariables>
+  <ModelStructure>
+    <batchFile name="curve.bat"></batchFile>
+    <inputFiles>
+      <inputFile name="t.dat"></inputFile>
+    </inputFiles>
+    <outputFiles>
+      <outputFile name="y.dat"></outputFile>
+    </outputFiles>
+  </ModelStructure>
+</ModelDescription>

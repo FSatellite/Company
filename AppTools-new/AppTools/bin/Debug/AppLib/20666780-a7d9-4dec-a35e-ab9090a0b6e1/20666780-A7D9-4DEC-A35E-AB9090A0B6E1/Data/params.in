@@ -1,0 +1,35 @@
+##rowModel
+#paramName  #description  #value  #type  #unit
+m 导弹质量 2.5 double t
+g 重力加速度 9.8 double m/s2
+density 空气密度 1.225 double kg/m3
+V 远场速度 238 double m/s
+l 翼展 2.5 double m
+CL 升力系数 1 double /
+rtRatio 根梢比 3 double /
+
+##matrixModel
+#[name]   #[description]   #[type]      #[unit]
+ma        马赫数           double[]     /
+0.2
+0.3
+0.4
+0.5
+0.6
+0.7
+0.8
+1.0
+1.2
+1.5
+1.8
+2.0
+
+
+//三行数据分别表示Cl Cd Cm
+##structModel
+#[name]      #[description]   #[type]      #[unit]
+aerodynamic  气动参数         double[][]   /
+-2 0 2 4 6 8 10 12
+0.0086 0.235 0.4579 0.6758 0.8969 1.1122 1.323 1.5206
+0.005 0.0048 0.0051 0.0058 0.0067 0.0082 0.0098 0.0123
+-0.052 -0.052 -0.052 -0.052 -0.052 -0.051 -0.049 -0.046

@@ -1,0 +1,30 @@
+# DAKOTA 
+
+environment
+  tabular_data
+
+method
+  conmin_frcg
+
+variables,
+  continuous_design = 2
+    initial_point   2.0      5  
+    lower_bounds    0.0      0 
+    upper_bounds    100      100
+    descriptors      'x'     'y' 
+
+interface
+  analysis_drivers = 'RunCMD.bat'
+  fork
+    parameters_file = 'paras.in'
+    results_file = 'result.out'
+    work_directory named 'distance' 
+    file_save directory_save
+
+
+responses,
+  objective_functions = 1
+  numerical_gradients
+    fd_gradient_step_size = .01
+  no_hessians
+

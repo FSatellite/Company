@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ModelDescription modelName="液面高度计算" modelIdentifier="LiquidLevelCal" fmiVersion="1.0" guid="8354EDDB-BF43-4D52-80B1-9F1AA9EAFAE1" description="" author="knowind" generationTool="C" programType="dll" category="总体专业" categoryCode="Z" principleType="行业规范" principleTypeCode="HYGF" applicationType="数据计算" applicationTypeCode="Caculate" moduleCategory="自研程序模块" moduleCategoryCode="SelfDevelopedProcedure" publishTime="2020-04-29 11:54:42 +8" copyright="" remark="" keyword="">
+  <ModelVariables>
+    <ScalarVariable name="s1_Volume" displayName="芯一级氧箱体积" dataType="double" valueReference="30000" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="s2_Volume" displayName="芯一级燃箱体积" dataType="double" valueReference="30000" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="s3_Volume" displayName="芯二级氧箱体积" dataType="double" valueReference="30000" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="s4_Volume" displayName="芯二级燃箱体积" dataType="double" valueReference="40000" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="s5_Volume" displayName="助推氧箱" dataType="double" valueReference="50000" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="s6_Volume" displayName="助推燃箱" dataType="double" valueReference="60000" dataFlow="input" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="s1_Height" displayName="高度1" dataType="double" valueReference="0.0" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="s2_Height" displayName="高度2" dataType="double" valueReference="0.0" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="s3_Height" displayName="高度3" dataType="double" valueReference="0.0" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="s4_Height" displayName="高度4" dataType="double" valueReference="0.0" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="s5_Height" displayName="高度5" dataType="double" valueReference="0.0" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+    <ScalarVariable name="s6_Height" displayName="高度6" dataType="double" valueReference="0.0" dataFlow="output" description="" format="" unit="/" variability="" causality="" keyMap="" tagImage="" />
+  </ModelVariables>
+</ModelDescription>

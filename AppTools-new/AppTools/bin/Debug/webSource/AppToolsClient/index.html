@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>小程序</title>
+    <link rel="stylesheet" type="text/css" href="style/common/reset.css">
+    <link rel="stylesheet" type="text/css" href="libs/easyui/themes/gray/easyui.css">
+    <link rel="stylesheet" type="text/css" href="libs/easyui/themes/color.css"/>
+    <link rel="stylesheet" type="text/css" href="libs/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="libs/easyui/themes/kno-icon-expends.css">
+    <link rel="stylesheet" type="text/css" href="libs/easyui/themes/kno-gray/kno-easyui.css">
+    <link rel="stylesheet" type="text/css" href="style/common/commonIcon.css">
+    <link rel="stylesheet" type="text/css" href="style/index.css">
+
+    <script type="text/javascript" src="libs/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="libs/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="libs/knowind/CFactory.js"></script>
+    <script type="text/javascript" src="js/common/config.js"></script>
+    <script type="text/javascript" src="js/common/services.js"></script>
+    <script type="text/javascript" src="libs/jQuery/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/common/aes.js"></script>
+    <script type="text/javascript" src="js/common/enc-base64-min.js"></script>
+</head>
+<body>
+<div compName="smallProIndexComponent" style="width:99%;height:99%;">
+    <div class="easyui-layout" style="width:100%;height:100%;">
+        <div data-options="region:'west'"
+             style="width:52px;border: 0;border-right: solid #c6cfdb 1px;background-color: #005f92;-webkit-app-region:no-drag;">
+            <div class="nav_t" style="-webkit-app-region:no-drag;">
+                <div class="nav_con_t kno_nav" onclick="smallProIndexComponent.goToNavPage(this)" knocomp="user"
+                     title="个人信息">
+                    <img src="imgs/index/user_off.png" class="nav_img_size" title="个人信息"
+                         style="-webkit-app-region:no-drag;"/><br/>
+                </div>
+                <div class="nav_con_t kno_nav" onclick="smallProIndexComponent.goToNavPage(this)" knocomp="program"
+                     title="程序" style="margin-top: 40px;">
+                    <img src="imgs/index/program_off.png" class="nav_img_size" title="程序"
+                         style="-webkit-app-region:no-drag;"/><br/>
+                </div>
+            </div>
+            <div class="nav_b">
+                <div class="nav_con_b kno_nav" onclick="smallProIndexComponent.goToNavPage(this)"
+                     knocomp="publishProgram" title="程序发布">
+                    <img src="imgs/index/publishProgram_off.png" class="nav_img_size" title="程序发布"
+                         style="-webkit-app-region:no-drag;"/><br/>
+                </div>
+                <div class="nav_con_b kno_nav" onclick="smallProIndexComponent.goToNavPage(this)" knocomp="manager"
+                     title="管理">
+                    <img src="imgs/index/manager_invalid.png" class="nav_img_size" title="管理"
+                         style="-webkit-app-region:no-drag;"/><br/>
+                </div>
+                <div class="nav_con_b kno_nav" onclick="smallProIndexComponent.goToNavPage(this)" knocomp="setting"
+                     title="设置">
+                    <img src="imgs/index/setting_invalid.png" class="nav_img_size" title="设置"
+                         style="-webkit-app-region:no-drag;"/><br/>
+                </div>
+            </div>
+        </div>
+        <div data-options="region:'center'" style="border: 0;">
+            <div class="easyui-layout" style="width:100%;height:100%;">
+                <div data-options="region:'north'"
+                     style="height:24px;background-color: #fbfcfd;-webkit-app-region:drag;">
+                    <ul style="text-align: right;height: 100%;-webkit-app-region:drag;">
+                        <li style="float: right;width: 22px;height: 22px;cursor: pointer; -webkit-app-region:no-drag;"
+                            onmouseover="smallProIndexComponent.showMouseOverState(this,'imgs/common/commonIcon_close')"
+                            onmouseout="smallProIndexComponent.hideMouseOverState(this,'imgs/common/commonIcon_close')">
+                            <img class="fa-close" n-ui-command="close" src="imgs/common/commonIcon_close.png"></li>
+                        <li style="float: right;width: 22px;height: 22px;cursor: pointer;-webkit-app-region:no-drag;"
+                            onmouseover="smallProIndexComponent.showMouseOverState(this,'imgs/common/commonIcon_minimize')"
+                            onmouseout="smallProIndexComponent.hideMouseOverState(this,'imgs/common/commonIcon_minimize')">
+                            <img class="fa-window-minimize" n-ui-command="minimize"
+                                 src="imgs/common/commonIcon_minimize.png"></li>
+                    </ul>
+                </div>
+                <div data-options="region:'center'" style="border: 0;">
+                    <div knocomp="navPage" style="width: 100%;height: 100%;border: 0;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var smallProIndexComponent = CFactory.createComponent({
+        compName: "smallProIndexComponent",
+        //选中的菜单
+        pageHrefName: "program",
+        init: function () {
+            this.goToNavPage($(this[this.pageHrefName])[0]);
+        },
+        goToNavPage: function (ele) {
+            this.pageHrefName = $(ele).attr("knocomp");
+            if ("manager" == this.pageHrefName || "setting" == this.pageHrefName) {
+                if (!loginUser || JSON.stringify(loginUser) == '{}' || JSON.stringify(loginUser) == 'undefined') {
+                    $(ele).children('img').attr({src: "imgs/index/" + this.pageHrefName + "_invalid.png"});
+                    alert("请先登录！");
+                    return;
+                }
+            }
+            $(this.navPage).panel({
+                href: 'views/' + this.pageHrefName + '/' + this.pageHrefName + '.html',
+                onLoad: function () {
+                }
+            });
+            if ("user" == this.pageHrefName) {
+                $(this.navPage).panel({
+                    onLoad: function () {
+                        userLoginComponent.user();
+                    }
+                });
+            } else if ("publishProgram" == this.pageHrefName) {
+                $(this.navPage).panel({
+                    onLoad: function () {
+                        publishProgramComponent.getPublishLoalProgram("");
+                    }
+                });
+            }
+            this.styleChange(ele);
+        },
+        //设置程序关闭、最小化等等按钮样式
+        showMouseOverState: function (ele, src) {
+            $(ele).children("img").attr("src", src + "_hover.png");
+        },
+        hideMouseOverState: function (ele, src) {
+            $(ele).children("img").attr("src", src + ".png");
+        },
+        //设置样式
+        styleChange: function (ele) {
+            $(".kno_nav").each(function () {
+                if (this == ele) {
+                    $(this).children("img").attr({src: "imgs/index/" + $(this).attr("knocomp") + "_on.png"});
+                } else {
+                    if ("manager" == $(this).attr("knocomp") || "setting" == $(this).attr("knocomp")) {
+                        if (!loginUser || JSON.stringify(loginUser) == '{}' || JSON.stringify(loginUser) == undefined) {
+                            $(this).children("img").attr({src: "imgs/index/" + $(this).attr("knocomp") + "_invalid.png"});
+                        } else {
+                            $(this).children("img").attr({src: "imgs/index/" + $(this).attr("knocomp") + "_off.png"});
+                        }
+                    } else {
+                        $(this).children("img").attr({src: "imgs/index/" + $(this).attr("knocomp") + "_off.png"});
+                    }
+                }
+            });
+        }
+    })
+</script>
+</body>
+</html>

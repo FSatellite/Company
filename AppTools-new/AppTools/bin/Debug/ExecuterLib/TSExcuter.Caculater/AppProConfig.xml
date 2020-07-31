@@ -1,0 +1,37 @@
+<?xml Version="1.0" encoding="utf-8"?>
+<AnyCAD.Plugin version="1.0">
+	<m_Plugins>
+		<type type="string">vector</type>
+		<size type="int">3</size>
+		<item>
+			<value type="APluginItem">
+				<m_Name type="string">Plugin.Viz.GL</m_Name>
+				<m_DllName type="string">AnyVizGL.dll</m_DllName>
+				<m_Category type="string">System</m_Category>
+			</value>
+		</item>
+		<item>
+			<value type="APluginItem">
+				<m_Name type="string">Plugin.Exchange.Core</m_Name>
+				<m_DllName type="string">AnyExchangeCore.dll</m_DllName>
+				<m_Category type="string">System</m_Category>
+			</value>
+		</item>  
+		<item>
+			<value type="APluginItem">
+				<m_Name type="string">Plugin.Exchange.Base</m_Name>
+				<m_DllName type="string">AnyExchangeBase.dll</m_DllName>
+				<m_Category type="string">System</m_Category>
+			</value>
+		</item>  		
+		<item>
+			<value type="APluginItem">
+				<m_Name type="string">Plugin.Exchange.DXF</m_Name>
+				<m_DllName type="string">AnyExchangeDXF.dll</m_DllName>
+				<m_Category type="string">System</m_Category>
+			</value>
+		</item>
+	</m_Plugins>
+	<m_ViewFactory type="string">AView3dFactory</m_ViewFactory>
+</AnyCAD.Plugin>
+

@@ -1,0 +1,3708 @@
+Dakota version 6.7 released Nov 15 2017.
+Repository revision 0616ac7c (2017-11-10) built Nov 13 2017 02:56:03.
+Running serial Dakota executable in serial mode.
+Start time: Sun Jul  8 10:32:56 2018
+
+----------------------------------------------------------------------------------------------------------------
+Begin DAKOTA input file
+D:\项目工作\2018年度\集成优化\OptXpert\OptXpert\bin\DMLib\29efd525-9f15-4e37-af3c-3fbe00cf9249\knowind_dakota.in
+----------------------------------------------------------------------------------------------------------------
+# DAKOTA 
+
+environment
+   tabular_data
+
+method
+      sampling
+       samples 30
+       seed 123456
+       sample_type lhs
+       variance_based_decomp 
+
+variables,
+    continuous_design = 3
+      initial_point   4.9   0.05   60
+     lower_bounds   4   0.04   0
+     upper_bounds       10   1   90
+     descriptors         'Rocket_projected_area'   'Mass_with_motor_in'   'Initial_angle_in'
+  Continuous_state = 5
+     initial_state   0.4   1.2   9.81   1   0.03
+    descriptors         'Drag_coefficient'   'Air_density'   'Gravity_in'   'Launch_Rod_Length_in'   'Mass_without_motor_in'
+
+interface
+ analysis_drivers ='RunComponent.bat'
+fork
+ parameters_file = 'paras.in'
+ results_file = 'result.out'
+ work_directory named 'D:\项目工作\2018年度\集成优化\OptXpert\OptXpert\bin\DMLib\29efd525-9f15-4e37-af3c-3fbe00cf9249'
+ file_save directory_save 
+
+responses,
+    objective_functions = 2
+    sense   'min' 'min'
+    nonlinear_inequality_constraints = 2
+    nonlinear_inequality_lower_bounds =  60 -1.0e+30
+    nonlinear_inequality_upper_bounds =  100 1.0e+30
+    response_descriptor    'Max_Vx' 'Max_Vy' 'Max_Attitude' 'Max_Attitude_x' 
+    no_gradients
+    no_hessians
+
+---------------------
+End DAKOTA input file
+---------------------
+
+Using Dakota input file 'D:\项目工作\2018年度\集成优化\OptXpert\OptXpert\bin\DMLib\29efd525-9f15-4e37-af3c-3fbe00cf9249\knowind_dakota.in'
+Writing new restart file 'dakota.rst'.
+
+>>>>> Executing environment.
+
+>>>>> Running random_sampling iterator.
+
+NonD lhs Samples = 30 Seed (user-specified) = 123456
+
+NonD lhs Samples = 30 Seed not reset from previous LHS execution
+
+---------------------
+Begin Evaluation    1
+---------------------
+Parameters for evaluation 1:
+                      4.7796250843e+00 Rocket_projected_area
+                      8.4946833297e-01 Mass_with_motor_in
+                      2.5215536254e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 1:
+Active set vector = { 1 1 1 1 }
+                      2.0249870734e-01 Max_Vx
+                      2.1766761812e-01 Max_Vy
+                      7.9413866015e-01 Max_Attitude
+                      3.7395634143e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation    2
+---------------------
+Parameters for evaluation 2:
+                      9.4705484291e+00 Rocket_projected_area
+                      9.6751131976e-01 Mass_with_motor_in
+                      4.6875127450e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 2:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation    3
+---------------------
+Parameters for evaluation 3:
+                      5.9863245025e+00 Rocket_projected_area
+                      6.0104591113e-01 Mass_with_motor_in
+                      5.2526329148e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 3:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      1.8439436162e-01 Max_Attitude
+                      2.4050376846e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation    4
+---------------------
+Parameters for evaluation 4:
+                      4.5933435672e+00 Rocket_projected_area
+                      5.4978723457e-01 Mass_with_motor_in
+                      8.2077614986e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 4:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation    5
+---------------------
+Parameters for evaluation 5:
+                      6.0672443490e+00 Rocket_projected_area
+                      7.1660616316e-01 Mass_with_motor_in
+                      5.4823777300e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 5:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation    6
+---------------------
+Parameters for evaluation 6:
+                      5.1411640247e+00 Rocket_projected_area
+                      8.8289423814e-01 Mass_with_motor_in
+                      7.9831764816e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 6:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation    7
+---------------------
+Parameters for evaluation 7:
+                      8.7921123322e+00 Rocket_projected_area
+                      3.0040171371e-01 Mass_with_motor_in
+                      2.1937630034e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 7:
+Active set vector = { 1 1 1 1 }
+                      7.6874108706e-01 Max_Vx
+                      2.4725507061e+00 Max_Vy
+                      6.3466217175e+00 Max_Attitude
+                      2.0378926633e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation    8
+---------------------
+Parameters for evaluation 8:
+                      7.4236661205e+00 Rocket_projected_area
+                      7.9902158152e-01 Mass_with_motor_in
+                      9.2460429319e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 8:
+Active set vector = { 1 1 1 1 }
+                      2.6578383451e-01 Max_Vx
+                      1.0522009972e+00 Max_Vy
+                      2.3329314531e+00 Max_Attitude
+                      3.7977662092e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation    9
+---------------------
+Parameters for evaluation 9:
+                      8.8258881346e+00 Rocket_projected_area
+                      3.5488773342e-01 Mass_with_motor_in
+                      7.3203393675e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 9:
+Active set vector = { 1 1 1 1 }
+                      8.0805787458e-01 Max_Vx
+                      2.1372951511e-01 Max_Vy
+                      6.9532249859e-01 Max_Attitude
+                      2.3035123167e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   10
+---------------------
+Parameters for evaluation 10:
+                      9.3719757411e+00 Rocket_projected_area
+                      4.3153623932e-01 Mass_with_motor_in
+                      4.3183977028e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 10:
+Active set vector = { 1 1 1 1 }
+                      7.4293419149e-01 Max_Vx
+                      6.8503917853e-01 Max_Vy
+                      1.8102855408e+00 Max_Attitude
+                      1.6990188401e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   11
+---------------------
+Parameters for evaluation 11:
+                      5.5557659408e+00 Rocket_projected_area
+                      5.7087580083e-01 Mass_with_motor_in
+                      6.3840417129e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 11:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      6.8710879449e-03 Max_Attitude
+                      1.3988807090e-02 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   12
+---------------------
+Parameters for evaluation 12:
+                      7.8166444920e+00 Rocket_projected_area
+                      9.0437079234e-01 Mass_with_motor_in
+                      5.8653698014e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 12:
+Active set vector = { 1 1 1 1 }
+                      2.0441590010e-01 Max_Vx
+                      1.0384787079e+00 Max_Vy
+                      2.2710158387e+00 Max_Attitude
+                      2.3329945836e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   13
+---------------------
+Parameters for evaluation 13:
+                      7.7086052408e+00 Rocket_projected_area
+                      2.6503609625e-01 Mass_with_motor_in
+                      8.7360555877e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 13:
+Active set vector = { 1 1 1 1 }
+                      2.1002511327e+00 Max_Vx
+                      1.3952739853e-01 Max_Vy
+                      2.1208996193e-01 Max_Attitude
+                      4.6006893189e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   14
+---------------------
+Parameters for evaluation 14:
+                      8.0746024453e+00 Rocket_projected_area
+                      1.6653092852e-01 Mass_with_motor_in
+                      3.4466863386e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 14:
+Active set vector = { 1 1 1 1 }
+                      2.9978266591e+00 Max_Vx
+                      8.4546657733e+00 Max_Vy
+                      1.1198136515e+01 Max_Attitude
+                      5.4112490951e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   15
+---------------------
+Parameters for evaluation 15:
+                      9.1884920544e+00 Rocket_projected_area
+                      6.5691788051e-01 Mass_with_motor_in
+                      6.1387063009e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 15:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   16
+---------------------
+Parameters for evaluation 16:
+                      4.0253939659e+00 Rocket_projected_area
+                      2.5103307500e-01 Mass_with_motor_in
+                      3.1030577620e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 16:
+Active set vector = { 1 1 1 1 }
+                      1.3841001684e+00 Max_Vx
+                      3.5772292995e+00 Max_Vy
+                      6.9030957500e+00 Max_Attitude
+                      3.0765936311e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   17
+---------------------
+Parameters for evaluation 17:
+                      8.4895993638e+00 Rocket_projected_area
+                      1.9285708015e-01 Mass_with_motor_in
+                      4.9924998506e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 17:
+Active set vector = { 1 1 1 1 }
+                      3.7110686449e+00 Max_Vx
+                      5.7562061222e+00 Max_Vy
+                      6.7559589200e+00 Max_Attitude
+                      6.4506736256e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   18
+---------------------
+Parameters for evaluation 18:
+                      6.6679734443e+00 Rocket_projected_area
+                      9.7132016094e-01 Mass_with_motor_in
+                      8.4353901407e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 18:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   19
+---------------------
+Parameters for evaluation 19:
+                      6.4902752940e+00 Rocket_projected_area
+                      4.9267927130e-01 Mass_with_motor_in
+                      2.7586212032e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 19:
+Active set vector = { 1 1 1 1 }
+                      1.5073297437e-01 Max_Vx
+                      1.1100181942e+00 Max_Vy
+                      4.8764330130e+00 Max_Attitude
+                      2.2402577695e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   20
+---------------------
+Parameters for evaluation 20:
+                      4.3029826512e+00 Rocket_projected_area
+                      4.1794092549e-01 Mass_with_motor_in
+                      2.0260706544e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 20:
+Active set vector = { 1 1 1 1 }
+                      5.5698316574e-01 Max_Vx
+                      1.5429639155e+00 Max_Vy
+                      4.0593009426e+00 Max_Attitude
+                      1.4984170180e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   21
+---------------------
+Parameters for evaluation 21:
+                      5.3794473044e+00 Rocket_projected_area
+                      1.1132439361e-01 Mass_with_motor_in
+                      4.0535105291e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 21:
+Active set vector = { 1 1 1 1 }
+                      8.3664629468e+00 Max_Vx
+                      2.0755861456e+01 Max_Vy
+                      1.6340909538e+01 Max_Attitude
+                      1.0629791026e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   22
+---------------------
+Parameters for evaluation 22:
+                      4.8520952012e+00 Rocket_projected_area
+                      7.7081822142e-02 Mass_with_motor_in
+                      5.7476513288e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 22:
+Active set vector = { 1 1 1 1 }
+                      3.0035368408e+01 Max_Vx
+                      4.0352568692e+01 Max_Vy
+                      1.7171463399e+01 Max_Attitude
+                      2.2641878156e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   23
+---------------------
+Parameters for evaluation 23:
+                      7.0431586867e+00 Rocket_projected_area
+                      3.8729279283e-01 Mass_with_motor_in
+                      6.1133150747e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 23:
+Active set vector = { 1 1 1 1 }
+                      2.2395379163e-01 Max_Vx
+                      1.3338033109e+00 Max_Vy
+                      6.0074728482e+00 Max_Attitude
+                      5.5077032589e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   24
+---------------------
+Parameters for evaluation 24:
+                      6.9680510168e+00 Rocket_projected_area
+                      6.8196063878e-01 Mass_with_motor_in
+                      3.6512751526e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 24:
+Active set vector = { 1 1 1 1 }
+                      1.9413184528e-01 Max_Vx
+                      1.2715269572e-01 Max_Vy
+                      6.2566644981e-01 Max_Attitude
+                      4.6318434007e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   25
+---------------------
+Parameters for evaluation 25:
+                      9.7640776725e+00 Rocket_projected_area
+                      5.1265713245e-02 Mass_with_motor_in
+                      7.5678679073e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 25:
+Active set vector = { 1 1 1 1 }
+                      7.2651553238e+01 Max_Vx
+                      3.5321577619e+01 Max_Vy
+                      1.1908199066e+01 Max_Attitude
+                      4.1409539232e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   26
+---------------------
+Parameters for evaluation 26:
+                      5.6753499431e+00 Rocket_projected_area
+                      2.0449487105e-01 Mass_with_motor_in
+                      2.9798316595e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 26:
+Active set vector = { 1 1 1 1 }
+                      1.7416519706e+00 Max_Vx
+                      5.3197900557e+00 Max_Vy
+                      9.3034400931e+00 Max_Attitude
+                      3.5770747283e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   27
+---------------------
+Parameters for evaluation 27:
+                      9.8351091943e+00 Rocket_projected_area
+                      4.7787044647e-01 Mass_with_motor_in
+                      1.5674369196e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 27:
+Active set vector = { 1 1 1 1 }
+                      4.2496496329e-01 Max_Vx
+                      1.3526292068e+00 Max_Vy
+                      3.7972307301e+00 Max_Attitude
+                      1.0655207797e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   28
+---------------------
+Parameters for evaluation 28:
+                      6.3257534342e+00 Rocket_projected_area
+                      6.3436837685e-01 Mass_with_motor_in
+                      7.0797246864e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 28:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   29
+---------------------
+Parameters for evaluation 29:
+                      7.2246204292e+00 Rocket_projected_area
+                      7.6289363205e-01 Mass_with_motor_in
+                      1.4584647872e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 29:
+Active set vector = { 1 1 1 1 }
+                      3.5590314109e-01 Max_Vx
+                      1.0022079793e+00 Max_Vy
+                      2.0001501296e+00 Max_Attitude
+                      5.2042783088e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   30
+---------------------
+Parameters for evaluation 30:
+                      8.2770889501e+00 Rocket_projected_area
+                      8.1585119414e-01 Mass_with_motor_in
+                      6.8614114951e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 30:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   31
+---------------------
+Parameters for evaluation 31:
+                      4.3125883866e+00 Rocket_projected_area
+                      5.0776987866e-02 Mass_with_motor_in
+                      7.3416821344e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 31:
+Active set vector = { 1 1 1 1 }
+                      8.5111677184e+01 Max_Vx
+                      5.0663316608e+01 Max_Vy
+                      1.4089477701e+01 Max_Attitude
+                      4.2002145548e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   32
+---------------------
+Parameters for evaluation 32:
+                      7.7927447374e+00 Rocket_projected_area
+                      1.1138975488e-01 Mass_with_motor_in
+                      2.5956500724e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 32:
+Active set vector = { 1 1 1 1 }
+                      3.6629521451e+00 Max_Vx
+                      1.6181057026e+01 Max_Vy
+                      1.9605636468e+01 Max_Attitude
+                      6.1014271469e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   33
+---------------------
+Parameters for evaluation 33:
+                      5.8088696855e+00 Rocket_projected_area
+                      4.9336980088e-01 Mass_with_motor_in
+                      5.1965494124e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 33:
+Active set vector = { 1 1 1 1 }
+                      3.2837331250e-01 Max_Vx
+                      1.7864637993e-01 Max_Vy
+                      7.6792541221e-01 Max_Attitude
+                      9.8168051449e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   34
+---------------------
+Parameters for evaluation 34:
+                      7.2441100537e+00 Rocket_projected_area
+                      9.2610970324e-01 Mass_with_motor_in
+                      9.0681128916e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 34:
+Active set vector = { 1 1 1 1 }
+                      2.5997509775e-01 Max_Vx
+                      1.0178801889e+00 Max_Vy
+                      1.9220838456e+00 Max_Attitude
+                      3.0677089824e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   35
+---------------------
+Parameters for evaluation 35:
+                      4.4166514934e+00 Rocket_projected_area
+                      3.3693518369e-01 Mass_with_motor_in
+                      1.3791868828e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 35:
+Active set vector = { 1 1 1 1 }
+                      4.4311790258e-01 Max_Vx
+                      1.8786811110e+00 Max_Vy
+                      6.2877331567e+00 Max_Attitude
+                      1.2710333531e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   36
+---------------------
+Parameters for evaluation 36:
+                      9.8494689900e+00 Rocket_projected_area
+                      2.3986447573e-01 Mass_with_motor_in
+                      1.4043072956e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 36:
+Active set vector = { 1 1 1 1 }
+                      1.2598833251e-01 Max_Vx
+                      1.1224449391e+00 Max_Vy
+                      1.0379714107e+01 Max_Attitude
+                      1.6580069125e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   37
+---------------------
+Parameters for evaluation 37:
+                      4.8102949925e+00 Rocket_projected_area
+                      5.5584785239e-01 Mass_with_motor_in
+                      4.4515968772e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 37:
+Active set vector = { 1 1 1 1 }
+                      2.7744788462e-01 Max_Vx
+                      1.8047165790e-01 Max_Vy
+                      7.8185861088e-01 Max_Attitude
+                      7.6875870090e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   38
+---------------------
+Parameters for evaluation 38:
+                      6.5486935522e+00 Rocket_projected_area
+                      1.9781302261e-01 Mass_with_motor_in
+                      8.2502213411e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 38:
+Active set vector = { 1 1 1 1 }
+                      4.8206282262e+00 Max_Vx
+                      1.1524298748e+00 Max_Vy
+                      1.1756669468e+00 Max_Attitude
+                      7.7778116566e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   39
+---------------------
+Parameters for evaluation 39:
+                      7.0415801015e+00 Rocket_projected_area
+                      2.9995353471e-01 Mass_with_motor_in
+                      3.8339973113e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 39:
+Active set vector = { 1 1 1 1 }
+                      1.7559439321e-01 Max_Vx
+                      1.2723444836e+00 Max_Vy
+                      8.1191757320e+00 Max_Attitude
+                      3.9938045918e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   40
+---------------------
+Parameters for evaluation 40:
+                      8.0111785960e+00 Rocket_projected_area
+                      6.1655331263e-01 Mass_with_motor_in
+                      2.8257806065e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 40:
+Active set vector = { 1 1 1 1 }
+                      4.2120716676e-01 Max_Vx
+                      5.9760032006e-01 Max_Vy
+                      1.5546501403e+00 Max_Attitude
+                      8.3561663221e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   41
+---------------------
+Parameters for evaluation 41:
+                      4.6499544214e+00 Rocket_projected_area
+                      9.9782857712e-01 Mass_with_motor_in
+                      5.9414351652e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 41:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   42
+---------------------
+Parameters for evaluation 42:
+                      5.7997765234e+00 Rocket_projected_area
+                      3.7730684832e-01 Mass_with_motor_in
+                      6.8912181416e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 42:
+Active set vector = { 1 1 1 1 }
+                      6.6710665299e-01 Max_Vx
+                      2.1868973428e-01 Max_Vy
+                      7.5699119339e-01 Max_Attitude
+                      1.9630310651e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   43
+---------------------
+Parameters for evaluation 43:
+                      8.9194927208e+00 Rocket_projected_area
+                      7.8013379946e-02 Mass_with_motor_in
+                      7.1353855693e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 43:
+Active set vector = { 1 1 1 1 }
+                      3.5843317228e+01 Max_Vx
+                      2.4913170899e+01 Max_Vy
+                      1.0010338289e+01 Max_Attitude
+                      2.5450447023e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   44
+---------------------
+Parameters for evaluation 44:
+                      6.1172370020e+00 Rocket_projected_area
+                      8.2304870084e-01 Mass_with_motor_in
+                      3.1863741547e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 44:
+Active set vector = { 1 1 1 1 }
+                      1.3545702664e-01 Max_Vx
+                      5.7044528127e-02 Max_Vy
+                      4.0274525151e-01 Max_Attitude
+                      2.5033337223e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   45
+---------------------
+Parameters for evaluation 45:
+                      8.4119217736e+00 Rocket_projected_area
+                      9.4644071256e-01 Mass_with_motor_in
+                      4.9778212036e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 45:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   46
+---------------------
+Parameters for evaluation 46:
+                      8.7986247968e+00 Rocket_projected_area
+                      5.2195117553e-01 Mass_with_motor_in
+                      7.7092165354e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 46:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   47
+---------------------
+Parameters for evaluation 47:
+                      5.5633091172e+00 Rocket_projected_area
+                      4.7539333797e-01 Mass_with_motor_in
+                      7.1409410269e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 47:
+Active set vector = { 1 1 1 1 }
+                      2.4173724446e-01 Max_Vx
+                      1.2703191880e+00 Max_Vy
+                      4.6602025368e+00 Max_Attitude
+                      5.7065526922e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   48
+---------------------
+Parameters for evaluation 48:
+                      5.3425246369e+00 Rocket_projected_area
+                      2.2206977811e-01 Mass_with_motor_in
+                      1.7764391861e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 48:
+Active set vector = { 1 1 1 1 }
+                      7.6004711158e-01 Max_Vx
+                      3.5277124991e+00 Max_Vy
+                      9.8551007216e+00 Max_Attitude
+                      2.0255279895e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   49
+---------------------
+Parameters for evaluation 49:
+                      8.2498632038e+00 Rocket_projected_area
+                      4.1410651600e-01 Mass_with_motor_in
+                      8.8856739816e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 49:
+Active set vector = { 1 1 1 1 }
+                      3.2215111781e-01 Max_Vx
+                      4.4333139195e-03 Max_Vy
+                      2.3630296185e-02 Max_Attitude
+                      1.1841021850e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   50
+---------------------
+Parameters for evaluation 50:
+                      7.5261597887e+00 Rocket_projected_area
+                      8.9809573407e-01 Mass_with_motor_in
+                      5.6069413247e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 50:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   51
+---------------------
+Parameters for evaluation 51:
+                      6.6059773256e+00 Rocket_projected_area
+                      5.8939498746e-01 Mass_with_motor_in
+                      3.7347234180e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 51:
+Active set vector = { 1 1 1 1 }
+                      3.2150121139e-01 Max_Vx
+                      2.9026518168e-01 Max_Vy
+                      1.0343613686e+00 Max_Attitude
+                      7.8932063033e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   52
+---------------------
+Parameters for evaluation 52:
+                      5.1952902734e+00 Rocket_projected_area
+                      7.3651036366e-01 Mass_with_motor_in
+                      6.4259727901e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 52:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   53
+---------------------
+Parameters for evaluation 53:
+                      4.1195450007e+00 Rocket_projected_area
+                      7.8293772490e-01 Mass_with_motor_in
+                      3.5086067002e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 53:
+Active set vector = { 1 1 1 1 }
+                      1.2173103706e-01 Max_Vx
+                      3.0936215823e-02 Max_Vy
+                      3.2836564246e-01 Max_Attitude
+                      2.3065943645e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   54
+---------------------
+Parameters for evaluation 54:
+                      6.2819665714e+00 Rocket_projected_area
+                      2.9235813022e-01 Mass_with_motor_in
+                      4.6246542221e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 54:
+Active set vector = { 1 1 1 1 }
+                      1.5226637068e+00 Max_Vx
+                      2.0432054786e+00 Max_Vy
+                      3.5832265716e+00 Max_Attitude
+                      3.5914819340e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   55
+---------------------
+Parameters for evaluation 55:
+                      9.4713000199e+00 Rocket_projected_area
+                      7.7119378588e-01 Mass_with_motor_in
+                      7.8782721834e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 55:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   56
+---------------------
+Parameters for evaluation 56:
+                      9.0061880066e+00 Rocket_projected_area
+                      6.7722617552e-01 Mass_with_motor_in
+                      6.1901747936e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 56:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   57
+---------------------
+Parameters for evaluation 57:
+                      9.7613367380e+00 Rocket_projected_area
+                      6.8893673860e-01 Mass_with_motor_in
+                      2.2347802563e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 57:
+Active set vector = { 1 1 1 1 }
+                      4.0064851703e-01 Max_Vx
+                      7.3131830195e-01 Max_Vy
+                      1.6576948493e+00 Max_Attitude
+                      6.8148642912e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   58
+---------------------
+Parameters for evaluation 58:
+                      7.9314596474e+00 Rocket_projected_area
+                      8.6996531857e-01 Mass_with_motor_in
+                      4.0117671953e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 58:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   59
+---------------------
+Parameters for evaluation 59:
+                      6.8823802872e+00 Rocket_projected_area
+                      1.3962355782e-01 Mass_with_motor_in
+                      2.0021447298e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 59:
+Active set vector = { 1 1 1 1 }
+                      1.5512936925e+00 Max_Vx
+                      8.4369256742e+00 Max_Vy
+                      1.6215235907e+01 Max_Attitude
+                      3.1264061728e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   60
+---------------------
+Parameters for evaluation 60:
+                      9.2806811665e+00 Rocket_projected_area
+                      4.2523337691e-01 Mass_with_motor_in
+                      8.4985705695e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 60:
+Active set vector = { 1 1 1 1 }
+                      2.7422268615e-01 Max_Vx
+                      1.5286283897e-02 Max_Vy
+                      9.1167172419e-02 Max_Attitude
+                      1.0390615176e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   61
+---------------------
+Parameters for evaluation 61:
+                      4.7796250843e+00 Rocket_projected_area
+                      5.0776987866e-02 Mass_with_motor_in
+                      7.3416821344e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 61:
+Active set vector = { 1 1 1 1 }
+                      8.3718308789e+01 Max_Vx
+                      4.9565454068e+01 Max_Vy
+                      1.4070114756e+01 Max_Attitude
+                      4.1941587623e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   62
+---------------------
+Parameters for evaluation 62:
+                      9.4705484291e+00 Rocket_projected_area
+                      1.1138975488e-01 Mass_with_motor_in
+                      2.5956500724e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 62:
+Active set vector = { 1 1 1 1 }
+                      3.6514882265e+00 Max_Vx
+                      1.6102036731e+01 Max_Vy
+                      1.9584995532e+01 Max_Attitude
+                      6.0931438791e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   63
+---------------------
+Parameters for evaluation 63:
+                      5.9863245025e+00 Rocket_projected_area
+                      4.9336980088e-01 Mass_with_motor_in
+                      5.1965494124e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 63:
+Active set vector = { 1 1 1 1 }
+                      3.2837292459e-01 Max_Vx
+                      1.7864607540e-01 Max_Vy
+                      7.6792443852e-01 Max_Attitude
+                      9.8167927544e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   64
+---------------------
+Parameters for evaluation 64:
+                      4.5933435672e+00 Rocket_projected_area
+                      9.2610970324e-01 Mass_with_motor_in
+                      9.0681128916e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 64:
+Active set vector = { 1 1 1 1 }
+                      2.5998015324e-01 Max_Vx
+                      1.0179118748e+00 Max_Vy
+                      1.9221207705e+00 Max_Attitude
+                      3.0677679157e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   65
+---------------------
+Parameters for evaluation 65:
+                      6.0672443490e+00 Rocket_projected_area
+                      3.3693518369e-01 Mass_with_motor_in
+                      1.3791868828e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 65:
+Active set vector = { 1 1 1 1 }
+                      4.4308610806e-01 Max_Vx
+                      1.8785366849e+00 Max_Vy
+                      6.2870647379e+00 Max_Attitude
+                      1.2709345747e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   66
+---------------------
+Parameters for evaluation 66:
+                      5.1411640247e+00 Rocket_projected_area
+                      2.3986447573e-01 Mass_with_motor_in
+                      1.4043072956e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 66:
+Active set vector = { 1 1 1 1 }
+                      1.2599306808e-01 Max_Vx
+                      1.1226388411e+00 Max_Vy
+                      1.0387316556e+01 Max_Attitude
+                      1.6585209032e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   67
+---------------------
+Parameters for evaluation 67:
+                      8.7921123322e+00 Rocket_projected_area
+                      5.5584785239e-01 Mass_with_motor_in
+                      4.4515968772e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 67:
+Active set vector = { 1 1 1 1 }
+                      2.7744262748e-01 Max_Vx
+                      1.8046631216e-01 Max_Vy
+                      7.8184134456e-01 Max_Attitude
+                      7.6874171990e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   68
+---------------------
+Parameters for evaluation 68:
+                      7.4236661205e+00 Rocket_projected_area
+                      1.9781302261e-01 Mass_with_motor_in
+                      8.2502213411e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 68:
+Active set vector = { 1 1 1 1 }
+                      4.8187833450e+00 Max_Vx
+                      1.1521115889e+00 Max_Vy
+                      1.1755435364e+00 Max_Attitude
+                      7.7768963030e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   69
+---------------------
+Parameters for evaluation 69:
+                      8.8258881346e+00 Rocket_projected_area
+                      2.9995353471e-01 Mass_with_motor_in
+                      3.8339973113e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 69:
+Active set vector = { 1 1 1 1 }
+                      1.7558938257e-01 Max_Vx
+                      1.2722684881e+00 Max_Vy
+                      8.1177900982e+00 Max_Attitude
+                      3.9934296138e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   70
+---------------------
+Parameters for evaluation 70:
+                      9.3719757411e+00 Rocket_projected_area
+                      6.1655331263e-01 Mass_with_motor_in
+                      2.8257806065e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 70:
+Active set vector = { 1 1 1 1 }
+                      4.2119938754e-01 Max_Vx
+                      5.9758584696e-01 Max_Vy
+                      1.5546309112e+00 Max_Attitude
+                      8.3560629669e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   71
+---------------------
+Parameters for evaluation 71:
+                      5.5557659408e+00 Rocket_projected_area
+                      9.9782857712e-01 Mass_with_motor_in
+                      5.9414351652e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 71:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   72
+---------------------
+Parameters for evaluation 72:
+                      7.8166444920e+00 Rocket_projected_area
+                      3.7730684832e-01 Mass_with_motor_in
+                      6.8912181416e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 72:
+Active set vector = { 1 1 1 1 }
+                      6.6707829035e-01 Max_Vx
+                      2.1867879696e-01 Max_Vy
+                      7.5696587323e-01 Max_Attitude
+                      1.9629654050e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   73
+---------------------
+Parameters for evaluation 73:
+                      7.7086052408e+00 Rocket_projected_area
+                      7.8013379946e-02 Mass_with_motor_in
+                      7.1353855693e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 73:
+Active set vector = { 1 1 1 1 }
+                      3.6295227860e+01 Max_Vx
+                      2.5344566429e+01 Max_Vy
+                      1.0024337279e+01 Max_Attitude
+                      2.5488759038e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   74
+---------------------
+Parameters for evaluation 74:
+                      8.0746024453e+00 Rocket_projected_area
+                      8.2304870084e-01 Mass_with_motor_in
+                      3.1863741547e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 74:
+Active set vector = { 1 1 1 1 }
+                      1.3545685230e-01 Max_Vx
+                      5.7044251955e-02 Max_Vy
+                      4.0274405260e-01 Max_Attitude
+                      2.5033260892e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   75
+---------------------
+Parameters for evaluation 75:
+                      9.1884920544e+00 Rocket_projected_area
+                      9.4644071256e-01 Mass_with_motor_in
+                      4.9778212036e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 75:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   76
+---------------------
+Parameters for evaluation 76:
+                      4.0253939659e+00 Rocket_projected_area
+                      5.2195117553e-01 Mass_with_motor_in
+                      7.7092165354e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 76:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   77
+---------------------
+Parameters for evaluation 77:
+                      8.4895993638e+00 Rocket_projected_area
+                      4.7539333797e-01 Mass_with_motor_in
+                      7.1409410269e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 77:
+Active set vector = { 1 1 1 1 }
+                      2.4172736420e-01 Max_Vx
+                      1.2702385077e+00 Max_Vy
+                      4.6597280611e+00 Max_Attitude
+                      5.7059937397e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   78
+---------------------
+Parameters for evaluation 78:
+                      6.6679734443e+00 Rocket_projected_area
+                      2.2206977811e-01 Mass_with_motor_in
+                      1.7764391861e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 78:
+Active set vector = { 1 1 1 1 }
+                      7.5989263464e-01 Max_Vx
+                      3.5270681389e+00 Max_Vy
+                      9.8531190367e+00 Max_Attitude
+                      2.0253370114e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   79
+---------------------
+Parameters for evaluation 79:
+                      6.4902752940e+00 Rocket_projected_area
+                      4.1410651600e-01 Mass_with_motor_in
+                      8.8856739816e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 79:
+Active set vector = { 1 1 1 1 }
+                      3.2215523435e-01 Max_Vx
+                      4.4333975030e-03 Max_Vy
+                      2.3630626389e-02 Max_Attitude
+                      1.1841183525e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   80
+---------------------
+Parameters for evaluation 80:
+                      4.3029826512e+00 Rocket_projected_area
+                      8.9809573407e-01 Mass_with_motor_in
+                      5.6069413247e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 80:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   81
+---------------------
+Parameters for evaluation 81:
+                      5.3794473044e+00 Rocket_projected_area
+                      5.8939498746e-01 Mass_with_motor_in
+                      3.7347234180e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 81:
+Active set vector = { 1 1 1 1 }
+                      3.2150380689e-01 Max_Vx
+                      2.9026858298e-01 Max_Vy
+                      1.0343696366e+00 Max_Attitude
+                      7.8932693950e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   82
+---------------------
+Parameters for evaluation 82:
+                      4.8520952012e+00 Rocket_projected_area
+                      7.3651036366e-01 Mass_with_motor_in
+                      6.4259727901e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 82:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   83
+---------------------
+Parameters for evaluation 83:
+                      7.0431586867e+00 Rocket_projected_area
+                      7.8293772490e-01 Mass_with_motor_in
+                      3.5086067002e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 83:
+Active set vector = { 1 1 1 1 }
+                      1.2173082617e-01 Max_Vx
+                      3.0936023954e-02 Max_Vy
+                      3.2836503731e-01 Max_Attitude
+                      2.3065836709e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   84
+---------------------
+Parameters for evaluation 84:
+                      6.9680510168e+00 Rocket_projected_area
+                      2.9235813022e-01 Mass_with_motor_in
+                      4.6246542221e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 84:
+Active set vector = { 1 1 1 1 }
+                      1.5225541770e+00 Max_Vx
+                      2.0430807507e+00 Max_Vy
+                      3.5830865636e+00 Max_Attitude
+                      3.5913358394e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   85
+---------------------
+Parameters for evaluation 85:
+                      9.7640776725e+00 Rocket_projected_area
+                      7.7119378588e-01 Mass_with_motor_in
+                      7.8782721834e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 85:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   86
+---------------------
+Parameters for evaluation 86:
+                      5.6753499431e+00 Rocket_projected_area
+                      6.7722617552e-01 Mass_with_motor_in
+                      6.1901747936e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 86:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   87
+---------------------
+Parameters for evaluation 87:
+                      9.8351091943e+00 Rocket_projected_area
+                      6.8893673860e-01 Mass_with_motor_in
+                      2.2347802563e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 87:
+Active set vector = { 1 1 1 1 }
+                      4.0064808776e-01 Max_Vx
+                      7.3131725776e-01 Max_Vy
+                      1.6576938151e+00 Max_Attitude
+                      6.8148600396e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   88
+---------------------
+Parameters for evaluation 88:
+                      6.3257534342e+00 Rocket_projected_area
+                      8.6996531857e-01 Mass_with_motor_in
+                      4.0117671953e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 88:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   89
+---------------------
+Parameters for evaluation 89:
+                      7.2246204292e+00 Rocket_projected_area
+                      1.3962355782e-01 Mass_with_motor_in
+                      2.0021447298e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 89:
+Active set vector = { 1 1 1 1 }
+                      1.5509318503e+00 Max_Vx
+                      8.4352839544e+00 Max_Vy
+                      1.6212994452e+01 Max_Attitude
+                      3.1260640576e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   90
+---------------------
+Parameters for evaluation 90:
+                      8.2770889501e+00 Rocket_projected_area
+                      4.2523337691e-01 Mass_with_motor_in
+                      8.4985705695e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 90:
+Active set vector = { 1 1 1 1 }
+                      2.7422433706e-01 Max_Vx
+                      1.5286434529e-02 Max_Vy
+                      9.1167810040e-02 Max_Attitude
+                      1.0390683967e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   91
+---------------------
+Parameters for evaluation 91:
+                      4.3125883866e+00 Rocket_projected_area
+                      8.4946833297e-01 Mass_with_motor_in
+                      7.3416821344e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 91:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   92
+---------------------
+Parameters for evaluation 92:
+                      7.7927447374e+00 Rocket_projected_area
+                      9.6751131976e-01 Mass_with_motor_in
+                      2.5956500724e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 92:
+Active set vector = { 1 1 1 1 }
+                      1.3375804383e-01 Max_Vx
+                      6.9347819235e-02 Max_Vy
+                      4.1283664893e-01 Max_Attitude
+                      2.0096605536e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   93
+---------------------
+Parameters for evaluation 93:
+                      5.8088696855e+00 Rocket_projected_area
+                      6.0104591113e-01 Mass_with_motor_in
+                      5.1965494124e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 93:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      8.4066338456e-01 Max_Attitude
+                      2.6030885531e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   94
+---------------------
+Parameters for evaluation 94:
+                      7.2441100537e+00 Rocket_projected_area
+                      5.4978723457e-01 Mass_with_motor_in
+                      9.0681128916e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 94:
+Active set vector = { 1 1 1 1 }
+                      2.7520087636e-01 Max_Vx
+                      1.2102054215e+00 Max_Vy
+                      3.7587315626e+00 Max_Attitude
+                      5.9990590959e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   95
+---------------------
+Parameters for evaluation 95:
+                      4.4166514934e+00 Rocket_projected_area
+                      7.1660616316e-01 Mass_with_motor_in
+                      1.3791868828e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 95:
+Active set vector = { 1 1 1 1 }
+                      3.4692871286e-01 Max_Vx
+                      1.0437353575e+00 Max_Vy
+                      2.2779339773e+00 Max_Attitude
+                      5.5917148328e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   96
+---------------------
+Parameters for evaluation 96:
+                      9.8494689900e+00 Rocket_projected_area
+                      8.8289423814e-01 Mass_with_motor_in
+                      1.4043072956e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 96:
+Active set vector = { 1 1 1 1 }
+                      1.2470116120e-01 Max_Vx
+                      1.0160098194e+00 Max_Vy
+                      2.7299924035e+00 Max_Attitude
+                      6.6924931437e-02 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   97
+---------------------
+Parameters for evaluation 97:
+                      4.8102949925e+00 Rocket_projected_area
+                      3.0040171371e-01 Mass_with_motor_in
+                      4.4515968772e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 97:
+Active set vector = { 1 1 1 1 }
+                      1.4199841042e+00 Max_Vx
+                      1.9841071570e+00 Max_Vy
+                      3.5767104698e+00 Max_Attitude
+                      3.4169889051e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   98
+---------------------
+Parameters for evaluation 98:
+                      6.5486935522e+00 Rocket_projected_area
+                      7.9902158152e-01 Mass_with_motor_in
+                      8.2502213411e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 98:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation   99
+---------------------
+Parameters for evaluation 99:
+                      7.0415801015e+00 Rocket_projected_area
+                      3.5488773342e-01 Mass_with_motor_in
+                      3.8339973113e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 99:
+Active set vector = { 1 1 1 1 }
+                      1.7413157102e-01 Max_Vx
+                      1.2244074933e+00 Max_Vy
+                      6.8048327712e+00 Max_Attitude
+                      3.6631790664e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  100
+---------------------
+Parameters for evaluation 100:
+                      8.0111785960e+00 Rocket_projected_area
+                      4.3153623932e-01 Mass_with_motor_in
+                      2.8257806065e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 100:
+Active set vector = { 1 1 1 1 }
+                      6.8371212855e-01 Max_Vx
+                      1.2981989104e+00 Max_Vy
+                      3.0958973127e+00 Max_Attitude
+                      1.6640292366e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  101
+---------------------
+Parameters for evaluation 101:
+                      4.6499544214e+00 Rocket_projected_area
+                      5.7087580083e-01 Mass_with_motor_in
+                      5.9414351652e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 101:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      9.8366452035e-02 Max_Attitude
+                      1.6813825302e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  102
+---------------------
+Parameters for evaluation 102:
+                      5.7997765234e+00 Rocket_projected_area
+                      9.0437079234e-01 Mass_with_motor_in
+                      6.8912181416e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 102:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  103
+---------------------
+Parameters for evaluation 103:
+                      8.9194927208e+00 Rocket_projected_area
+                      2.6503609625e-01 Mass_with_motor_in
+                      7.1353855693e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 103:
+Active set vector = { 1 1 1 1 }
+                      2.1114798200e+00 Max_Vx
+                      1.0450088070e+00 Max_Vy
+                      1.5587612740e+00 Max_Attitude
+                      4.5997924189e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  104
+---------------------
+Parameters for evaluation 104:
+                      6.1172370020e+00 Rocket_projected_area
+                      1.6653092852e-01 Mass_with_motor_in
+                      3.1863741547e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 104:
+Active set vector = { 1 1 1 1 }
+                      2.6587899776e+00 Max_Vx
+                      8.2497418704e+00 Max_Vy
+                      1.1635004799e+01 Max_Attitude
+                      4.9312283863e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  105
+---------------------
+Parameters for evaluation 105:
+                      8.4119217736e+00 Rocket_projected_area
+                      6.5691788051e-01 Mass_with_motor_in
+                      4.9778212036e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 105:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      5.9560315009e-02 Max_Attitude
+                      7.1925603261e-02 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  106
+---------------------
+Parameters for evaluation 106:
+                      8.7986247968e+00 Rocket_projected_area
+                      2.5103307500e-01 Mass_with_motor_in
+                      7.7092165354e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 106:
+Active set vector = { 1 1 1 1 }
+                      2.4747003202e+00 Max_Vx
+                      8.7084284571e-01 Max_Vy
+                      1.2132526233e+00 Max_Attitude
+                      5.1108131133e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  107
+---------------------
+Parameters for evaluation 107:
+                      5.5633091172e+00 Rocket_projected_area
+                      1.9285708015e-01 Mass_with_motor_in
+                      7.1409410269e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 107:
+Active set vector = { 1 1 1 1 }
+                      2.8013614682e-01 Max_Vx
+                      2.0091593937e+00 Max_Vy
+                      1.2581866235e+01 Max_Attitude
+                      9.2055592506e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  108
+---------------------
+Parameters for evaluation 108:
+                      5.3425246369e+00 Rocket_projected_area
+                      9.7132016094e-01 Mass_with_motor_in
+                      1.7764391861e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 108:
+Active set vector = { 1 1 1 1 }
+                      2.2618715104e-01 Max_Vx
+                      3.9386778234e-01 Max_Vy
+                      1.0456120437e+00 Max_Attitude
+                      3.3499263155e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  109
+---------------------
+Parameters for evaluation 109:
+                      8.2498632038e+00 Rocket_projected_area
+                      4.9267927130e-01 Mass_with_motor_in
+                      8.8856739816e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 109:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      3.2609526206e-03 Max_Attitude
+                      2.1493857531e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  110
+---------------------
+Parameters for evaluation 110:
+                      7.5261597887e+00 Rocket_projected_area
+                      4.1794092549e-01 Mass_with_motor_in
+                      5.6069413247e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 110:
+Active set vector = { 1 1 1 1 }
+                      5.8292806810e-01 Max_Vx
+                      3.2488854623e-01 Max_Vy
+                      1.0946312445e+00 Max_Attitude
+                      1.6271061517e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  111
+---------------------
+Parameters for evaluation 111:
+                      6.6059773256e+00 Rocket_projected_area
+                      1.1132439361e-01 Mass_with_motor_in
+                      3.7347234180e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 111:
+Active set vector = { 1 1 1 1 }
+                      7.2392789775e+00 Max_Vx
+                      2.0174540179e+01 Max_Vy
+                      1.7143171272e+01 Max_Attitude
+                      9.7104565136e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  112
+---------------------
+Parameters for evaluation 112:
+                      5.1952902734e+00 Rocket_projected_area
+                      7.7081822142e-02 Mass_with_motor_in
+                      6.4259727901e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 112:
+Active set vector = { 1 1 1 1 }
+                      3.4365605782e+01 Max_Vx
+                      3.4685350620e+01 Max_Vy
+                      1.3843093263e+01 Max_Attitude
+                      2.4456439141e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  113
+---------------------
+Parameters for evaluation 113:
+                      4.1195450007e+00 Rocket_projected_area
+                      3.8729279283e-01 Mass_with_motor_in
+                      3.5086067002e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 113:
+Active set vector = { 1 1 1 1 }
+                      8.5453829257e-01 Max_Vx
+                      1.3382981311e+00 Max_Vy
+                      3.0155672238e+00 Max_Attitude
+                      2.1182807962e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  114
+---------------------
+Parameters for evaluation 114:
+                      6.2819665714e+00 Rocket_projected_area
+                      6.8196063878e-01 Mass_with_motor_in
+                      4.6246542221e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 114:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      1.0709669053e-01 Max_Attitude
+                      1.1213257942e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  115
+---------------------
+Parameters for evaluation 115:
+                      9.4713000199e+00 Rocket_projected_area
+                      5.1265713245e-02 Mass_with_motor_in
+                      7.8782721834e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 115:
+Active set vector = { 1 1 1 1 }
+                      7.5115584322e+01 Max_Vx
+                      2.8468114564e+01 Max_Vy
+                      9.3755569452e+00 Max_Attitude
+                      4.2031841859e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  116
+---------------------
+Parameters for evaluation 116:
+                      9.0061880066e+00 Rocket_projected_area
+                      2.0449487105e-01 Mass_with_motor_in
+                      6.1901747936e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 116:
+Active set vector = { 1 1 1 1 }
+                      3.9165119639e+00 Max_Vx
+                      3.7485001497e+00 Max_Vy
+                      4.2571576056e+00 Max_Attitude
+                      6.7723069737e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  117
+---------------------
+Parameters for evaluation 117:
+                      9.7613367380e+00 Rocket_projected_area
+                      4.7787044647e-01 Mass_with_motor_in
+                      2.2347802563e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 117:
+Active set vector = { 1 1 1 1 }
+                      5.4856845705e-01 Max_Vx
+                      1.2614978044e+00 Max_Vy
+                      3.1496697474e+00 Max_Attitude
+                      1.2948445789e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  118
+---------------------
+Parameters for evaluation 118:
+                      7.9314596474e+00 Rocket_projected_area
+                      6.3436837685e-01 Mass_with_motor_in
+                      4.0117671953e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 118:
+Active set vector = { 1 1 1 1 }
+                      2.0366699244e-01 Max_Vx
+                      1.2303147257e-01 Max_Vy
+                      6.2229806073e-01 Max_Attitude
+                      5.2435175330e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  119
+---------------------
+Parameters for evaluation 119:
+                      6.8823802872e+00 Rocket_projected_area
+                      7.6289363205e-01 Mass_with_motor_in
+                      2.0021447298e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 119:
+Active set vector = { 1 1 1 1 }
+                      3.4610008479e-01 Max_Vx
+                      6.7536772082e-01 Max_Vy
+                      1.5253734767e+00 Max_Attitude
+                      5.5583725781e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  120
+---------------------
+Parameters for evaluation 120:
+                      9.2806811665e+00 Rocket_projected_area
+                      8.1585119414e-01 Mass_with_motor_in
+                      8.4985705695e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 120:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  121
+---------------------
+Parameters for evaluation 121:
+                      4.3125883866e+00 Rocket_projected_area
+                      5.0776987866e-02 Mass_with_motor_in
+                      2.5215536254e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 121:
+Active set vector = { 1 1 1 1 }
+                      1.5248425072e+01 Max_Vx
+                      7.1394465323e+01 Max_Vy
+                      4.4340718927e+01 Max_Attitude
+                      1.5541920508e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  122
+---------------------
+Parameters for evaluation 122:
+                      7.7927447374e+00 Rocket_projected_area
+                      1.1138975488e-01 Mass_with_motor_in
+                      4.6875127450e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 122:
+Active set vector = { 1 1 1 1 }
+                      1.0478970358e+01 Max_Vx
+                      2.0620696762e+01 Max_Vy
+                      1.4572707616e+01 Max_Attitude
+                      1.2254179458e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  123
+---------------------
+Parameters for evaluation 123:
+                      5.8088696855e+00 Rocket_projected_area
+                      4.9336980088e-01 Mass_with_motor_in
+                      5.2526329148e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 123:
+Active set vector = { 1 1 1 1 }
+                      3.2001666869e-01 Max_Vx
+                      1.6866415068e-01 Max_Vy
+                      7.4043231843e-01 Max_Attitude
+                      9.6586886681e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  124
+---------------------
+Parameters for evaluation 124:
+                      7.2441100537e+00 Rocket_projected_area
+                      9.2610970324e-01 Mass_with_motor_in
+                      8.2077614986e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 124:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  125
+---------------------
+Parameters for evaluation 125:
+                      4.4166514934e+00 Rocket_projected_area
+                      3.3693518369e-01 Mass_with_motor_in
+                      5.4823777300e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 125:
+Active set vector = { 1 1 1 1 }
+                      1.1499066245e+00 Max_Vx
+                      9.1732062933e-01 Max_Vy
+                      1.9985334783e+00 Max_Attitude
+                      2.8355993335e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  126
+---------------------
+Parameters for evaluation 126:
+                      9.8494689900e+00 Rocket_projected_area
+                      2.3986447573e-01 Mass_with_motor_in
+                      7.9831764816e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 126:
+Active set vector = { 1 1 1 1 }
+                      2.8266926960e+00 Max_Vx
+                      8.0967285152e-01 Max_Vy
+                      1.0634485413e+00 Max_Attitude
+                      5.5713349170e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  127
+---------------------
+Parameters for evaluation 127:
+                      4.8102949925e+00 Rocket_projected_area
+                      5.5584785239e-01 Mass_with_motor_in
+                      2.1937630034e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 127:
+Active set vector = { 1 1 1 1 }
+                      5.0093421746e-01 Max_Vx
+                      1.0686085621e+00 Max_Vy
+                      2.5040663635e+00 Max_Attitude
+                      1.0085390883e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  128
+---------------------
+Parameters for evaluation 128:
+                      6.5486935522e+00 Rocket_projected_area
+                      1.9781302261e-01 Mass_with_motor_in
+                      9.2460429319e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 128:
+Active set vector = { 1 1 1 1 }
+                      3.5891437475e-01 Max_Vx
+                      2.4123911992e+00 Max_Vy
+                      1.2084455302e+01 Max_Attitude
+                      1.1702238273e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  129
+---------------------
+Parameters for evaluation 129:
+                      7.0415801015e+00 Rocket_projected_area
+                      2.9995353471e-01 Mass_with_motor_in
+                      7.3203393675e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 129:
+Active set vector = { 1 1 1 1 }
+                      1.4540550566e+00 Max_Vx
+                      5.3712514265e-01 Max_Vy
+                      1.0705355252e+00 Max_Attitude
+                      3.5465439028e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  130
+---------------------
+Parameters for evaluation 130:
+                      8.0111785960e+00 Rocket_projected_area
+                      6.1655331263e-01 Mass_with_motor_in
+                      4.3183977028e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 130:
+Active set vector = { 1 1 1 1 }
+                      1.8590389214e-01 Max_Vx
+                      9.1529633468e-02 Max_Vy
+                      5.3424647001e-01 Max_Attitude
+                      5.0140975537e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  131
+---------------------
+Parameters for evaluation 131:
+                      4.6499544214e+00 Rocket_projected_area
+                      9.9782857712e-01 Mass_with_motor_in
+                      6.3840417129e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 131:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  132
+---------------------
+Parameters for evaluation 132:
+                      5.7997765234e+00 Rocket_projected_area
+                      3.7730684832e-01 Mass_with_motor_in
+                      5.8653698014e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 132:
+Active set vector = { 1 1 1 1 }
+                      2.1830259702e-01 Max_Vx
+                      1.3295238387e+00 Max_Vy
+                      6.2073645514e+00 Max_Attitude
+                      5.3576061604e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  133
+---------------------
+Parameters for evaluation 133:
+                      8.9194927208e+00 Rocket_projected_area
+                      7.8013379946e-02 Mass_with_motor_in
+                      8.7360555877e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 133:
+Active set vector = { 1 1 1 1 }
+                      4.0019109576e+01 Max_Vx
+                      3.8030493806e+00 Max_Vy
+                      1.4406721258e+00 Max_Attitude
+                      2.7040548739e+01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  134
+---------------------
+Parameters for evaluation 134:
+                      6.1172370020e+00 Rocket_projected_area
+                      8.2304870084e-01 Mass_with_motor_in
+                      3.4466863386e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 134:
+Active set vector = { 1 1 1 1 }
+                      1.0366716911e-01 Max_Vx
+                      5.3376500651e-03 Max_Vy
+                      2.3743711921e-01 Max_Attitude
+                      1.6302098148e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  135
+---------------------
+Parameters for evaluation 135:
+                      8.4119217736e+00 Rocket_projected_area
+                      9.4644071256e-01 Mass_with_motor_in
+                      6.1387063009e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 135:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  136
+---------------------
+Parameters for evaluation 136:
+                      8.7986247968e+00 Rocket_projected_area
+                      5.2195117553e-01 Mass_with_motor_in
+                      3.1030577620e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 136:
+Active set vector = { 1 1 1 1 }
+                      6.0579330332e-01 Max_Vx
+                      8.4076472382e-01 Max_Vy
+                      1.9699414043e+00 Max_Attitude
+                      1.1850915506e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  137
+---------------------
+Parameters for evaluation 137:
+                      5.5633091172e+00 Rocket_projected_area
+                      4.7539333797e-01 Mass_with_motor_in
+                      4.9924998506e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 137:
+Active set vector = { 1 1 1 1 }
+                      4.2153703892e-01 Max_Vx
+                      2.7051964953e-01 Max_Vy
+                      9.9728878145e-01 Max_Attitude
+                      1.1853677997e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  138
+---------------------
+Parameters for evaluation 138:
+                      5.3425246369e+00 Rocket_projected_area
+                      2.2206977811e-01 Mass_with_motor_in
+                      8.4353901407e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 138:
+Active set vector = { 1 1 1 1 }
+                      3.5354483951e+00 Max_Vx
+                      5.9223383837e-01 Max_Vy
+                      7.0079430616e-01 Max_Attitude
+                      6.4225712134e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  139
+---------------------
+Parameters for evaluation 139:
+                      8.2498632038e+00 Rocket_projected_area
+                      4.1410651600e-01 Mass_with_motor_in
+                      2.7586212032e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 139:
+Active set vector = { 1 1 1 1 }
+                      1.5139005368e-01 Max_Vx
+                      1.1340793791e+00 Max_Vy
+                      5.8612673060e+00 Max_Attitude
+                      2.4533533187e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  140
+---------------------
+Parameters for evaluation 140:
+                      7.5261597887e+00 Rocket_projected_area
+                      8.9809573407e-01 Mass_with_motor_in
+                      2.0260706544e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 140:
+Active set vector = { 1 1 1 1 }
+                      2.3510431621e-01 Max_Vx
+                      3.6600563900e-01 Max_Vy
+                      1.0390880580e+00 Max_Attitude
+                      3.8356043350e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  141
+---------------------
+Parameters for evaluation 141:
+                      6.6059773256e+00 Rocket_projected_area
+                      5.8939498746e-01 Mass_with_motor_in
+                      4.0535105291e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 141:
+Active set vector = { 1 1 1 1 }
+                      2.7099747433e-01 Max_Vx
+                      1.9996409726e-01 Max_Vy
+                      8.2789993650e-01 Max_Attitude
+                      7.0797108124e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  142
+---------------------
+Parameters for evaluation 142:
+                      5.1952902734e+00 Rocket_projected_area
+                      7.3651036366e-01 Mass_with_motor_in
+                      5.7476513288e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 142:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  143
+---------------------
+Parameters for evaluation 143:
+                      4.1195450007e+00 Rocket_projected_area
+                      7.8293772490e-01 Mass_with_motor_in
+                      6.1133150747e+00 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 143:
+Active set vector = { 1 1 1 1 }
+                      2.1024729370e-01 Max_Vx
+                      1.0639679825e+00 Max_Vy
+                      2.6783042589e+00 Max_Attitude
+                      2.8685769510e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  144
+---------------------
+Parameters for evaluation 144:
+                      6.2819665714e+00 Rocket_projected_area
+                      2.9235813022e-01 Mass_with_motor_in
+                      3.6512751526e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 144:
+Active set vector = { 1 1 1 1 }
+                      1.3105363189e+00 Max_Vx
+                      2.4947636174e+00 Max_Vy
+                      4.7831347585e+00 Max_Attitude
+                      3.1095163746e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  145
+---------------------
+Parameters for evaluation 145:
+                      9.4713000199e+00 Rocket_projected_area
+                      7.7119378588e-01 Mass_with_motor_in
+                      7.5678679073e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 145:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  146
+---------------------
+Parameters for evaluation 146:
+                      9.0061880066e+00 Rocket_projected_area
+                      6.7722617552e-01 Mass_with_motor_in
+                      2.9798316595e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 146:
+Active set vector = { 1 1 1 1 }
+                      2.9927907368e-01 Max_Vx
+                      3.4798458512e-01 Max_Vy
+                      1.1144056923e+00 Max_Attitude
+                      6.3818267695e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  147
+---------------------
+Parameters for evaluation 147:
+                      9.7613367380e+00 Rocket_projected_area
+                      6.8893673860e-01 Mass_with_motor_in
+                      1.5674369196e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 147:
+Active set vector = { 1 1 1 1 }
+                      3.7943439115e-01 Max_Vx
+                      1.0320128699e+00 Max_Vy
+                      2.2442708287e+00 Max_Attitude
+                      6.2975293659e-01 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  148
+---------------------
+Parameters for evaluation 148:
+                      7.9314596474e+00 Rocket_projected_area
+                      8.6996531857e-01 Mass_with_motor_in
+                      7.0797246864e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 148:
+Active set vector = { 1 1 1 1 }
+                      1.0000000000e-01 Max_Vx
+                      0.0000000000e+00 Max_Vy
+                      0.0000000000e+00 Max_Attitude
+                      0.0000000000e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  149
+---------------------
+Parameters for evaluation 149:
+                      6.8823802872e+00 Rocket_projected_area
+                      1.3962355782e-01 Mass_with_motor_in
+                      1.4584647872e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 149:
+Active set vector = { 1 1 1 1 }
+                      8.7257507598e-01 Max_Vx
+                      6.1563677988e+00 Max_Vy
+                      1.6882300890e+01 Max_Attitude
+                      2.1720299352e+00 Max_Attitude_x
+
+
+
+---------------------
+Begin Evaluation  150
+---------------------
+Parameters for evaluation 150:
+                      9.2806811665e+00 Rocket_projected_area
+                      4.2523337691e-01 Mass_with_motor_in
+                      6.8614114951e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+
+blocking fork: RunComponent.bat paras.in result.out
+
+Active response data for evaluation 150:
+Active set vector = { 1 1 1 1 }
+                      3.7941758302e-01 Max_Vx
+                      1.0942315394e-01 Max_Vy
+                      4.9640374928e-01 Max_Attitude
+                      1.2675921944e+00 Max_Attitude_x
+
+
+<<<<< Function evaluation summary: 150 total (150 new, 0 duplicate)
+<<<<< Best parameters          =
+                      4.3125883866e+00 Rocket_projected_area
+                      5.0776987866e-02 Mass_with_motor_in
+                      2.5215536254e+01 Initial_angle_in
+                      4.0000000000e-01 Drag_coefficient
+                      1.2000000000e+00 Air_density
+                      9.8100000000e+00 Gravity_in
+                      1.0000000000e+00 Launch_Rod_Length_in
+                      3.0000000000e-02 Mass_without_motor_in
+<<<<< Best objective functions =
+                      1.5248425072e+01
+                      7.1394465323e+01
+<<<<< Best constraint values   =
+                      4.4340718927e+01
+                      1.5541920508e+01
+<<<<< Best data captured at function evaluation 121
+
+Global sensitivity indices for each response function:
+Max_Vx Sobol' indices:
+                                  Main             Total
+                      6.7742026834e-04  1.5702786379e-04 Rocket_projected_area
+                      9.4847661431e-01  1.1182964335e+00 Mass_with_motor_in
+                      3.3781555711e-02  3.6464923739e-01 Initial_angle_in
+Max_Vy Sobol' indices:
+                                  Main             Total
+                      9.2400167709e-04  2.3308634306e-04 Rocket_projected_area
+                      9.7278521061e-01  9.9556059853e-01 Mass_with_motor_in
+                     -1.3050092985e-03  1.5343338546e-01 Initial_angle_in
+Max_Attitude Sobol' indices:
+                                  Main             Total
+                      9.5426082200e-05  6.7045875831e-07 Rocket_projected_area
+                      1.0880969413e+00  1.1281347830e+00 Mass_with_motor_in
+                      7.4453097305e-02  9.2469943702e-01 Initial_angle_in
+Max_Attitude_x Sobol' indices:
+                                  Main             Total
+                      1.2314107256e-04  1.2164315770e-06 Rocket_projected_area
+                      1.0801296058e+00  1.1395573275e+00 Mass_with_motor_in
+                      2.4106914009e-02  1.9908688812e-01 Initial_angle_in
+
+<<<<< Iterator random_sampling completed.
+<<<<< Environment execution completed.
+DAKOTA execution time in seconds:
+  Total CPU        =    107.987 [parent =    107.987, child =          0]
+  Total wall clock =    107.987

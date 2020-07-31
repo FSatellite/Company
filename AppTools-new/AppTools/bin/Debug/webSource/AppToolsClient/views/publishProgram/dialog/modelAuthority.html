@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>程序受众范围</title>
+    <link rel="stylesheet" type="text/css" href="../../../style/common/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/color.css"/>
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/icon.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/kno-icon-expends.css">
+    <link rel="stylesheet" type="text/css" href="../../../libs/easyui/themes/kno-gray/kno-easyui.css">
+    <link rel="stylesheet" type="text/css" href="../../../style/common/commonIcon.css">
+    <link rel="stylesheet" type="text/css" href="../../../style/manager/twoLevelPage/twoLevelPage.css">
+    <script type="text/javascript" src="../../../libs/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="../../../libs/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="../../../libs/knowind/CFactory.js"></script>
+    <script type="text/javascript" src="../../../js/common/config.js"></script>
+    <script type="text/javascript" src="../../../js/common/services.js"></script>
+</head>
+<body>
+<div compName="modelAuthorityComponent" style="width:100%;height:100%;">
+    <div class="easyui-layout" style="width:100%;height:100%;">
+        <div data-options="region:'north'"
+             style="height:35px;border: 0;border-bottom: solid #c6cfdb 1px;background-color: #005f92;">
+            <h6 class="manager_two_title" style="width:30%;float: left">共享范围配置</h6>
+            <div style="width:60%;float: left ">
+                <ul style="text-align: right;width:100%;margin-top:10px;-webkit-app-region:drag;">
+                    <li style="float: right;width: 22px;height: 22px;cursor: pointer; -webkit-app-region:no-drag;"
+                        onmouseover="modelAuthorityComponent.showMouseOverState(this,'../../../imgs/common/commonIcon_close')"
+                        onmouseout="modelAuthorityComponent.hideMouseOverState(this,'../../../imgs/common/commonIcon_close')">
+                        <img id="close" class="fa-close" n-ui-command="close"
+                             src="../../../imgs/common/commonIcon_close.png"></li>
+                    <li style="float: right;width: 22px;height: 22px;cursor: pointer;-webkit-app-region:no-drag;"
+                        onmouseover="modelAuthorityComponent.showMouseOverState(this,'../../../imgs/common/commonIcon_minimize')"
+                        onmouseout="modelAuthorityComponent.hideMouseOverState(this,'../../../imgs/common/commonIcon_minimize')">
+                        <img class="fa-window-minimize" n-ui-command="minimize"
+                             src="../../../imgs/common/commonIcon_minimize.png"></li>
+                </ul>
+            </div>
+
+        </div>
+        <div data-options="region:'center'">
+
+            <ul id="deptTree">
+            </ul>
+        </div>
+        <div data-options="region:'south'" style="height:40px;border: 0;background-color: #cccccc;">
+            <a href="javascript:modelAuthorityComponent.cancel()" class="easyui-linkbutton" data-options="plain:true"
+               style="float: right;margin-top:5px;margin-right:20px;background-color: #ffffff">取消共享</a>
+            <a href="javascript:modelAuthorityComponent.setAuthority()" class="easyui-linkbutton"
+               data-options="plain:true"
+               style="float: right;margin-top:5px;margin-right:20px;background-color: #ffffff">保存配置并共享</a>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var modelAuthorityComponent = CFactory.createComponent({
+        compName: "modelAuthorityComponent",
+        values: [],
+        x_auth_token: "",
+        init: function () {
+            var value = services.getQueryString("value");
+            values = value.split(',');
+            x_auth_token = services.getQueryString("x-auth-token");
+            console.log(x_auth_token);
+            this.getAllDept();
+        },
+        //设置程序关闭、最小化等等按钮样式
+        showMouseOverState: function (ele, src) {
+            $(ele).children("img").attr("src", src + "_hover.png");
+        },
+        hideMouseOverState: function (ele, src) {
+            $(ele).children("img").attr("src", src + ".png");
+        },
+        getAllDept: function () {
+            services.get(config.portal_Addr + "/department/getDeptTree?deptId=root&x-auth-token=" + x_auth_token, null, function (succ) {
+//                console.log(succ);
+                var depts = succ.data;
+                $("#deptTree").tree({
+                    data: depts,
+                    checkbox: true,
+                    formatter: function (node) {
+                        node.children = node.childList;
+                        return node.depName;
+                    }
+                })
+            }, function (error) {
+                console.log(error);
+            })
+        },
+        setAuthority: function () {
+            var nodes = $("#deptTree").tree("getChecked");
+            var deptIds = [];
+            deptIds.push("-1");//解决只有一个部门时到后台将部门id拆分成单个字符的情况
+            for(var i=0;i<nodes.length;i++){
+                deptIds.push(nodes[i].id);
+            }
+            try{
+                var tempFlag = false;
+                console.log(values);
+                for (var i = 0; i < values.length; i++) {
+
+                    var result = Kworld.IoOption.uploadModel(values[i], x_auth_token);
+                    console.log(result);
+                    //修改本地程序的是否共享字段
+                    if (result.indexOf("success") > 0) {
+
+                        var data = {"guid":values[i],"deptIds":deptIds};
+                        console.log(data);
+                        Kworld.AppInfo.updateIfShare(values[i], "1");
+                        services.post(config.KnowledgeApp_Addr+"/authority/insertMany?x-auth-token="+x_auth_token,data,function (succ) {
+                            console.log(succ);
+                            if(succ.code == "success"){
+                                console.log("共享成功");
+                            }else{
+                                console.log("共享失败");
+                            }
+                        },function (err) {
+                            console.log(err);
+                        })
+                    }
+                }
+            }catch (e){
+                alert("共享失败");
+            }finally {
+                $("#close").click();
+            }
+        },
+        cancel: function () {
+            $("#close").click();
+        }
+
+    })
+</script>
+</body>
+</html>
