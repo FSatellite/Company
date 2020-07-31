@@ -1,0 +1,13 @@
+<!DOCTYPE html><html><head><title></title><link rel="stylesheet" href="/stylesheets/style.css"></head><body><h1>Unexpected token c in JSON at position 0</h1><h2>400</h2><pre>SyntaxError: Unexpected token c in JSON at position 0
+    at JSON.parse (&lt;anonymous&gt;)
+    at createStrictSyntaxError (E:\webstorm\knowledgeApp\node_modules\body-parser\lib\types\json.js:158:10)
+    at parse (E:\webstorm\knowledgeApp\node_modules\body-parser\lib\types\json.js:83:15)
+    at E:\webstorm\knowledgeApp\node_modules\body-parser\lib\read.js:121:18
+    at invokeCallback (E:\webstorm\knowledgeApp\node_modules\raw-body\index.js:224:16)
+    at done (E:\webstorm\knowledgeApp\node_modules\raw-body\index.js:213:7)
+    at IncomingMessage.onEnd (E:\webstorm\knowledgeApp\node_modules\raw-body\index.js:273:7)
+    at emitNone (events.js:106:13)
+    at IncomingMessage.emit (events.js:208:7)
+    at endReadableNT (_stream_readable.js:1055:12)
+    at _combinedTickCallback (internal/process/next_tick.js:138:11)
+    at process._tickCallback (internal/process/next_tick.js:180:9)</pre></body></html>

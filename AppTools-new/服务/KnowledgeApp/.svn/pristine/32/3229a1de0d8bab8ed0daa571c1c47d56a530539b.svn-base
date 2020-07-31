@@ -1,0 +1,380 @@
+get http://localhost:8020/category/getAll
+Content-Type:application/json;
+
+###
+
+get http://localhost:8020/category/getAll
+Content-Type:application/json;
+
+###
+
+POST http://localhost:8020/file/upload
+Content-Type:multipart/form-data;boundary=----
+
+< C:/Users/knowind/Desktop/shouye.png
+
+<> 2019-01-07T042313.200.json
+
+###
+
+POST http://localhost:8020/file/upload
+Content-Type:multipart/form-data;boundary=----WebKitFormBoundaryESZsFhAS6E73s7Ch
+
+< C:/Users/knowind/Desktop/shouye.png
+
+<> 2019-01-07T042207.200.json
+
+###
+
+POST http://localhost:8020/file/upload
+Content-Type:multipart/form-data;boundary=----WebKitFormBoundaryESZsFhAS6E73s7Ch
+
+< C:/Users/knowind/Desktop/2.xls
+
+<> 2019-01-07T042124.200.json
+
+###
+
+POST http://localhost:8020/file/upload
+Content-Type:multipart/form-data;
+
+< C:/Users/knowind/Desktop/2.xls
+
+<> 2019-01-07T042021.200.json
+
+###
+
+POST http://localhost:8020/file/upload
+
+< C:/Users/knowind/Desktop/2.xls
+
+###
+
+POST http://localhost:8020/file/upload
+
+< C:/Users/knowind/Desktop/2.xls
+
+###
+
+POST http://localhost:8020/file/upload
+
+< C:/Users/knowind/Desktop/2.xls
+
+###
+
+POST http://localhost:8020/file/upload
+
+< C:/Users/knowind/Desktop/2.xls
+
+###
+
+POST http://localhost:8020/file/upload
+
+< C:/Users/knowind/Desktop/2.xls
+
+###
+
+POST http://localhost:8020/file/upload
+
+< C:/Users/knowind/Desktop/称重数据.docx
+
+###
+
+POST http://localhost:8020/file/upload
+
+< C:/Users/knowind/Desktop/称重数据.docx
+
+###
+
+POST http://localhost:8020/file/upload
+
+< C:/Users/knowind/Desktop/称重数据.docx
+
+###
+
+POST http://localhost:8020/file/upload
+
+< C:/Users/knowind/Desktop/称重数据.docx
+
+###
+
+POST http://localhost:8020/file/upload
+
+< C:/Users/knowind/Desktop/称重数据.docx
+
+###
+
+POST http://localhost:8020/file/upload
+Content-Type:application/json;
+
+< C:/Users/knowind/Desktop/称重数据.docx
+
+<> 2019-01-07T035951.200.json
+
+###
+
+POST http://localhost:8020/file/upload?fileName=数据
+Content-Type:application/json;
+
+< C:/Users/knowind/Desktop/称重数据.docx
+
+###
+
+POST http://localhost:8020/file/upload?fileName=数据
+Content-Type:application/json;
+
+< C:/Users/knowind/Desktop/称重数据.docx
+
+<> 2019-01-07T035915.200.json
+
+###
+
+POST http://localhost:8020/file/upload?fileName=数据
+Content-Type:application/json;
+
+< C:/Users/knowind/Desktop/称重数据.docx
+
+###
+
+POST http://localhost:8020/file/upload?fileName=数据
+Content-Type:application/json;
+
+< C:/Users/knowind/Desktop/称重数据.docx
+
+<> 2019-01-07T035847.200.json
+
+###
+
+POST http://localhost:8020/file/upload?fileName=数据
+Content-Type:application/json;
+
+< C:/Users/knowind/Desktop/称重数据.docx
+
+<> 2019-01-07T035758.200.json
+
+###
+
+get http://localhost:8020/category/getAll
+Accept:*/*
+Content-Type:application/json
+
+###
+
+get http://localhost:8020/category/getAll
+Accept:*/*
+Content-Type:application/json
+
+###
+
+POST http://localhost:8020/category/insert?category={"categoryId":"0001","categoryName":"aaaa","description":"fdffd"}
+Accept:*/*
+Content-Type:application/json
+
+<> 2019-01-07T035401.400.html
+
+###
+
+POST http://localhost:8020/category/insert?category={"categoryId":"0001","categoryName":"aaaa","description":"fdffd"}
+Accept:*/*
+Content-Type:application/json
+
+<> 2019-01-07T035051.400.html
+
+###
+
+POST http://localhost:8020/category/insert?classify={"categoryId":"0001","categoryName":"aaaa","description":"fdffd"}
+Accept:*/*
+Content-Type:application/json
+
+<> 2019-01-07T034945.400.html
+
+###
+
+POST http://localhost:8020/category/insert?classify={"categoryId":"0001","categoryName":"aaaa","description":"fdffd"}
+Accept:*/*
+Content-Type:application/json
+
+###
+
+POST http://localhost:7000/classify/save?classify={"cId":"0001","cName":"aaaa","description":"fdffd"}
+Accept:*/*
+Content-Type:application/json
+
+<> 2018-12-24T075907.400.html
+
+###
+
+POST http://localhost:7000/classify/save
+Accept:*/*
+Content-Type:application/json
+
+{"cId":"0001","cName":"aaaa","description":"fdffd"}
+
+###
+
+POST http://localhost:7000/classify/save
+Accept:*/*
+Content-Type:application/json
+
+{"cId":"0001","cName":"aaaa","description":"fdffd"}
+
+###
+
+POST http://localhost:7000/classify/save
+Accept:*/*
+Content-Type:application/json
+
+{"cId":"0001","cName":"aaaa","description":"fdffd"}
+
+<> 2018-12-24T075259.404.html
+
+###
+
+POST http://localhost:7000/classify/save?"classify"={"cId":"0001","cName":"aaaa","description":"fdffd"}
+Accept:*/*
+Content-Type:application/json
+
+<> 2018-12-24T075212.400.html
+
+###
+
+POST http://localhost:7000/classify/save?classify={"cId":"0001","cName":"aaaa","description":"fdffd"}
+Accept:*/*
+Content-Type:application/json
+
+<> 2018-12-24T075149.400.html
+
+###
+
+POST http://localhost:7000/classify/save?classify={"cId":"0001","cName":"aaaa","description":"fdffd"}
+Accept:*/*
+Content-Type:application/json
+
+<> 2018-12-24T075148.400.html
+
+###
+
+POST http://localhost:7000/classify/save?classify={"cId":"0001","cName":"aaaa","description":"fdffd"}
+Accept:*/*
+Content-Type:application/json
+
+<> 2018-12-24T075146.400.html
+
+###
+
+POST http://localhost:7000/classify/save?classify={"cId":"0001","cName":"aaaa","description":"fdffd"}
+Accept:*/*
+Cache-Control:no-cache
+Content-Type:application/json
+
+<> 2018-12-24T075127.400.html
+
+###
+
+POST http://localhost:7000/classify/save?classify={cId:"0001",cName:"aaaa",description:"fdffd"}
+Accept:*/*
+Cache-Control:no-cache
+Content-Type:application/json
+
+<> 2018-12-24T074754.400.html
+
+###
+
+POST http://localhost:7000/classify/save
+Accept:*/*
+Cache-Control:no-cache
+Content-Type:application/json
+
+{cId:"0001",cName:"aaaa",description:"fdffd"}
+
+<> 2018-12-24T074655.400.html
+
+###
+
+POST http://localhost:7000/classify/save?classify={cId:"0001",cName:"aaaa",description:"fdffd"}
+Accept:*/*
+Cache-Control:no-cache
+Content-Type:application/json
+
+<> 2018-12-24T074458.400.html
+
+###
+
+POST http://localhost:7000/classify/save?classify={cId:"0001",cName:"aaaa",description:"fdffd"}
+Accept:*/*
+Cache-Control:no-cache
+Content-Type:application/json
+
+<> 2018-12-24T074405.400.html
+
+###
+
+POST http://localhost:7000/classify/save?classify={cId:"0001",cName:"aaaa",description:"fdffd"}
+Accept:*/*
+Cache-Control:no-cache
+Content-Type:application/json
+
+<> 2018-12-24T074132.400.html
+
+###
+
+POST http://localhost:7000/classify/save?classify={cId:"0001",cName:"aaaa",description:"fdffd"}
+Accept:*/*
+Cache-Control:no-cache
+
+<> 2018-12-19T061304.415.html
+
+###
+
+POST http://localhost:7000/classify/save?classify={cId:"0001",cName:"aaaa",description:"fdffd"}
+Accept:*/*
+Cache-Control:no-cache
+
+<> 2018-12-19T061228.415.html
+
+###
+
+POST http://localhost:7000/classify/save?=&cId=0001&cName=aaaa&description=fjdsklfj
+Accept:*/*
+Cache-Control:no-cache
+
+<> 2018-12-19T061055.415.html
+
+###
+
+GET http://localhost:7000/classify/save?=
+Accept:*/*
+Cache-Control:no-cache
+
+<> 2018-12-19T061000.200.json
+
+###
+
+GET http://localhost:7000/classify/save?=
+Accept:*/*
+Cache-Control:no-cache
+
+<> 2018-12-19T060929.500.html
+
+###
+
+post http://localhost:7000/classify/save?cId=0001&cName=aaa&description=fjksdf
+Accept:*/*
+Cache-Control:no-cache
+
+###
+
+GET http://localhost:7000?cId=0001&cName=aaa&description=fjksdf
+Accept:*/*
+Cache-Control:no-cache
+
+<> 2018-12-19T060711.200.html
+
+###
+
+post http://localhost:7000/classify/save?cId=0001&cName=aaa&description=fjksdf
+Accept:*/*
+Cache-Control:no-cache
+
+###
+

@@ -1,0 +1,426 @@
+// 程序接口
+var express = require('express');
+var bodyParser = require("body-parser");
+var Model = require("../class/ModelSchema");
+var mongoose = require('../modules/db.js');
+var uuid = require('../modules/uuid');
+var URL = require('url');
+var config = require("../modules/SysConfig");
+var fs = require("fs");
+var path = require('path');
+var router = express.Router();
+var multiparty = require('multiparty');
+router.use(bodyParser.urlencoded({extended: false}));
+var modelInstance = new Model();
+var GridFile = require("../class/GridFileSchema");
+var gridFileInstance = new GridFile();
+var DownInfo = require("../class/DownInfoSchema");
+var downInfoInstance = new DownInfo();
+var Authority = require("../class/AuthoritySchema");
+var authorityInstance = new Authority();
+/**
+ * 查询所有程序
+ * @name: 程序名
+ * @pageSize 每页条数
+ * @page 当前页
+ */
+router.get("/getAll", function (req, res, next) {
+    var option = {};
+    var name = req.query.name;
+    var pageSize = req.query.pageSize;
+    var page = req.query.pageNum;
+    if (name) {
+        option['modelname'] = new RegExp(name);
+    }
+    if (page && pageSize) {
+        try {
+            option['page'] = parseInt(page);
+            option['pageSize'] = parseInt(pageSize);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    //增加权限条件时，可以用mouldId:{$in:[]}
+    modelInstance.getAll(option, function (err, result) {
+        if (err) {
+            res.send({code: "error", msg: "程序查询失败,原因:" + err});
+        }
+        res.send({code: "success", data: result, msg: "程序查询成功"});
+    })
+});
+/**
+ * 根据分类查询程序
+ *@categoryId 分类id
+ *@page 当前页
+ *@pageSize 每页条数
+ */
+router.get("/getByModuleCategory/:categoryCode", function (req, res, next) {
+    var option = {};
+    var moduleCategoryCode = req.params.categoryCode;
+    var pageSize = req.query.pageSize;
+    var page = req.query.page;
+    if (page && pageSize) {
+        try {
+            option['page'] = parseInt(page);
+            option['pageSize'] = parseInt(pageSize);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    option['moduleCategoryCode'] = moduleCategoryCode;
+    modelInstance.getAll(option, function (err, result) {
+        if (err) {
+            res.send({code: "error", msg: "程序查询失败,原因:" + err});
+        }
+        res.send({code: "success", data: result, msg: "程序查询成功"});
+    })
+});
+
+/**
+ * 根据作者查询程序
+ *@authorId 作者id
+ */
+router.get("/getByAuthor/:authorId", function (req, res, next) {
+    var option = {};
+    console.log("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\");
+    console.log(req);
+    var authorId = req.params.authorId;
+    option['authorId'] = authorId;
+    var modelname = req.query.modelName;
+    if (modelname) {
+        option['modelname'] = new RegExp(modelname);
+    }
+    modelInstance.getAll(option, function (err, result) {
+        if (err) {
+            res.send({code: "error", msg: "程序查询失败,原因:" + err});
+        }
+        res.send({code: "success", data: result, msg: "程序查询成功"});
+    })
+});
+
+router.get("/getByApplicationType", function (req, res, next) {
+    var applicationTypeCode = req.query.applicationTypeCode;
+    var authorId = config.loginUser.user.id;
+    var deptId = config.loginUser.user.depId;
+    var authOption = {deptId: deptId};
+    authorityInstance.getAll(authOption, function (err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            var guids = [];
+            for (var i = 0; i < result.length; i++) {
+                guids.push(result[i].guid);
+            }
+
+
+            modelInstance.getAll2(applicationTypeCode,authorId,guids, function (err1, result1) {
+                if (err1) {
+                    console.log(err1);
+                    res.send({code: "error", msg: "程序查询失败,原因:" + err});
+                    return;
+                }
+                res.send({code: "success", data: result1, msg: "程序查询成功"});
+            })
+        }
+    })
+});
+
+/**
+ * 根据id查询程序分类
+ */
+router.get("/getById/:id", function (req, res, next) {
+    var id = req.params.id;
+    var options = {id: id};
+    modelInstance.getOne(options, function (err, result) {
+        if (err) {
+            res.send({code: "error", msg: "程序获取失败，原因：" + err});
+        } else {
+            res.send({code: "success", data: result, msg: "程序获取成功"});
+        }
+    })
+
+});
+/**
+ * 上传程序
+ */
+router.post("/upload", function (req, res, next) {
+    var Attachment = mongoose.getAttachment();
+    console.log("开始上传文件");
+    // 解析一个文件上传
+    var form = new multiparty.Form();
+    form.encoding = 'utf-8';
+    form.uploadDir = path.join(__dirname, '../public') + "/tmp";
+    form.keepExtensions = true;
+    //上传后处理
+    form.parse(req, function (err, fields, files) {
+        var objectId = "";
+        if (err) {
+            res.send({code: "error", data: [], msg: "文件上传失败！"});
+            return;
+        } else {
+            //fields 是获取表单的数据
+            //files是文件上传成功返回的地址信息
+            console.log("上传文件表单");
+            var modelJson = {};
+            if (fields) {
+                var modelname = fields.modelName[0];
+                delete fields.id;
+                delete fields.modelName;
+                fields.modelname = [modelname];
+            }
+            var name = "";
+            if (fields.modelname) {
+                name = fields.modelname[0];
+            }
+            if (files && files.file[0]) {
+                var oldPath = files.file[0].path;
+                var fileType = oldPath.substring(oldPath.lastIndexOf('.'), oldPath.length);
+                var filename = name + fileType;
+                var readStream = fs.createReadStream(oldPath);
+                var options = {
+                    filename: filename
+                }
+                Attachment.write(options, readStream, function (error, f) {
+                    if (error) {
+                        console.log(error);
+                        res.send({code: "error", data: [], msg: "文件上传失败！"});
+                    } else {
+                        // console.log(f);
+                        var objectId = f._id;
+                        fields.objectId = objectId;
+                        console.log("上传成功");
+                        var date = new Date();
+                        //格式化日期
+                        var month = date.getMonth() + 1;
+                        var strDate = date.getDate();
+                        if (month >= 1 && month <= 9) {
+                            month = "0" + month;
+                        }
+                        if (strDate >= 0 && strDate <= 9) {
+                            strDate = "0" + strDate;
+                        }
+                        var currentDate = date.getFullYear() + "-" + month + "-" + strDate
+                            + " " + date.toLocaleTimeString();
+
+                        if (fields.id) {
+                            //更新
+                            fields.updateTime = currentDate;/*date.toLocaleDateString() + " " + date.toLocaleTimeString()*/
+                            modelInstance.update(fields, function (err) {
+                                if (err) {
+                                    res.send({code: "error", msg: "程序共享(更新)失败，原因：" + err});
+                                } else {
+                                    // mongoose.upload(filename,readStream);
+                                    fs.unlink(oldPath, function (err) {
+                                        if (err) throw err;
+                                        console.log('成功')
+                                        res.send({code: "success", data: fields, msg: "程序共享(更新)成功！"});
+                                    })
+                                    // res.send({code: "success",data:json,msg:"文件上传成功"});
+                                }
+                            })
+
+                        } else {
+                            //新建
+                            fields.id = [Math.uuidFast()];
+                            fields.downloadNumber = 0;
+                            fields.publishTime = [currentDate];/*date.toLocaleDateString() + " " + date.toLocaleTimeString()*/
+                            console.log(config.loginUser);
+                            fields.authorId = config.loginUser.user.id;
+                            fields.author = config.loginUser.user.truename;
+                            modelInstance.insert(fields, function (err) {
+                                if (err) {
+                                    console.log(err);
+                                    res.send({code: "error", msg: "程序共享失败，原因：" + err});
+                                } else {
+                                    // mongoose.upload(filename,readStream);
+                                    fs.unlink(oldPath, function (err1) {
+                                        if (err1) throw err;
+                                        console.log('成功')
+                                        res.send({code: "success", data: fields, msg: "程序共享成功！"});
+                                    })
+                                    // res.send({code: "success",data:json,msg:"文件上传成功"});
+                                }
+                            });
+                        }
+
+
+                    }
+                })
+            }
+            // res.send({code: "success", data: [], msg: "文件上传成功！"});
+        }
+    })
+});
+/**
+ * 下载程序
+ * @id
+ */
+router.get("/download/:id", function (req, res, next) {
+    try {
+        var id = req.params.id;
+        //先根据id查询程序信息
+        modelInstance.getOne({id: id}, function (modelErr, model) {
+            if (modelErr) {
+                console.log(modelErr);
+                res.send({code: "error", msg: "程序下载失败，原因：" + modelErr});
+            } else {
+                var objectId = model.objectId;
+                gridFileInstance.getById(objectId, function (err, value) {
+                    if (err) {
+                        console.log(err);
+                        res.send({code: "error", msg: "程序下载失败，原因：" + err});
+                    } else {
+                        if (value == null) {
+                            console.log("文件不存在");
+                            res.send({code: "error", data: null, msg: "文件不存在!"});
+                            return;
+                        }
+                        var filename = JSON.parse(JSON.stringify(value)).filename;
+                        var Attachment = mongoose.getAttachment();
+                        var readStream = Attachment.readById(mongoose.Types.ObjectId(objectId));
+                        readStream.on('error', function (err) {
+                            console.log("文件不存在");
+                            res.send({code: "error", data: null, msg: "文件不存在!"});
+                        });
+                        var p = path.join(__dirname, '../public') + "/tmp/" + filename;
+                        readStream.on('data', function (fileConent) {
+                            try{
+                                fs.appendFileSync(p, fileConent);
+                                console.log('数据已追加到文件'+fileConent.length);
+                            }catch (errSync){
+                                console.error(errSync);
+                            }
+                            /*fs.appendFile(p, fileConent, function (err1) {
+                                if (err1) {
+                                    console.error(err1);
+                                } else {
+                                    console.log('写入成功'+fileConent.length);
+                                }
+                            });*/
+                        });
+
+                        readStream.on('end', function () {
+                            var file = path.join(__dirname, '../public') + "/tmp/" + filename;
+                            fs.exists(file, function (exist) {
+                                if (exist) {
+                                    res.set({
+                                        "Content-type": "application/octet-stream",
+                                        "Content-Disposition": "attachment;filename=" + encodeURI(filename)
+                                    });
+                                    var fReadStream = fs.createReadStream(file);
+                                    fReadStream.on("data", function (chunk) {
+                                        res.write(chunk, "binary");
+                                    });
+                                    fReadStream.on("end", function () {
+                                        fs.unlink(file, function (err) {
+                                            if (err) throw err;
+                                            // console.log('成功')
+                                            //添加下载信息，修改下载次数
+                                            // console.log(model);
+                                            var downloadNumber = model.downloadNumber;
+                                            var date = new Date();
+                                            var downloadInfo = {
+                                                id: Math.uuidFast(),
+                                                userId: "003",
+                                                userName: "yet",
+                                                modelId: model.id,
+                                                modelname: model.modelname,
+                                                downloadTime: date.toLocaleDateString() + " " + date.toLocaleTimeString()
+                                            };
+                                            downInfoInstance.insert(downloadInfo, function (err1) {
+                                                if (err1) {
+                                                    console.log("程序下载信息添加失败");
+                                                } else {
+                                                    console.log("程序下载信息添加成功");
+                                                    //修改下载次数
+                                                    modelInstance.update({
+                                                        id: model.id,
+                                                        downloadNumber: downloadNumber + 1
+                                                    }, function (err2) {
+                                                        if (err2) {
+                                                            console.log("下载次数修改失败");
+                                                        } else {
+                                                            console.log("下载次数修改成功");
+                                                            res.end();
+                                                        }
+                                                    })
+                                                }
+                                            })
+                                        });
+                                        res.end();
+                                    });
+                                } else {
+                                    console.log("文件不存在")
+                                    res.send({code: "error", data: null, msg: "文件不存在!"});
+                                    res.end();
+                                }
+                            });
+                        });
+                    }
+                })
+            }
+        });
+    } catch (e) {
+        res.send({code: "error", data: null, msg: e});
+        res.end();
+    }
+
+});
+/**
+ * 卸载程序
+ * id:程序id
+ */
+router.get("/deleteById/:id", function (req, res, next) {
+    var id = req.params.id;
+    modelInstance.delete({id: id}, function (err, value) {
+        if (err) {
+            res.send({code: "error", msg: "程序卸载失败，原因：" + err});
+        } else {
+            res.send({code: "success", msg: "程序卸载成功"});
+            try {
+                //获取objectId
+                var objectId = value.objectId;
+                // 删除文件
+                var _id = mongoose.Types.ObjectId(objectId);
+                var Attachment = mongoose.getAttachment();
+                if (_id) {
+                    Attachment.unlink({_id: _id}, function (err1) {
+                        if (err1) {
+                            console.log("数据库文件删除失败，原因" + err1);
+                            // res.send({code: "error", msg: "程序卸载失败111，原因：" + err1});
+                        } else {
+                            // res.send({code: "success", msg: "程序卸载成功！"});
+                            console.log("数据库文件删除成功");
+                        }
+                    })
+                } else {
+                }
+
+            } catch (e) {
+                console.log(e);
+                // res.send({code: "error", msg: "程序卸载成功"});
+            }
+        }
+    })
+
+
+});
+/**
+ * 修改程序信息
+ */
+router.put("/update/:id", function (req, res, next) {
+    var json = req.body.content;
+    var id = req.params.id;
+    if (!json.id) {
+        json["id"] = id;
+    }
+    modelInstance.update(json, function (err) {
+        if (err) {
+            res.send({code: "error", msg: "程序更新失败，原因：" + err});
+        } else {
+            res.send({code: "success", data: json, msg: "程序更新成功"});
+        }
+    })
+});
+
+module.exports = router;

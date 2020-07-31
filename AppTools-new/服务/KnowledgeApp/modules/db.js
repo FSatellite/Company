@@ -1,0 +1,113 @@
+var mongoose = require('mongoose');
+var DB_URL = 'mongodb://localhost:27017/knowledgeApp';
+var gridfs = require('mongoose-gridfs');
+var fs = require("fs");
+var path = require('path');
+var options = {
+    poolSize: 10,
+    autoReconnect: true,
+    useNewUrlParser: true
+};
+/**
+ * 连接
+ */
+mongoose.connect(DB_URL, options);
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+var db = mongoose.connection;
+/**
+ * 连接成功
+ */
+var Attachment;
+mongoose.connection.on('connected', function () {
+    console.log('Mongoose connection open to ' + DB_URL);
+    Attachment = gridfs({
+        collection:"knowledgeApp",
+        model:'Attachment',
+        mongooseConnection:mongoose.connection
+    })
+});
+/**
+ * 连接异常
+ */
+mongoose.connection.on('error',function (err) {
+    console.log('Mongoose connection error: ' + err);
+});
+
+/**
+ * 连接断开
+ */
+mongoose.connection.on('disconnected', function () {
+    console.log('Mongoose connection disconnected');
+});
+
+/*/!**
+ * 添加
+ * @param SchemaInst
+ * @param callback
+ *!/
+mongoose.save = function (Schema, SchemaInst, callback) {
+    Schema.create(SchemaInst, callback);
+};
+/!**
+ * 查询全部
+ * @param Schema：表对象
+ * @param json：查询条件(可以模糊查询)
+ * @param projection：显示属性
+ * @param callback：回调函数
+ *!/
+mongoose.find = function (Schema, json, projection, callback) {
+    return Schema.find(json, projection, callback);
+};
+/!**
+ * 根据id查询
+ * @param Schema：表对象
+ * @param id：id
+ * @param projection：显示属性
+ * @param callback：回调函数
+ *!/
+mongoose.findOne = function (Schema, id, projection, callback) {
+    Schema.findOne(id, projection, callback);
+};
+/!**
+ * 根据条件删除一条记录
+ * @param Schema
+ * @param deleteJson
+ * @param callback
+ *!/
+mongoose.deleteOne = function (Schema, deleteJson, callback) {
+    // Schema.findOneAndDelete(deleteJson, callback);
+    Schema.deleteOne(deleteJson, callback);
+};
+/!**
+ * 根据条件删除多条记录
+ * @param Schema
+ * @param deleteJson
+ * @param callback
+ *!/
+mongoose.deleteMany = function (Schema, deleteJson, callback) {
+    // Schema.findOneAndDelete(deleteJson, callback);
+    Schema.deleteMany(deleteJson, callback);
+};
+/!**
+ * 根据条件修改一条记录
+ * @param Schema：表对象
+ * @param update：更新条件json
+ * @param options：拟更新的属性json
+ * @param callback：回调函数
+ *!/
+mongoose.update = function (Schema, update, options, callback) {
+    Schema.findOneAndUpdate(update, {$set: options}, {new: true}, callback);
+}
+mongoose.upload = function (filename,readStream) {
+
+};*/
+mongoose.getAttachment = function () {
+    return Attachment;
+};
+
+mongoose.getFile = function (objectId) {
+
+}
+module.exports = mongoose;

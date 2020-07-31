@@ -1,0 +1,17 @@
+<!DOCTYPE html><html><head><title></title><link rel="stylesheet" href="/stylesheets/style.css"></head><body><h1>classify is not defined</h1><h2></h2><pre>ReferenceError: classify is not defined
+    at E:\webstorm\knowledgeApp\routes\classify.js:26:38
+    at Layer.handle [as handle_request] (E:\webstorm\knowledgeApp\node_modules\express\lib\router\layer.js:95:5)
+    at next (E:\webstorm\knowledgeApp\node_modules\express\lib\router\route.js:137:13)
+    at Route.dispatch (E:\webstorm\knowledgeApp\node_modules\express\lib\router\route.js:112:3)
+    at Layer.handle [as handle_request] (E:\webstorm\knowledgeApp\node_modules\express\lib\router\layer.js:95:5)
+    at E:\webstorm\knowledgeApp\node_modules\express\lib\router\index.js:281:22
+    at Function.process_params (E:\webstorm\knowledgeApp\node_modules\express\lib\router\index.js:335:12)
+    at next (E:\webstorm\knowledgeApp\node_modules\express\lib\router\index.js:275:10)
+    at urlencodedParser (E:\webstorm\knowledgeApp\node_modules\body-parser\lib\types\urlencoded.js:91:7)
+    at Layer.handle [as handle_request] (E:\webstorm\knowledgeApp\node_modules\express\lib\router\layer.js:95:5)
+    at trim_prefix (E:\webstorm\knowledgeApp\node_modules\express\lib\router\index.js:317:13)
+    at E:\webstorm\knowledgeApp\node_modules\express\lib\router\index.js:284:7
+    at Function.process_params (E:\webstorm\knowledgeApp\node_modules\express\lib\router\index.js:335:12)
+    at next (E:\webstorm\knowledgeApp\node_modules\express\lib\router\index.js:275:10)
+    at Function.handle (E:\webstorm\knowledgeApp\node_modules\express\lib\router\index.js:174:3)
+    at router (E:\webstorm\knowledgeApp\node_modules\express\lib\router\index.js:47:12)</pre></body></html>

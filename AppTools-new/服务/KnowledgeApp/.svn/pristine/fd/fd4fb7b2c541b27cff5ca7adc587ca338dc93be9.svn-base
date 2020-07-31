@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+hello
+<form action="http://localhost:8020/file/upload" enctype="multipart/form-data" method="post">
+    <input type="file" name="file">
+    <input type="text" name="FileName">
+   <!-- <input type="text" name="name">
+    <input type="number" name="age">-->
+    <input type="submit">
+</form>
+</body>
+</html>
